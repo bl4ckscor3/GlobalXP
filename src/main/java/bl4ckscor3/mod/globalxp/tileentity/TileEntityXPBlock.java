@@ -1,7 +1,6 @@
 package bl4ckscor3.mod.globalxp.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityXPBlock extends TileEntity
@@ -58,20 +57,5 @@ public class TileEntityXPBlock extends TileEntity
 			storedLevels = tag.getInteger("stored_levels");
 		
 		super.readFromNBT(tag);
-	}
-	
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
-		NBTTagCompound tag = new NBTTagCompound();
-		
-		writeToNBT(tag);
-		return new SPacketUpdateTileEntity(pos, 1, tag);
-	}
-	
-	@Override
-	public void onDataPacket(net.minecraft.network.NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
-		readFromNBT(pkt.getNbtCompound());
 	}
 }
