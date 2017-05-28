@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.network.ServerProxy;
+import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
+import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,7 +20,10 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid=GlobalXP.modid, name=GlobalXP.name, version=GlobalXP.version, acceptedMinecraftVersions="[" + GlobalXP.mcVersion + "]")
 public class GlobalXP
@@ -30,6 +35,7 @@ public class GlobalXP
 	public static Block xp_block;
 	@SidedProxy(clientSide = "bl4ckscor3.mod.globalxp.network.ClientProxy", serverSide = "bl4ckscor3.mod.globalxp.network.ServerProxy")
 	public static ServerProxy serverProxy;
+	public static SimpleNetworkWrapper network;
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
@@ -42,6 +48,9 @@ public class GlobalXP
 		meta.modId = modid;
 		meta.name = name;
 		meta.version = version;
+		network = NetworkRegistry.INSTANCE.newSimpleChannel(modid);
+		network.registerMessage(new SPacketUpdateXPBlock.Handler(), SPacketUpdateXPBlock.class, 0, Side.CLIENT);
+		network.registerMessage(new CPacketRequestXPBlockUpdate.Handler(), CPacketRequestXPBlockUpdate.class, 1, Side.SERVER);
 		xp_block = new XPBlock(Material.IRON);
 		GameRegistry.register(xp_block);
 		GameRegistry.register(new ItemBlock(xp_block).setRegistryName(xp_block.getRegistryName().toString()));
@@ -54,6 +63,6 @@ public class GlobalXP
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		FMLInterModComms.sendMessage("Waila", "register", "bl4ckscor3.mod.globalxp.imc.waila.WailaDataProvider.callbackRegister");
+		FMLInterModComms.sendMessage("waila", "register", "bl4ckscor3.mod.globalxp.imc.waila.WailaDataProvider.callbackRegister");
 	}
 }
