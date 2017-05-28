@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "globalxp:blocks/xp_block" 
+        "all": "minecraft:blocks/iron_bars" 
     }
 }

@@ -47,6 +47,7 @@ public class GlobalXP
 		GameRegistry.register(new ItemBlock(xp_block).setRegistryName(xp_block.getRegistryName().toString()));
 		GameRegistry.registerTileEntity(TileEntityXPBlock.class, xp_block.getRegistryName().toString());
 		serverProxy.loadModels();
+		serverProxy.registerRenderers();
 		GameRegistry.addRecipe(new ItemStack(xp_block, 1), "XXX", "XYX", "XXX", 'X', Blocks.IRON_BARS, 'Y', Items.EMERALD);
 	}
 	

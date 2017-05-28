@@ -53,9 +53,7 @@ public class TileEntityXPBlock extends TileEntity
 	@Override
 	public void readFromNBT(NBTTagCompound tag)
 	{
-		if(tag.hasKey("stored_levels"))
-			storedLevels = tag.getInteger("stored_levels");
-		
+		storedLevels = tag.getInteger("stored_levels");
 		super.readFromNBT(tag);
 	}
 }
