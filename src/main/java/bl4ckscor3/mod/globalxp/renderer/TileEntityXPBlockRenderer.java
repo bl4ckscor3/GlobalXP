@@ -38,6 +38,5 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 		GlStateManager.popMatrix();
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.disableBlend();
-		
 	}
 }

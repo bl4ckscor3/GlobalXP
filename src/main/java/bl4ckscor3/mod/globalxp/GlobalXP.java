@@ -13,12 +13,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -30,7 +32,7 @@ public class GlobalXP
 {
 	public static final String modid = "globalxp";
 	public static final String name = "Global XP";
-	public static final String version = "v1.0";
+	public static final String version = "v1.1";
 	public static final String mcVersion = "1.11.2";
 	public static Block xp_block;
 	@SidedProxy(clientSide = "bl4ckscor3.mod.globalxp.network.ClientProxy", serverSide = "bl4ckscor3.mod.globalxp.network.ServerProxy")
@@ -48,6 +50,7 @@ public class GlobalXP
 		meta.modId = modid;
 		meta.name = name;
 		meta.version = version;
+		MinecraftForge.EVENT_BUS.register(new bl4ckscor3.mod.globalxp.handlers.EventHandler());
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(modid);
 		network.registerMessage(new SPacketUpdateXPBlock.Handler(), SPacketUpdateXPBlock.class, 0, Side.CLIENT);
 		network.registerMessage(new CPacketRequestXPBlockUpdate.Handler(), CPacketRequestXPBlockUpdate.class, 1, Side.SERVER);

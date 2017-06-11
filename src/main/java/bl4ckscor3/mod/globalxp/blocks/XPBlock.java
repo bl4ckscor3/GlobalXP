@@ -6,13 +6,9 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class XPBlock extends Block
@@ -45,31 +41,6 @@ public class XPBlock extends Block
 	public BlockRenderLayer getBlockLayer()
 	{
 		return BlockRenderLayer.CUTOUT;
-	}
-	
-	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-		if(!worldIn.isRemote)
-		{
-			if(playerIn.isSneaking()) //add all levels to the block
-			{
-				((TileEntityXPBlock)worldIn.getTileEntity(pos)).addLevel(playerIn.experienceLevel);
-				playerIn.removeExperienceLevel(playerIn.experienceLevel);
-			}
-			else //remove one level from the block
-			{
-				TileEntityXPBlock te = ((TileEntityXPBlock)worldIn.getTileEntity(pos));
-				
-				if(te.getStoredLevels() == 0)
-					return true;
-				
-				te.removeLevel();
-				playerIn.addExperienceLevel(1);
-			}
-		}
-		
-		return true;
 	}
 	
 	/**
