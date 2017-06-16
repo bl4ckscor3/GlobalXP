@@ -8,12 +8,12 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaRegistrar;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class WailaDataProvider implements IWailaDataProvider
@@ -33,7 +33,7 @@ public class WailaDataProvider implements IWailaDataProvider
 	@Override
 	public List<String> getWailaBody(ItemStack arg0, List<String> arg1, IWailaDataAccessor arg2, IWailaConfigHandler arg3)
 	{
-		arg1.add(String.format(I18n.translateToLocal("waila.body"), ((TileEntityXPBlock)arg2.getTileEntity()).getStoredLevels()));
+		arg1.add(String.format(I18n.format("waila.body"), ((TileEntityXPBlock)arg2.getTileEntity()).getStoredLevels()));
 		return arg1;
 	}
 
