@@ -19,7 +19,7 @@ public class EventHandler
 			if(event.getEntityPlayer().isSneaking()) //add all levels to the block
 			{
 				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addLevel(event.getEntityPlayer().experienceLevel);
-				event.getEntityPlayer().removeExperienceLevel(event.getEntityPlayer().experienceLevel);
+				event.getEntityPlayer().addExperienceLevel(-event.getEntityPlayer().experienceLevel);
 			}
 			else //remove one level from the block
 			{

@@ -54,7 +54,7 @@ public class CPacketRequestXPBlockUpdate implements IMessage
 		@Override
 		public SPacketUpdateXPBlock onMessage(CPacketRequestXPBlockUpdate message, MessageContext ctx)
 		{
-			TileEntityXPBlock te = (TileEntityXPBlock)FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(message.dimension).getTileEntity(message.pos);
+			TileEntityXPBlock te = (TileEntityXPBlock)FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(message.dimension).getTileEntity(message.pos);
 			
 			if(te != null)
 				return new SPacketUpdateXPBlock(te);
