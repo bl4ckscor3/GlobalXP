@@ -25,7 +25,7 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 	{
 		ITextComponent levelsText = new TextComponentString("" + te.getStoredLevels());
 		
-		if(rendererDispatcher.cameraHitResult != null && rendererDispatcher.cameraHitResult.getBlockPos().equals(te.getPos()))
+		if(te != null && te.getPos() != null && rendererDispatcher.cameraHitResult != null && rendererDispatcher.cameraHitResult.getBlockPos() != null && rendererDispatcher.cameraHitResult.getBlockPos().equals(te.getPos()))
 		{
 			setLightmapDisabled(true);
 			drawNameplate(te, levelsText.getFormattedText(), x, y, z, 12);
