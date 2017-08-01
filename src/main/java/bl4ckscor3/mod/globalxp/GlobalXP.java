@@ -29,7 +29,7 @@ public class GlobalXP
 {
 	public static final String modid = "globalxp";
 	public static final String name = "Global XP";
-	public static final String version = "v1.2";
+	public static final String version = "v1.2.1";
 	public static final String mcVersion = "1.12";
 	public static Block xp_block;
 	@SidedProxy(clientSide = "bl4ckscor3.mod.globalxp.network.ClientProxy", serverSide = "bl4ckscor3.mod.globalxp.network.ServerProxy")
