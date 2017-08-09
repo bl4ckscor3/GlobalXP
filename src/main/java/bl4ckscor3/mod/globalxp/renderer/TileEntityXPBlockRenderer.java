@@ -33,7 +33,7 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 			setLightmapDisabled(false);
 		}
 		
-		double offset = (Math.sin((te.getWorld().getTotalWorldTime() + partialTicks) * GlobalXP.config.bobSpeed / 8.0D) / 10.0D);
+		double offset = Math.sin((te.getWorld().getTotalWorldTime() + partialTicks) * GlobalXP.config.bobSpeed / 8.0D) / 10.0D;
 		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(emerald, te.getWorld(), null);
 		
 		GlStateManager.enableRescaleNormal();
