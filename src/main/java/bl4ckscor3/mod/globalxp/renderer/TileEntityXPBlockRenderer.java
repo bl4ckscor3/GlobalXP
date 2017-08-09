@@ -2,6 +2,7 @@ package bl4ckscor3.mod.globalxp.renderer;
 
 import org.lwjgl.opengl.GL11;
 
+import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -32,7 +33,7 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 			setLightmapDisabled(false);
 		}
 		
-		double offset = Math.sin((te.getWorld().getTotalWorldTime() + partialTicks) / 8.0D) / 10.0D;
+		double offset = (Math.sin((te.getWorld().getTotalWorldTime() + partialTicks) * GlobalXP.config.bobSpeed / 8.0D) / 10.0D);
 		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(emerald, te.getWorld(), null);
 		
 		GlStateManager.enableRescaleNormal();
@@ -42,7 +43,7 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 		GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5D, y + 0.4D + offset, z + 0.5D);
-		GlStateManager.rotate((te.getWorld().getTotalWorldTime() + partialTicks) * 4.0F, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate((te.getWorld().getTotalWorldTime() + partialTicks) * 4.0F * (float)GlobalXP.config.spinSpeed, 0.0F, 1.0F, 0.0F);
 		model = ForgeHooksClient.handleCameraTransforms(model, TransformType.GROUND, false);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		Minecraft.getMinecraft().getRenderItem().renderItem(emerald, model);

@@ -1,9 +1,11 @@
 package bl4ckscor3.mod.globalxp.handlers;
 
+import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandler
@@ -31,6 +33,16 @@ public class EventHandler
 				te.removeLevel();
 				event.getEntityPlayer().addExperienceLevel(1);
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void onOnConfigChanged(OnConfigChangedEvent event) //yes, this is how i name my event listener methods
+	{
+		if(event.getModID().equals(GlobalXP.MOD_ID))
+		{
+			GlobalXP.config.save();
+			GlobalXP.config.refresh();
 		}
 	}
 }

@@ -1,2 +1,6 @@
 tile.xp_block.name=XP Block
 waila.body=%s levels saved
+globalxp.config.spinspeed=Emerald spin speed
+globalxp.config.spinspeed.tooltip=How fast the emerald should spin (multiplier of the default speed)
+globalxp.config.bobspeed=Emerald bob speed
+globalxp.config.bobspeed.tooltip=How fast the emerald should bob up and down (multiplier of the default speed)
