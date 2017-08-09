@@ -1,5 +1,9 @@
 # GlobalXP Changelog
 
+### v1.3
+- Added configuration option to change the spinning speed of the emerald
+- Added configuration option to change the bobbing up and down speed of the emerald
+
 #### v1.2.1
 - Added spanish translation by Dorzar
 
