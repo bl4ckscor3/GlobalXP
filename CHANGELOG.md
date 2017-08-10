@@ -1,8 +1,8 @@
 # GlobalXP Changelog
 
 ### v1.3
-- Added configuration option to change the spinning speed of the emerald
-- Added configuration option to change the bobbing up and down speed of the emerald
+- Added configuration option to change the speed at which the emerald within the XP Block is spinning
+- Added configuration option to change the speed at which the emerald is bobbing up and down
 
 #### v1.2.1
 - Added spanish translation by Dorzar
