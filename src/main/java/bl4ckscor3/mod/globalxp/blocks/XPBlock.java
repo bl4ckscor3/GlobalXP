@@ -51,8 +51,7 @@ public class XPBlock extends Block
 			tag.setInteger("z", pos.getZ());
 			((TileEntityXPBlock)te).readFromNBT(tag);
 			((TileEntityXPBlock)te).markDirty();
-			
-				GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock((TileEntityXPBlock)te), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+			GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock((TileEntityXPBlock)te), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
 		}
 	}
 	
