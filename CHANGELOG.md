@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+### v1.4
+- The XP Block now retains its levels when broken
+
 ### v1.3
 - Added configuration option to change the speed at which the emerald within the XP Block is spinning
 - Added configuration option to change the speed at which the emerald is bobbing up and down

@@ -55,7 +55,8 @@ public class SPacketUpdateXPBlock implements IMessage
 		public IMessage onMessage(SPacketUpdateXPBlock message, MessageContext ctx)
 		{
 			Minecraft.getMinecraft().addScheduledTask(() -> {
-				((TileEntityXPBlock)Minecraft.getMinecraft().world.getTileEntity(message.pos)).setStoredLevels(message.storedLevels);
+				if(Minecraft.getMinecraft().world.getTileEntity(message.pos) != null)
+					((TileEntityXPBlock)Minecraft.getMinecraft().world.getTileEntity(message.pos)).setStoredLevels(message.storedLevels);
 			});
 			return null;
 		}
