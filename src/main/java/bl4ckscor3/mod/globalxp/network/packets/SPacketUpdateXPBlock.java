@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class SPacketUpdateXPBlock implements IMessage
 {
 	private BlockPos pos;
-	private int storedLevels;
+	private int storedXp;
 
 	public SPacketUpdateXPBlock() {}
 	
@@ -21,32 +21,32 @@ public class SPacketUpdateXPBlock implements IMessage
 	 */
 	public SPacketUpdateXPBlock(TileEntityXPBlock te)
 	{
-		this(te.getPos(), te.getStoredLevels());
+		this(te.getPos(), te.getStoredXp());
 	}
 	
 	/**
 	 * Initializes this packet
 	 * @param p The position of the tile entity
-	 * @param sL The amount of stored levels in it
+	 * @param sL The amount of stored xp in it
 	 */
-	public SPacketUpdateXPBlock(BlockPos p, int sL)
+	public SPacketUpdateXPBlock(BlockPos p, int sX)
 	{
 		pos = p;
-		storedLevels = sL;
+		storedXp = sX;
 	}
 	
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
 		buf.writeLong(pos.toLong());
-		buf.writeInt(storedLevels);
+		buf.writeInt(storedXp);
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
 		pos = BlockPos.fromLong(buf.readLong());
-		storedLevels = buf.readInt();
+		storedXp = buf.readInt();
 	}
 	
 	public static class Handler implements IMessageHandler<SPacketUpdateXPBlock, IMessage>
@@ -56,7 +56,9 @@ public class SPacketUpdateXPBlock implements IMessage
 		{
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				if(Minecraft.getMinecraft().world.getTileEntity(message.pos) != null)
-					((TileEntityXPBlock)Minecraft.getMinecraft().world.getTileEntity(message.pos)).setStoredLevels(message.storedLevels);
+				{
+					((TileEntityXPBlock)Minecraft.getMinecraft().world.getTileEntity(message.pos)).setStoredXp(message.storedXp);
+				}
 			});
 			return null;
 		}

@@ -29,7 +29,7 @@ public class GlobalXP
 {
 	public static final String MOD_ID = "globalxp";
 	public static final String NAME = "Global XP";
-	public static final String VERSION = "v1.3";
+	public static final String VERSION = "v1.4";
 	public static final String MC_VERSION = "1.12"; //1.12.1 also works
 	public static final String GUI_FACTORY = "bl4ckscor3.mod.globalxp.gui.GUIFactory";
 	public static Block xp_block;
