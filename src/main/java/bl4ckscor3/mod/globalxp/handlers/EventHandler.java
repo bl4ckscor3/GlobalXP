@@ -4,6 +4,7 @@ import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.util.EnumHand;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -18,20 +19,19 @@ public class EventHandler
 
 		if(!event.getWorld().isRemote)
 		{
-			if(event.getEntityPlayer().isSneaking()) //add all levels to the block
+			if(event.getEntityPlayer().isSneaking()) //sneaking = add all player XP to the block
 			{
-				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addLevel(event.getEntityPlayer().experienceLevel);
-				event.getEntityPlayer().addExperienceLevel(-event.getEntityPlayer().experienceLevel);
+				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addXP(event.getEntityPlayer().experienceTotal);
+				event.getEntityPlayer().addExperienceLevel(-event.getEntityPlayer().experienceLevel - 1); // set player XP to 0
 			}
-			else //remove one level from the block
+			else //not sneaking = remove exactly enough XP from the block to get player to the next level
 			{
 				TileEntityXPBlock te = ((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos()));
+				EntityPlayer player = event.getEntityPlayer();
+				int neededXP = player.xpBarCap() - (int)player.experience;
+				int availableXP = te.removeXP(neededXP);
 				
-				if(te.getStoredLevels() == 0)
-					return;
-				
-				te.removeLevel();
-				event.getEntityPlayer().addExperienceLevel(1);
+				event.getEntityPlayer().addExperience(availableXP);
 			}
 		}
 	}

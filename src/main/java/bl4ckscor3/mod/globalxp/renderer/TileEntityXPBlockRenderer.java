@@ -24,7 +24,7 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 	@Override
 	public void render(TileEntityXPBlock te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
 	{
-		ITextComponent levelsText = new TextComponentString("" + te.getStoredLevels());
+		ITextComponent levelsText = new TextComponentString("" + (int)te.getStoredLevels());
 		
 		if(te != null && te.getPos() != null && rendererDispatcher.cameraHitResult != null && rendererDispatcher.cameraHitResult.getBlockPos() != null && rendererDispatcher.cameraHitResult.getBlockPos().equals(te.getPos()))
 		{
