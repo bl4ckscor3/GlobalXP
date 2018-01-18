@@ -24,18 +24,18 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 	@Override
 	public void render(TileEntityXPBlock te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
 	{
-		ITextComponent levelsText = new TextComponentString("" + (int)te.getStoredLevels());
-		
+		ITextComponent levelsText = new TextComponentString((int)te.getStoredLevels() + " (" + te.getStoredXP() + ")");
+
 		if(te != null && te.getPos() != null && rendererDispatcher.cameraHitResult != null && rendererDispatcher.cameraHitResult.getBlockPos() != null && rendererDispatcher.cameraHitResult.getBlockPos().equals(te.getPos()))
 		{
 			setLightmapDisabled(true);
 			drawNameplate(te, levelsText.getFormattedText(), x, y, z, 12);
 			setLightmapDisabled(false);
 		}
-		
+
 		double offset = Math.sin((te.getWorld().getTotalWorldTime() + partialTicks) * GlobalXP.config.bobSpeed / 8.0D) / 10.0D;
 		IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(emerald, te.getWorld(), null);
-		
+
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 		GlStateManager.enableBlend();

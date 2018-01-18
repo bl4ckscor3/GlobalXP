@@ -1,5 +1,5 @@
 tile.xp_block.name=XP Block
-waila.body=%s Level gespeichert
+waila.body=%s Level gespeichert (%s XP)
 globalxp.config.spinspeed=Smaragd Drehschnelligkeit
 globalxp.config.spinspeed.tooltip=Wie schnell sich der Smaragd drehen soll (wird mit Standardschnelligkeit multipliziert)
 globalxp.config.bobspeed=Smaragd Auf-Ab-Bewegung

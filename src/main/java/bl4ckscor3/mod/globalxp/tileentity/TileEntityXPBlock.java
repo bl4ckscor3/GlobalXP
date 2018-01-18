@@ -7,12 +7,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-
 public class TileEntityXPBlock extends TileEntity
 {
 	private int storedXP = 0;
 	private float storedLevels = 0f;
-	
+
 	/**
 	 * Adds xp to this tile entity and updates all clients within a 64 block range with that change
 	 * @param amount The amount of xp to add
@@ -24,7 +23,7 @@ public class TileEntityXPBlock extends TileEntity
 		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
 		calculateStoredLevels();
 	}
-	
+
 	/**
 	 * Removes xp from the storage and returns amount removed.	Updates all clients within a 64 block range with that change
 	 * @param amount The amount of xp to remove
@@ -34,9 +33,7 @@ public class TileEntityXPBlock extends TileEntity
 		int amountRemoved = Math.min(amount, storedXP);
 
 		if(amountRemoved <= 0)
-		{
 			return 0;
-		}
 
 		storedXP -= amountRemoved;
 		markDirty();
@@ -44,7 +41,7 @@ public class TileEntityXPBlock extends TileEntity
 		calculateStoredLevels();
 		return amountRemoved;
 	}
-	
+
 	/**
 	 * Sets how much XP is stored in this tile entity
 	 * @param xp The amount of xp
@@ -54,7 +51,7 @@ public class TileEntityXPBlock extends TileEntity
 		storedXP = xp;
 		calculateStoredLevels();
 	}
-	
+
 	/**
 	 * Gets how many XP are stored in this tile entity
 	 * @return The total amount of XP stored in this tile entity
@@ -67,7 +64,7 @@ public class TileEntityXPBlock extends TileEntity
 	/**
 	 * Gets how many levels are stored.
 	 * This value is only used for display purposes and does not reflect partial levels
-	*/
+	 */
 	public float getStoredLevels()
 	{
 		return storedLevels;
@@ -75,26 +72,28 @@ public class TileEntityXPBlock extends TileEntity
 
 	/**
 	 * Calculates total levels based on stored XP.
-	*/
+	 */
 	protected void calculateStoredLevels()
 	{
-		storedLevels = 0f;
+		storedLevels = 0.0F;
 
 		int xp = storedXP;
 
 		while(xp > 0)
 		{
 			int xpToNextLevel = getXPForLevel((int)storedLevels);
+
 			if(xp < xpToNextLevel)
 			{
 				storedLevels += (float)xp / xpToNextLevel;
-				break;
+				return;
 			}
+
 			xp -= xpToNextLevel;
-			storedLevels += 1.0f;
+			storedLevels += 1.0F;
 		}
 	}
-	
+
 	/**
 	 * Gets XP requirement to go from level to level+1
 	 * Formula copied from EntityPlayer.java
@@ -107,21 +106,21 @@ public class TileEntityXPBlock extends TileEntity
 			return 112 + (level - 30) * 9;
 		return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
 	}
-	
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound tag)
 	{
 		tag.setInteger("stored_xp", storedXP);
 		return super.writeToNBT(tag);
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound tag)
 	{
 		setStoredXP(tag.getInteger("stored_xp"));
 		super.readFromNBT(tag);
 	}
-	
+
 	@Override
 	public void onLoad()
 	{

@@ -14,7 +14,7 @@ public class SPacketUpdateXPBlock implements IMessage
 	private int storedXP;
 
 	public SPacketUpdateXPBlock() {}
-	
+
 	/**
 	 * Initializes this packet with a tile entity
 	 * @param te The tile entity to initialize with
@@ -23,39 +23,38 @@ public class SPacketUpdateXPBlock implements IMessage
 	{
 		this(te.getPos(), te.getStoredXP());
 	}
-	
+
 	/**
 	 * Initializes this packet
 	 * @param p The position of the tile entity
-	 * @param sL The amount of stored xp in it
+	 * @param sL The amount of xp stored in it
 	 */
 	public SPacketUpdateXPBlock(BlockPos p, int sX)
 	{
 		pos = p;
 		storedXP = sX;
 	}
-	
+
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
 		buf.writeLong(pos.toLong());
 		buf.writeInt(storedXP);
 	}
-	
+
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
 		pos = BlockPos.fromLong(buf.readLong());
 		storedXP = buf.readInt();
 	}
-	
+
 	public static class Handler implements IMessageHandler<SPacketUpdateXPBlock, IMessage>
 	{
 		@Override
 		public IMessage onMessage(SPacketUpdateXPBlock message, MessageContext ctx)
 		{
-			Minecraft.getMinecraft().addScheduledTask(() ->
-			{
+			Minecraft.getMinecraft().addScheduledTask(() -> {
 				if(Minecraft.getMinecraft().world.getTileEntity(message.pos) != null)
 					((TileEntityXPBlock)Minecraft.getMinecraft().world.getTileEntity(message.pos)).setStoredXP(message.storedXP);
 			});
