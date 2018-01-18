@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class SPacketUpdateXPBlock implements IMessage
 {
 	private BlockPos pos;
-	private int storedXp;
+	private int storedXP;
 
 	public SPacketUpdateXPBlock() {}
 	
@@ -21,7 +21,7 @@ public class SPacketUpdateXPBlock implements IMessage
 	 */
 	public SPacketUpdateXPBlock(TileEntityXPBlock te)
 	{
-		this(te.getPos(), te.getStoredXp());
+		this(te.getPos(), te.getStoredXP());
 	}
 	
 	/**
@@ -32,21 +32,21 @@ public class SPacketUpdateXPBlock implements IMessage
 	public SPacketUpdateXPBlock(BlockPos p, int sX)
 	{
 		pos = p;
-		storedXp = sX;
+		storedXP = sX;
 	}
 	
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
 		buf.writeLong(pos.toLong());
-		buf.writeInt(storedXp);
+		buf.writeInt(storedXP);
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
 		pos = BlockPos.fromLong(buf.readLong());
-		storedXp = buf.readInt();
+		storedXP = buf.readInt();
 	}
 	
 	public static class Handler implements IMessageHandler<SPacketUpdateXPBlock, IMessage>
@@ -54,11 +54,10 @@ public class SPacketUpdateXPBlock implements IMessage
 		@Override
 		public IMessage onMessage(SPacketUpdateXPBlock message, MessageContext ctx)
 		{
-			Minecraft.getMinecraft().addScheduledTask(() -> {
+			Minecraft.getMinecraft().addScheduledTask(() ->
+			{
 				if(Minecraft.getMinecraft().world.getTileEntity(message.pos) != null)
-				{
-					((TileEntityXPBlock)Minecraft.getMinecraft().world.getTileEntity(message.pos)).setStoredXp(message.storedXp);
-				}
+					((TileEntityXPBlock)Minecraft.getMinecraft().world.getTileEntity(message.pos)).setStoredXP(message.storedXP);
 			});
 			return null;
 		}

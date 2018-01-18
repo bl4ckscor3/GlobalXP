@@ -19,24 +19,19 @@ public class EventHandler
 
 		if(!event.getWorld().isRemote)
 		{
-			if(event.getEntityPlayer().isSneaking())
+			if(event.getEntityPlayer().isSneaking()) //sneaking = add all player XP to the block
 			{
-				// Sneaking = add all player XP to the block
-
-				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addXp(event.getEntityPlayer().experienceTotal);
+				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addXP(event.getEntityPlayer().experienceTotal);
 				event.getEntityPlayer().addExperienceLevel(-event.getEntityPlayer().experienceLevel - 1); // set player XP to 0
 			}
-			else
+			else //not sneaking = remove exactly enough XP from the block to get player to the next level
 			{
-				// Not sneaking = remove exactly enough XP from the block to get player to the next level
-
 				TileEntityXPBlock te = ((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos()));
 				EntityPlayer player = event.getEntityPlayer();
-
-				int neededXp = player.xpBarCap() - (int)player.experience;
-				int availableXp = te.removeXp(neededXp);
+				int neededXP = player.xpBarCap() - (int)player.experience;
+				int availableXP = te.removeXP(neededXP);
 				
-				event.getEntityPlayer().addExperience(availableXp);
+				event.getEntityPlayer().addExperience(availableXP);
 			}
 		}
 	}
