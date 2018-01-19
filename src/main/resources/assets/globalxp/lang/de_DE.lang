@@ -1,6 +1,9 @@
+//Translation by bl4ckscor3
 tile.xp_block.name=XP Block
 waila.body=%s Level gespeichert (%s XP)
 globalxp.config.spinspeed=Smaragd Drehschnelligkeit
 globalxp.config.spinspeed.tooltip=Wie schnell sich der Smaragd drehen soll (wird mit Standardschnelligkeit multipliziert)
 globalxp.config.bobspeed=Smaragd Auf-Ab-Bewegung
 globalxp.config.bobspeed.tooltip=Wie schnell sich der Smaragd hoch und runter bewegen soll (wird mit Standardschnelligkeit multipliziert)
+globalxp.config.renderNameplate=Anzeigen der XP
+globalxp.config.renderNameplate.tooltip=Ob eine Info der gespeichterten Level über dem XP Block angezeigt werden soll

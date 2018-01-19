@@ -9,7 +9,8 @@ public class Config extends Configuration
 {
 	public double spinSpeed;
 	public double bobSpeed;
-	
+	public boolean renderNameplate;
+
 	/**
 	 * Sets up this mod's config file
 	 * @param suggestedFile The file as per {@link net.minecraftforge.fml.common.event.FMLPreInitializationEvent}#getSuggestedConfigurationFile
@@ -17,27 +18,31 @@ public class Config extends Configuration
 	public Config(File suggestedFile)
 	{
 		super(suggestedFile);
-		
+
 		refresh();
 	}
-	
+
 	/**
 	 * Refreshes this mod's configuration
 	 */
 	public void refresh()
 	{
 		load();
-		
+
 		Property prop;
 
 		prop = get("options", "spinspeed", 1.0D);
 		prop.setLanguageKey("globalxp.config.spinspeed");
 		spinSpeed = prop.getDouble(1.0D);
-		
+
 		prop = get("options", "bobspeed", 1.0D);
 		prop.setLanguageKey("globalxp.config.bobspeed");
 		bobSpeed = prop.getDouble(1.0D);
-		
+
+		prop = get("options", "renderNameplate", true);
+		prop.setLanguageKey("globalxp.config.renderNameplate");
+		renderNameplate = prop.getBoolean(true);
+
 		if(hasChanged())
 			save();
 	}
