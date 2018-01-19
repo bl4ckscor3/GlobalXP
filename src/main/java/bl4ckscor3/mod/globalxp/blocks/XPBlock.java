@@ -134,10 +134,10 @@ public class XPBlock extends Block implements TOPInfoProvider
         TileEntity te = world.getTileEntity(data.getPos());
         if(te instanceof TileEntityXPBlock)
         {
-        	TileEntityXPBlock tileentity = (TileEntityXPBlock) te;
+            TileEntityXPBlock tileentity = (TileEntityXPBlock) te;
             probeInfo.horizontal().text(I18n.format("top.body", String.format("%.2f", tileentity.getStoredLevels())));
             if(mode == ProbeMode.EXTENDED)
-            	probeInfo.horizontal().text(I18n.format("top.extended", tileentity.getStoredXP()));
+                probeInfo.horizontal().text(I18n.format("top.extended", tileentity.getStoredXP()));
         }
     }
 }
