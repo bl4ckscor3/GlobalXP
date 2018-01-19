@@ -9,7 +9,6 @@ public class Config extends Configuration
 {
 	public double spinSpeed;
 	public double bobSpeed;
-	public boolean levelvisibility;
 	
 	/**
 	 * Sets up this mod's config file
@@ -38,10 +37,6 @@ public class Config extends Configuration
 		prop = get("options", "bobspeed", 1.0D);
 		prop.setLanguageKey("globalxp.config.bobspeed");
 		bobSpeed = prop.getDouble(1.0D);
-		
-		prop = get("options", "levelvisibility", true);
-		prop.setLanguageKey("globalxp.config.levelvisibility");
-		levelvisibility = prop.getBoolean(true);
 		
 		if(hasChanged())
 			save();

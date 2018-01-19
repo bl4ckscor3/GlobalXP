@@ -6,5 +6,3 @@ globalxp.config.spinspeed=Emerald spin speed
 globalxp.config.spinspeed.tooltip=How fast the emerald should spin (multiplier of the default speed)
 globalxp.config.bobspeed=Emerald bob speed
 globalxp.config.bobspeed.tooltip=How fast the emerald should bob up and down (multiplier of the default speed)
-globalxp.config.levelvisibility=Level number visibility
-globalxp.config.levelvisibility.tooltip=If there should be a nameplate showing stored levels floating above the block
