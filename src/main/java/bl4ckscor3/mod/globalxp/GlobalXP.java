@@ -6,6 +6,7 @@ import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.network.ServerProxy;
 import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
 import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
+import bl4ckscor3.mod.globalxp.theoneprobe.MainCompatHandler;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -60,6 +61,7 @@ public class GlobalXP
 		GameRegistry.registerTileEntity(TileEntityXPBlock.class, xp_block.getRegistryName().toString());
 		serverProxy.loadModels();
 		serverProxy.registerRenderers();
+		MainCompatHandler.registerTOP();
 	}
 	
 	@EventHandler

@@ -29,7 +29,8 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 		if(te != null && te.getPos() != null && rendererDispatcher.cameraHitResult != null && rendererDispatcher.cameraHitResult.getBlockPos() != null && rendererDispatcher.cameraHitResult.getBlockPos().equals(te.getPos()))
 		{
 			setLightmapDisabled(true);
-			drawNameplate(te, levelsText.getFormattedText(), x, y, z, 12);
+			if(GlobalXP.config.levelvisibility)
+				drawNameplate(te, levelsText.getFormattedText(), x, y, z, 12);
 			setLightmapDisabled(false);
 		}
 
