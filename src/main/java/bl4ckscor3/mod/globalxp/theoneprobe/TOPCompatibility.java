@@ -26,7 +26,6 @@ public class TOPCompatibility
         FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "bl4ckscor3.mod.globalxp.theoneprobe.TOPCompatibility$GetTheOneProbe");
     }
 
-
     public static class GetTheOneProbe implements Function<ITheOneProbe, Void>
     {
         public static ITheOneProbe probe;
