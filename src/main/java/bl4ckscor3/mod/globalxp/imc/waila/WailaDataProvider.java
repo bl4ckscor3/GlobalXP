@@ -23,7 +23,7 @@ public class WailaDataProvider implements IWailaDataProvider
 		registrar.registerBodyProvider(new WailaDataProvider(), XPBlock.class);
 		registrar.registerStackProvider(new WailaDataProvider(), XPBlock.class);
 	}
-	
+
 	@Override
 	public NBTTagCompound getNBTData(EntityPlayerMP arg0, TileEntity arg1, NBTTagCompound arg2, World arg3, BlockPos arg4)
 	{
@@ -33,7 +33,7 @@ public class WailaDataProvider implements IWailaDataProvider
 	@Override
 	public List<String> getWailaBody(ItemStack arg0, List<String> arg1, IWailaDataAccessor arg2, IWailaConfigHandler arg3)
 	{
-		arg1.add(I18n.format("waila.body", String.format("%.2f", ((TileEntityXPBlock)arg2.getTileEntity()).getStoredLevels())));
+		arg1.add(I18n.format("waila.body", String.format("%.2f", ((TileEntityXPBlock)arg2.getTileEntity()).getStoredLevels()), ((TileEntityXPBlock)arg2.getTileEntity()).getStoredXP()));
 		return arg1;
 	}
 

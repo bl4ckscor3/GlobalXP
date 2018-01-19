@@ -1,5 +1,5 @@
 //Translated by: Dorzar / VeryHardChamp
-tile.xp_block.name=Almacenador de EXP
+tile.xp_block.name=Almacenador de EXP (%s EXP)
 waila.body=%s niveles almacenados
 globalxp.config.spinspeed=Velocidad de giro
 globalxp.config.spinspeed.tooltip=¿Qué tan rápido debe girar la esmeralda? (multiplica la velocidad predeterminada).

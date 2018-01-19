@@ -31,7 +31,7 @@ public class EventHandler
 				int neededXP = player.xpBarCap() - (int)player.experience;
 				int availableXP = te.removeXP(neededXP);
 				
-				event.getEntityPlayer().addExperience(availableXP);
+				player.addExperience(availableXP);
 			}
 		}
 	}
