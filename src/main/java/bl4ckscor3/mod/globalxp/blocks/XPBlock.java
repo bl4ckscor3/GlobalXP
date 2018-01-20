@@ -138,10 +138,10 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		{
 			TileEntityXPBlock tileentity = (TileEntityXPBlock)te;
 
-			probeInfo.horizontal().text(I18n.format("top.body", String.format("%.2f", tileentity.getStoredLevels())));
+			probeInfo.horizontal().text(I18n.format("info.body", String.format("%.2f", tileentity.getStoredLevels())));
 
 			if(mode == ProbeMode.EXTENDED)
-				probeInfo.horizontal().text(I18n.format("top.extended", tileentity.getStoredXP()));
+				probeInfo.horizontal().text(I18n.format("info.extended", tileentity.getStoredXP()));
 		}
 	}
 }

@@ -33,7 +33,13 @@ public class WailaDataProvider implements IWailaDataProvider
 	@Override
 	public List<String> getWailaBody(ItemStack arg0, List<String> arg1, IWailaDataAccessor arg2, IWailaConfigHandler arg3)
 	{
-		arg1.add(I18n.format("waila.body", String.format("%.2f", ((TileEntityXPBlock)arg2.getTileEntity()).getStoredLevels()), ((TileEntityXPBlock)arg2.getTileEntity()).getStoredXP()));
+		TileEntityXPBlock te = ((TileEntityXPBlock)arg2.getTileEntity());
+
+		arg1.add(I18n.format("info.body", String.format("%.2f", te.getStoredLevels()), te.getStoredXP()));
+
+		if(arg2.getPlayer().isSneaking())
+			arg1.add(I18n.format("info.extended", te.getStoredXP()));
+
 		return arg1;
 	}
 

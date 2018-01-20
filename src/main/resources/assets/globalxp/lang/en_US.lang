@@ -1,8 +1,7 @@
 //by bl4ckscor3
 tile.xp_block.name=XP Block
-waila.body=%s levels saved (%s XP)
-top.body=%s levels saved
-top.extended=%s XP saved
+info.body=%s levels saved
+info.extended=%s XP saved
 globalxp.config.spinspeed=Emerald spin speed
 globalxp.config.spinspeed.tooltip=How fast the emerald should spin (multiplier of the default speed)
 globalxp.config.bobspeed=Emerald bob speed
