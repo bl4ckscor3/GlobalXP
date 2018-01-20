@@ -1,7 +1,7 @@
 //Translation by Dorzar/VeryHardChamp
 tile.xp_block.name=Almacenador de EXP
-info.body=%s niveles almacenados
-info.extended=%s EXP almacenados
+info.levels=%s niveles almacenados
+info.xp=%s EXP almacenados
 globalxp.config.spinspeed=Velocidad de giro
 globalxp.config.spinspeed.tooltip=¿Qué tan rápido debe girar la esmeralda? (multiplica la velocidad predeterminada).
 globalxp.config.bobspeed=Velocidad de animación

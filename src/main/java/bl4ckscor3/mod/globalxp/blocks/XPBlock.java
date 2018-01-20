@@ -132,16 +132,16 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	@Override
 	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
 	{
-		TileEntity te = world.getTileEntity(data.getPos());
+		TileEntity te1 = world.getTileEntity(data.getPos());
 
-		if(te instanceof TileEntityXPBlock)
+		if(te1 instanceof TileEntityXPBlock)
 		{
-			TileEntityXPBlock tileentity = (TileEntityXPBlock)te;
+			TileEntityXPBlock te2 = (TileEntityXPBlock)te1;
 
-			probeInfo.horizontal().text(I18n.format("info.body", String.format("%.2f", tileentity.getStoredLevels())));
+			probeInfo.horizontal().text(I18n.format("info.levels", String.format("%.2f", te2.getStoredLevels())));
 
 			if(mode == ProbeMode.EXTENDED)
-				probeInfo.horizontal().text(I18n.format("info.extended", tileentity.getStoredXP()));
+				probeInfo.horizontal().text(I18n.format("info.xp", te2.getStoredXP()));
 		}
 	}
 }

@@ -1,7 +1,7 @@
 //Translation by bl4ckscor3
 tile.xp_block.name=XP Block
-info.body=%s Level gespeichert
-info.extended=%s XP gespeichert
+info.levels=%s Level gespeichert
+info.xp=%s XP gespeichert
 globalxp.config.spinspeed=Smaragd Drehschnelligkeit
 globalxp.config.spinspeed.tooltip=Wie schnell sich der Smaragd drehen soll (wird mit Standardschnelligkeit multipliziert)
 globalxp.config.bobspeed=Smaragd Auf-Ab-Bewegung

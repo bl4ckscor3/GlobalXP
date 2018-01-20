@@ -49,7 +49,6 @@ public class TOPCompatibility
 				{
 					if(blockState.getBlock() instanceof ITOPInfoProvider)
 						((ITOPInfoProvider)blockState.getBlock()).addProbeInfo(mode, probeInfo, player, world, blockState, data);
-
 				}
 			});
 			return null;

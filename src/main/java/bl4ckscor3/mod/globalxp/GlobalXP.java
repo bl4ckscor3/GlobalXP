@@ -4,13 +4,13 @@ import java.util.Arrays;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.imc.top.TOPCompatibility;
+import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
 import bl4ckscor3.mod.globalxp.network.ServerProxy;
 import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
 import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -58,7 +58,7 @@ public class GlobalXP
 		network.registerMessage(new CPacketRequestXPBlockUpdate.Handler(), CPacketRequestXPBlockUpdate.class, 1, Side.SERVER);
 		xp_block = new XPBlock(Material.IRON);
 		GameData.register_impl(xp_block);
-		GameData.register_impl(new ItemBlock(xp_block).setRegistryName(xp_block.getRegistryName().toString()));
+		GameData.register_impl(new ItemBlockXPBlock(xp_block).setRegistryName(xp_block.getRegistryName().toString()));
 		GameRegistry.registerTileEntity(TileEntityXPBlock.class, xp_block.getRegistryName().toString());
 		serverProxy.loadModels();
 		serverProxy.registerRenderers();

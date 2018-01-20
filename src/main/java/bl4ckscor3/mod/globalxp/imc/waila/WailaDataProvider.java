@@ -35,10 +35,10 @@ public class WailaDataProvider implements IWailaDataProvider
 	{
 		TileEntityXPBlock te = ((TileEntityXPBlock)arg2.getTileEntity());
 
-		arg1.add(I18n.format("info.body", String.format("%.2f", te.getStoredLevels()), te.getStoredXP()));
+		arg1.add(I18n.format("info.levels", String.format("%.2f", te.getStoredLevels())));
 
 		if(arg2.getPlayer().isSneaking())
-			arg1.add(I18n.format("info.extended", te.getStoredXP()));
+			arg1.add(I18n.format("info.xp", te.getStoredXP()));
 
 		return arg1;
 	}
