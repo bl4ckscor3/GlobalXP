@@ -1,6 +1,7 @@
 # GlobalXP Changelog
 
 ### v1.4
+- Added TheOneProbe integration (Thanks Konlii!)
 - The XP Block now retains its levels when broken
 - The XP Block now stores XP instead of individual levels (Thanks CplPibald and Konlii!)
 
