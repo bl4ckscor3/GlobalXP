@@ -3,8 +3,8 @@ package bl4ckscor3.mod.globalxp.blocks;
 import java.util.Random;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
+import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
-import bl4ckscor3.mod.globalxp.theoneprobe.TOPInfoProvider;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -26,7 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-public class XPBlock extends Block implements TOPInfoProvider
+public class XPBlock extends Block implements ITOPInfoProvider
 {
 	public XPBlock(Material materialIn)
 	{
@@ -45,9 +45,9 @@ public class XPBlock extends Block implements TOPInfoProvider
 	{
 		if(worldIn.isRemote || !stack.hasTagCompound())
 			return;
-		
+
 		TileEntity te = worldIn.getTileEntity(pos);
-		
+
 		if(te instanceof TileEntityXPBlock)
 		{
 			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("BlockEntityTag");
@@ -60,7 +60,7 @@ public class XPBlock extends Block implements TOPInfoProvider
 			GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock((TileEntityXPBlock)te), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
 		}
 	}
-	
+
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) //shamelessly stolen from shulker box
 	{
@@ -69,7 +69,7 @@ public class XPBlock extends Block implements TOPInfoProvider
 		if (tileentity instanceof TileEntityXPBlock)
 		{
 			ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
-			
+
 			if(((TileEntityXPBlock)tileentity).getStoredLevels() != 0)
 			{
 				NBTTagCompound nbttagcompound = new NBTTagCompound();
@@ -78,7 +78,7 @@ public class XPBlock extends Block implements TOPInfoProvider
 				nbttagcompound.setTag("BlockEntityTag", ((TileEntityXPBlock)tileentity).writeToNBT(nbttagcompound1));
 				itemstack.setTagCompound(nbttagcompound);
 			}
-			
+
 			spawnAsEntity(worldIn, pos, itemstack);
 		}
 
@@ -90,7 +90,7 @@ public class XPBlock extends Block implements TOPInfoProvider
 	{
 		return null;
 	}
-	
+
 	@Override
 	public boolean isOpaqueCube(IBlockState state)
 	{
@@ -128,16 +128,20 @@ public class XPBlock extends Block implements TOPInfoProvider
 	{
 		return new TileEntityXPBlock();
 	}
-	
-    @Override
-    public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data) {
-        TileEntity te = world.getTileEntity(data.getPos());
-        if(te instanceof TileEntityXPBlock)
-        {
-            TileEntityXPBlock tileentity = (TileEntityXPBlock) te;
-            probeInfo.horizontal().text(I18n.format("top.body", String.format("%.2f", tileentity.getStoredLevels())));
-            if(mode == ProbeMode.EXTENDED)
-                probeInfo.horizontal().text(I18n.format("top.extended", tileentity.getStoredXP()));
-        }
-    }
+
+	@Override
+	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
+	{
+		TileEntity te = world.getTileEntity(data.getPos());
+
+		if(te instanceof TileEntityXPBlock)
+		{
+			TileEntityXPBlock tileentity = (TileEntityXPBlock)te;
+
+			probeInfo.horizontal().text(I18n.format("top.body", String.format("%.2f", tileentity.getStoredLevels())));
+
+			if(mode == ProbeMode.EXTENDED)
+				probeInfo.horizontal().text(I18n.format("top.extended", tileentity.getStoredXP()));
+		}
+	}
 }

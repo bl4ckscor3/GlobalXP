@@ -3,15 +3,16 @@ package bl4ckscor3.mod.globalxp;
 import java.util.Arrays;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
+import bl4ckscor3.mod.globalxp.imc.top.TOPCompatibility;
 import bl4ckscor3.mod.globalxp.network.ServerProxy;
 import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
 import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
-import bl4ckscor3.mod.globalxp.theoneprobe.MainCompatHandler;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -38,7 +39,7 @@ public class GlobalXP
 	public static ServerProxy serverProxy;
 	public static SimpleNetworkWrapper network;
 	public static Config config;
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -61,9 +62,11 @@ public class GlobalXP
 		GameRegistry.registerTileEntity(TileEntityXPBlock.class, xp_block.getRegistryName().toString());
 		serverProxy.loadModels();
 		serverProxy.registerRenderers();
-		MainCompatHandler.registerTOP();
+
+		if(Loader.isModLoaded("theoneprobe"))
+			TOPCompatibility.register();
 	}
-	
+
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
