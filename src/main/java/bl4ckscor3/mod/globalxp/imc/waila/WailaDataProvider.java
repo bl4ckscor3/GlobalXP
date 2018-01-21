@@ -10,6 +10,7 @@ import mcp.mobius.waila.api.IWailaDataProvider;
 import mcp.mobius.waila.api.IWailaRegistrar;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -33,6 +34,9 @@ public class WailaDataProvider implements IWailaDataProvider
 	@Override
 	public List<String> getWailaBody(ItemStack arg0, List<String> arg1, IWailaDataAccessor arg2, IWailaConfigHandler arg3)
 	{
+		if(!(arg2.getTileEntity() instanceof TileEntityXPBlock))
+			return arg1;
+
 		TileEntityXPBlock te = ((TileEntityXPBlock)arg2.getTileEntity());
 
 		arg1.add(I18n.format("info.levels", String.format("%.2f", te.getStoredLevels())));
@@ -52,6 +56,8 @@ public class WailaDataProvider implements IWailaDataProvider
 	@Override
 	public ItemStack getWailaStack(IWailaDataAccessor arg0, IWailaConfigHandler arg1)
 	{
+		if(!(arg0.getBlock() instanceof XPBlock))
+			return new ItemStack(Blocks.AIR);
 		return ((XPBlock)(arg0.getBlock())).getWailaDisplayStack();
 	}
 
