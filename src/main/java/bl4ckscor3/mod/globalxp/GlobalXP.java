@@ -3,8 +3,6 @@ package bl4ckscor3.mod.globalxp;
 import java.util.Arrays;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
-import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
-import bl4ckscor3.mod.globalxp.imc.waila.WailaDataProvider;
 import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
 import bl4ckscor3.mod.globalxp.network.ServerProxy;
 import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
@@ -67,7 +65,7 @@ public class GlobalXP
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		FMLInterModComms.sendMessage("waila", "register", WailaDataProvider.class.getName() + ".callbackRegister");
-		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", GetTheOneProbe.class.getName());
+		FMLInterModComms.sendMessage("waila", "register", "bl4ckscor3.mod.globalxp.imc.waila.WailaDataProvider.callbackRegister");
+		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe");
 	}
 }
