@@ -2,8 +2,8 @@
 
 ### v1.4
 - Added TheOneProbe integration (Thanks Konlii!)
-- The XP Block now retains its levels when broken
 - The XP Block now stores XP instead of individual levels (Thanks CplPibald and Konlii!)
+- The XP Block now retains its contents when broken
 
 ### v1.3
 - Added configuration option to change the speed at which the emerald within the XP Block is spinning
