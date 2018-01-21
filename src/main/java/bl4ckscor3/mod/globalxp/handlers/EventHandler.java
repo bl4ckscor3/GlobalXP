@@ -33,6 +33,7 @@ public class EventHandler
 
 				player.addExperience(availableXP);
 			}
+			event.getWorld().scheduleUpdate(event.getPos(), event.getWorld().getBlockState(event.getPos()).getBlock(), 1);
 		}
 	}
 

@@ -23,8 +23,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class XPBlock extends Block implements ITOPInfoProvider
 {
@@ -38,6 +41,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		setSoundType(SoundType.METAL);
 		setUnlocalizedName("xp_block");
 		setRegistryName("xp_block");
+		setTickRandomly(true);
 	}
 
 	@Override
@@ -143,5 +147,84 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			if(mode == ProbeMode.EXTENDED)
 				probeInfo.horizontal().text(I18n.format("info.xp", te2.getStoredXP()));
 		}
+	}
+	
+	@Override
+	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos)
+	{
+		TileEntity te = world.getTileEntity(pos);
+		if(te != null && te instanceof TileEntityXPBlock)
+		{
+			switch((int)((TileEntityXPBlock) te).getStoredLevels())
+			{
+				case 0: this.lightValue = 0;
+					break;
+				case 1:
+				case 2:
+				case 3: this.lightValue = 5;
+					break;
+				case 4:
+				case 5:	
+				case 6: this.lightValue = 6;
+					break;
+				case 7:
+				case 8:
+				case 9: this.lightValue = 7;
+					break;
+				case 10:
+				case 11:
+				case 12: this.lightValue = 8;
+					break;
+				case 13:
+				case 14:
+				case 15: this.lightValue = 9;
+					break;
+				case 16:
+				case 17:
+				case 18: this.lightValue = 10;
+					break;
+				case 19:
+				case 20:
+				case 21: this.lightValue = 11;
+					break;
+				case 22:
+				case 23:
+				case 24: this.lightValue = 12;
+					break;
+				case 25:
+				case 26:
+				case 27: this.lightValue = 13;
+					break;
+				case 28:
+				case 29: this.lightValue = 14;
+					break;
+				default: this.lightValue = 15;
+					break;
+			}
+			return this.lightValue;
+		}
+		return super.getLightValue(state, world, pos);
+	}
+
+	@Override
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
+	{
+		super.onBlockAdded(worldIn, pos, state);
+		worldIn.scheduleUpdate(pos, this, 1);
+	}
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
+	{
+		super.updateTick(worldIn, pos, state, rand);
+		worldIn.checkLight(pos);
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+	{
+		super.randomDisplayTick(stateIn, worldIn, pos, rand);
+		worldIn.checkLight(pos);
 	}
 }
