@@ -3,7 +3,8 @@ package bl4ckscor3.mod.globalxp;
 import java.util.Arrays;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
-import bl4ckscor3.mod.globalxp.imc.top.TOPCompatibility;
+import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
+import bl4ckscor3.mod.globalxp.imc.waila.WailaDataProvider;
 import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
 import bl4ckscor3.mod.globalxp.network.ServerProxy;
 import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
@@ -12,7 +13,6 @@ import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -32,7 +32,7 @@ public class GlobalXP
 	public static final String MOD_ID = "globalxp";
 	public static final String NAME = "Global XP";
 	public static final String VERSION = "v1.4";
-	public static final String MC_VERSION = "1.12"; //1.12.1 also works
+	public static final String MC_VERSION = "1.12"; //1.12.1 and 1.12.2 also work
 	public static final String GUI_FACTORY = "bl4ckscor3.mod.globalxp.gui.GUIFactory";
 	public static Block xp_block;
 	@SidedProxy(clientSide = "bl4ckscor3.mod.globalxp.network.ClientProxy", serverSide = "bl4ckscor3.mod.globalxp.network.ServerProxy")
@@ -62,14 +62,12 @@ public class GlobalXP
 		GameRegistry.registerTileEntity(TileEntityXPBlock.class, xp_block.getRegistryName().toString());
 		serverProxy.loadModels();
 		serverProxy.registerRenderers();
-
-		if(Loader.isModLoaded("theoneprobe"))
-			TOPCompatibility.register();
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		FMLInterModComms.sendMessage("waila", "register", "bl4ckscor3.mod.globalxp.imc.waila.WailaDataProvider.callbackRegister");
+		FMLInterModComms.sendMessage("waila", "register", WailaDataProvider.class.getName() + ".callbackRegister");
+		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", GetTheOneProbe.class.getName());
 	}
 }

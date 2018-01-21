@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 public class TileEntityXPBlock extends TileEntity
 {
 	private int storedXP = 0;
-	private float storedLevels = 0f;
+	private float storedLevels = 0.0F;
 
 	/**
 	 * Adds XP to this tile entity and updates all clients within a 64 block range with that change
@@ -20,15 +20,16 @@ public class TileEntityXPBlock extends TileEntity
 	public void addXP(int amount)
 	{
 		storedXP += amount;
+		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
 		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
-		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 	}
 
 	/**
 	 * Removes XP from the storage and returns amount removed.
 	 * Updates all clients within a 64 block range with that change
 	 * @param amount The amount of XP to remove
+	 * @return The amount of XP that has been removed
 	 */
 	public int removeXP(int amount)
 	{
@@ -38,9 +39,9 @@ public class TileEntityXPBlock extends TileEntity
 			return 0;
 
 		storedXP -= amountRemoved;
+		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
 		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
-		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		return amountRemoved;
 	}
 
