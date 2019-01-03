@@ -1,7 +1,7 @@
-package bl4ckscor3.mod.globalxp.util;
+package bl4ckscor3.mod.globalxp.utils;
 
-public class XPUtils
-{
+public class XPUtils {
+
 	/**
 	 * Calculates the amount of levels the given XP value represents
 	 * @param storedXP The amount of XP to get the level amount of
@@ -41,4 +41,5 @@ public class XPUtils
 			return 112 + (level - 30) * 9;
 		return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
 	}
+
 }

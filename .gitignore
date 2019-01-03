@@ -1,5 +1,21 @@
-/bin
-/build
-/.project
-/.classpath
-/.gradle
+# gradle
+
+.gradle/
+build/
+out/
+
+# idea
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# fabric
+
+run/
+/bin/
+*.launch
+*.settings
+*.project
+*.classpath
