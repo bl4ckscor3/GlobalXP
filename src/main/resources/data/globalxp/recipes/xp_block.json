@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "crafting_shaped",
   "pattern": [
     "BBB",
     "BEB",
@@ -7,10 +7,10 @@
   ],
   "key": {
     "B": {
-      "item": "minecraft:iron_bars"
+      "item": "iron_bars"
     },
     "E": {
-      "item": "minecraft:emerald"
+      "item": "emerald"
     }
   },
   "result": {
