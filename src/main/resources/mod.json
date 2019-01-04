@@ -1,7 +1,7 @@
 {
   "id": "globalxp",
   "name": "Global XP",
-  "version": "1.0.0",
+  "version": "1.4",
   "side": "universal",
   "initializer": "bl4ckscor3.mod.globalxp.GlobalXP"
 }

@@ -1,6 +1,7 @@
 package bl4ckscor3.mod.globalxp.blockentities;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
+import bl4ckscor3.mod.globalxp.network.packets.PacketHelper;
 import bl4ckscor3.mod.globalxp.utils.XPUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +12,7 @@ public class XPBlockEntity extends BlockEntity {
 	private float storedLevels = 0.0F;
 
 	public XPBlockEntity() {
-		super(GlobalXP.BLOCK_ENTITY_OWNABLE);
+		super(GlobalXP.XP_BLOCK_ENTITY);
 	}
 	
 	/**
@@ -23,7 +24,7 @@ public class XPBlockEntity extends BlockEntity {
 		storedXP += amount;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+		PacketHelper.createUpdateXPPacket(pos, storedXP);
 	}
 
 	/**
@@ -42,7 +43,7 @@ public class XPBlockEntity extends BlockEntity {
 		storedXP -= amountRemoved;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+		PacketHelper.createUpdateXPPacket(pos, storedXP);
 		return amountRemoved;
 	}
 

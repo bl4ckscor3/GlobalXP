@@ -1,21 +1,17 @@
-# gradle
-
-.gradle/
-build/
-out/
-
-# idea
-
-.idea/
-*.iml
-*.ipr
-*.iws
-
-# fabric
-
-run/
-/bin/
+/bin
+/build
+/libs
+/.project
+/.classpath
+/.gradle
+/.mixin.out
+/.settings
+/logs
+/saves
+/run
+/out
+*crash*
 *.launch
-*.settings
-*.project
-*.classpath
+options.txt
+usercache.json
+*.log
