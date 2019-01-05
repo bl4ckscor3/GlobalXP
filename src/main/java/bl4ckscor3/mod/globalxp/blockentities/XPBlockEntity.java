@@ -6,12 +6,13 @@ import bl4ckscor3.mod.globalxp.utils.XPUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 
-public class XPBlockEntity extends BlockEntity {
-	
+public class XPBlockEntity extends BlockEntity 
+{
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 
-	public XPBlockEntity() {
+	public XPBlockEntity() 
+	{
 		super(GlobalXP.XP_BLOCK_ENTITY);
 	}
 	

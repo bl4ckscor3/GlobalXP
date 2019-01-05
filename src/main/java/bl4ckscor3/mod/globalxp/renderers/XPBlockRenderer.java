@@ -14,9 +14,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 @Environment(EnvType.CLIENT)
-public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity> {
-
-	public void render(XPBlockEntity blockEntity, double x, double y, double z, float partialTicks, int int_1) {
+public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity> 
+{
+	@Override
+	public void render(XPBlockEntity blockEntity, double x, double y, double z, float partialTicks, int int_1) 
+	{
 		double offset = Math.sin((blockEntity.getWorld().getTime() + partialTicks) * 1.0D / 8.0D) / 10.0D;
 		BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModelMap().getModel(Items.EMERALD);
 

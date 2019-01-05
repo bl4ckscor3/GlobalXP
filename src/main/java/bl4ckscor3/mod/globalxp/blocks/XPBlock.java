@@ -24,16 +24,18 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class XPBlock extends Block implements BlockEntityProvider {
-	
+public class XPBlock extends Block implements BlockEntityProvider 
+{
 	public static final Identifier ID = new Identifier(GlobalXP.MODID + ":xp_block");
 
-	public XPBlock() {
+	public XPBlock() 
+	{
 		super(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(12.5F, 2000.0F).build());
 	}
 	
 	@Override
-	public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, Direction direction, float f1, float f2, float f3) {
+	public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, Direction direction, float f1, float f2, float f3) 
+	{
 		if(!(blockState.getBlock() instanceof XPBlock) || hand != Hand.MAIN)
 			return false;
 		
@@ -60,7 +62,8 @@ public class XPBlock extends Block implements BlockEntityProvider {
 		return false;
 	}
 
-	public void onPlaced(World world, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) {
+	public void onPlaced(World world, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) 
+	{
 		if(world.isClient || world.getBlockEntity(blockPos) == null || !(livingEntity instanceof PlayerEntity))
 			return;
 

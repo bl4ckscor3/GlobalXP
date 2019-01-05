@@ -1,7 +1,11 @@
 {
   "id": "globalxp",
   "name": "Global XP",
+  "description": "Adds a fast way to store XP and share it with your friends!",
   "version": "1.4",
   "side": "universal",
-  "initializer": "bl4ckscor3.mod.globalxp.GlobalXP"
+  "initializer": "bl4ckscor3.mod.globalxp.GlobalXP",
+  "requires": {
+    "fabric": "*"
+  }
 }

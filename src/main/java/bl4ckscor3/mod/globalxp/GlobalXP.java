@@ -16,8 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-public class GlobalXP implements ModInitializer {
-	
+public class GlobalXP implements ModInitializer 
+{
 	public static final String MODID = "globalxp";
 	public static final String NAME = "Global XP";
 	public static final String VERSION = "1.4";
@@ -29,7 +29,8 @@ public class GlobalXP implements ModInitializer {
 	public static final BlockEntityType<XPBlockEntity> XP_BLOCK_ENTITY = BlockEntityType.Builder.create(XPBlockEntity::new).method_11034(null);
 
 	@Override
-	public void onInitialize() {
+	public void onInitialize() 
+	{
 		Registry.register(Registry.BLOCK, XPBlock.ID, XP_BLOCK);
 		Registry.register(Registry.BLOCK_ENTITY, XPBlock.ID, XP_BLOCK_ENTITY);
 		Registry.register(Registry.ITEM, XPBlock.ID, new BlockItem(XP_BLOCK, new Item.Settings().itemGroup(ItemGroup.MISC)));
@@ -40,7 +41,8 @@ public class GlobalXP implements ModInitializer {
 			World world = player.getEntityWorld();
 			BlockPos pos = BlockPos.fromLong(packetByteBuf.readLong());
 
-			if(world.getBlockState(pos).getBlock() instanceof XPBlock) {
+			if(world.getBlockState(pos).getBlock() instanceof XPBlock) 
+			{
 				((XPBlockEntity) player.getEntityWorld().getBlockEntity(pos)).addXP(packetByteBuf.readInt());
 			}
 		});
