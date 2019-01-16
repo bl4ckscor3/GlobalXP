@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.BlockHitResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -34,7 +35,7 @@ public class XPBlock extends Block implements BlockEntityProvider
 	}
 	
 	@Override
-	public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, Direction direction, float f1, float f2, float f3) 
+	public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult hitResult)
 	{
 		if(!(blockState.getBlock() instanceof XPBlock) || hand != Hand.MAIN)
 			return false;

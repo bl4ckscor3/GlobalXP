@@ -26,7 +26,7 @@ public class GlobalXP implements ModInitializer
 	
 	public static final XPBlock XP_BLOCK = new XPBlock();
 
-	public static final BlockEntityType<XPBlockEntity> XP_BLOCK_ENTITY = BlockEntityType.Builder.create(XPBlockEntity::new).method_11034(null);
+	public static final BlockEntityType<XPBlockEntity> XP_BLOCK_ENTITY = BlockEntityType.Builder.create(XPBlockEntity::new).build(null);
 
 	@Override
 	public void onInitialize() 
