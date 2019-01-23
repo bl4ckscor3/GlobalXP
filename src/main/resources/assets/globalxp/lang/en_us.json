@@ -1,3 +1,5 @@
 {
-	"block.globalxp.xp_block": "XP Block"
+	"block.globalxp.xp_block": "XP Block",
+	"info.levels": "%s levels saved",
+	"info.xp": "%s XP saved"
 }
