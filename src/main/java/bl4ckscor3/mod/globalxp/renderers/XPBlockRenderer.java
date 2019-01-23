@@ -8,6 +8,7 @@ import bl4ckscor3.mod.globalxp.blockentities.XPBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.ItemStack;
@@ -37,12 +38,12 @@ public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 
 
 		double offset = Math.sin((be.getWorld().getTime() + partialTicks) * bobSpeed / 8.0D) / 10.0D; //TODO: config option to change bobSpeed
-		BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModelMap().getModel(Items.EMERALD);
+		BakedModel model = MinecraftClient.getInstance().getItemRenderer().method_4028(emerald, be.getWorld(), null);
 
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 		GlStateManager.enableBlend();
-		GlStateManager.disableLighting();
+		GuiLighting.enable();
 		GlStateManager.blendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 		GlStateManager.pushMatrix();
 		GlStateManager.translated(x + 0.5D, y + 0.5D + offset, z + 0.5D);
@@ -50,6 +51,7 @@ public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 		GlStateManager.rotatef((be.getWorld().getTime() + partialTicks) * 4.0F * spinSpeed, 0.0F, 1.0F, 0.0F); //TODO: config option to change spinSpeed
 		MinecraftClient.getInstance().getItemRenderer().renderItemAndGlow(emerald, model);
 		GlStateManager.popMatrix();
+		GuiLighting.disable();
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.disableBlend();
 	}
