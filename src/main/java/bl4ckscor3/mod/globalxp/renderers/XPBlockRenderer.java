@@ -12,14 +12,31 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.TextComponent;
 
 @Environment(EnvType.CLIENT)
 public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 {
+	private final ItemStack emerald = new ItemStack(Items.EMERALD, 1);
+	private final float spinSpeed = 1.0F;
+	private final double bobSpeed = 1.0D;
+
 	@Override
-	public void render(XPBlockEntity blockEntity, double x, double y, double z, float partialTicks, int int_1)
+	public void render(XPBlockEntity be, double x, double y, double z, float partialTicks, int int_1)
 	{
-		double offset = Math.sin((blockEntity.getWorld().getTime() + partialTicks) * 1.0D / 8.0D) / 10.0D;
+		//TODO: config option to disable this
+		TextComponent levelsText = new StringTextComponent((int)be.getStoredLevels() + " (" + be.getStoredXP() + ")");
+
+		if(be != null && be.getPos() != null && renderManager.hitResult != null && renderManager.hitResult.getPos() != null && renderManager.hitResult.getPos().equals(be.getPos()))
+		{
+			method_3570(true); //disabling lightmap
+			method_3567(be, levelsText.getFormattedText(), x, y, z, 12); //drawing the nameplate
+			method_3570(false); //enabling lightmap
+		}
+
+
+		double offset = Math.sin((be.getWorld().getTime() + partialTicks) * bobSpeed / 8.0D) / 10.0D; //TODO: config option to change bobSpeed
 		BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModelMap().getModel(Items.EMERALD);
 
 		GlStateManager.enableRescaleNormal();
@@ -30,8 +47,8 @@ public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 		GlStateManager.pushMatrix();
 		GlStateManager.translated(x + 0.5D, y + 0.5D + offset, z + 0.5D);
 		GlStateManager.scalef(0.75F, 0.75F, 0.75F);
-		GlStateManager.rotatef((blockEntity.getWorld().getTime() + partialTicks) * 4.0F * 1.0F, 0.0F, 1.0F, 0.0F);
-		MinecraftClient.getInstance().getItemRenderer().renderItemAndGlow(new ItemStack(Items.EMERALD), model);
+		GlStateManager.rotatef((be.getWorld().getTime() + partialTicks) * 4.0F * spinSpeed, 0.0F, 1.0F, 0.0F); //TODO: config option to change spinSpeed
+		MinecraftClient.getInstance().getItemRenderer().renderItemAndGlow(emerald, model);
 		GlStateManager.popMatrix();
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.disableBlend();
