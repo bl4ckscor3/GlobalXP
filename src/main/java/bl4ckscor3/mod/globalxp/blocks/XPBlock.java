@@ -12,7 +12,6 @@ import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -82,30 +81,6 @@ public class XPBlock extends Block implements BlockEntityProvider
 			be.markDirty();
 			player.networkHandler.sendPacket(PacketHelper.createUpdateXPPacket(blockPos, ((XPBlockEntity) be).getStoredXP()));
 		}
-	}
-
-	@Override
-	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) //shamelessly stolen from shulker box
-	{
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-
-		if (blockEntity instanceof XPBlockEntity)
-		{
-			ItemStack itemStack = new ItemStack(Item.getItemFromBlock(this));
-
-			if(((XPBlockEntity)blockEntity).getStoredLevels() != 0)
-			{
-				CompoundTag stackTag = new CompoundTag();
-				CompoundTag beTag = new CompoundTag();
-
-				stackTag.put("BlockEntityTag", ((XPBlockEntity)blockEntity).toTag(beTag));
-				itemStack.setTag(stackTag);
-			}
-
-			dropStack(world, pos, itemStack);
-		}
-
-		super.onBreak(world, pos, state, player);
 	}
 
 	@Override
