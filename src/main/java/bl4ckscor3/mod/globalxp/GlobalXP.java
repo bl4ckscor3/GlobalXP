@@ -16,32 +16,32 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-public class GlobalXP implements ModInitializer 
+public class GlobalXP implements ModInitializer
 {
 	public static final String MODID = "globalxp";
 	public static final String NAME = "Global XP";
 	public static final String VERSION = "1.4";
-	
+
 	public static final Identifier UPDATE_XP_BLOCK = new Identifier(MODID, "update_xp_block");
-	
+
 	public static final XPBlock XP_BLOCK = new XPBlock();
 
 	public static final BlockEntityType<XPBlockEntity> XP_BLOCK_ENTITY = BlockEntityType.Builder.create(XPBlockEntity::new).build(null);
 
 	@Override
-	public void onInitialize() 
+	public void onInitialize()
 	{
 		Registry.register(Registry.BLOCK, XPBlock.ID, XP_BLOCK);
 		Registry.register(Registry.BLOCK_ENTITY, XPBlock.ID, XP_BLOCK_ENTITY);
 		Registry.register(Registry.ITEM, XPBlock.ID, new BlockItem(XP_BLOCK, new Item.Settings().itemGroup(ItemGroup.MISC)));
 		BlockEntityRendererRegistry.INSTANCE.register(XPBlockEntity.class, new XPBlockRenderer());
-		
+
 		CustomPayloadPacketRegistry.CLIENT.register(UPDATE_XP_BLOCK, (packetContext, packetByteBuf) -> {
 			PlayerEntity player = packetContext.getPlayer();
 			World world = player.getEntityWorld();
 			BlockPos pos = BlockPos.fromLong(packetByteBuf.readLong());
 
-			if(world.getBlockState(pos).getBlock() instanceof XPBlock) 
+			if(world.getBlockState(pos).getBlock() instanceof XPBlock)
 			{
 				((XPBlockEntity) player.getEntityWorld().getBlockEntity(pos)).addXP(packetByteBuf.readInt());
 			}

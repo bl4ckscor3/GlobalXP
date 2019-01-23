@@ -14,10 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 @Environment(EnvType.CLIENT)
-public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity> 
+public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 {
 	@Override
-	public void render(XPBlockEntity blockEntity, double x, double y, double z, float partialTicks, int int_1) 
+	public void render(XPBlockEntity blockEntity, double x, double y, double z, float partialTicks, int int_1)
 	{
 		double offset = Math.sin((blockEntity.getWorld().getTime() + partialTicks) * 1.0D / 8.0D) / 10.0D;
 		BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModelMap().getModel(Items.EMERALD);
@@ -30,7 +30,7 @@ public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 		GlStateManager.pushMatrix();
 		GlStateManager.translated(x + 0.5D, y + 0.5D + offset, z + 0.5D);
 		GlStateManager.scalef(0.75F, 0.75F, 0.75F);
-		GlStateManager.rotatef((blockEntity.getWorld().getTime() + partialTicks) * 4.0F * (float)1.0F, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotatef((blockEntity.getWorld().getTime() + partialTicks) * 4.0F * 1.0F, 0.0F, 1.0F, 0.0F);
 		MinecraftClient.getInstance().getItemRenderer().renderItemAndGlow(new ItemStack(Items.EMERALD), model);
 		GlStateManager.popMatrix();
 		GlStateManager.disableRescaleNormal();

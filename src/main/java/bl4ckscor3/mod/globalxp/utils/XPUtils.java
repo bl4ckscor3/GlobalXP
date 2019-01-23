@@ -1,6 +1,6 @@
 package bl4ckscor3.mod.globalxp.utils;
 
-public class XPUtils 
+public class XPUtils
 {
 	/**
 	 * Calculates the amount of levels the given XP value represents

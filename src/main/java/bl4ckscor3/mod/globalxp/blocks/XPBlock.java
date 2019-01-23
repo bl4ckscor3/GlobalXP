@@ -21,26 +21,25 @@ import net.minecraft.util.BlockHitResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class XPBlock extends Block implements BlockEntityProvider 
+public class XPBlock extends Block implements BlockEntityProvider
 {
 	public static final Identifier ID = new Identifier(GlobalXP.MODID + ":xp_block");
 
-	public XPBlock() 
+	public XPBlock()
 	{
 		super(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL).strength(12.5F, 2000.0F).build());
 	}
-	
+
 	@Override
 	public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult hitResult)
 	{
 		if(!(blockState.getBlock() instanceof XPBlock) || hand != Hand.MAIN)
 			return false;
-		
-		if(!world.isClient) 
+
+		if(!world.isClient)
 		{
 			XPBlockEntity be = ((XPBlockEntity) world.getBlockEntity(blockPos));
 
@@ -52,18 +51,18 @@ public class XPBlock extends Block implements BlockEntityProvider
 			}
 			else //not sneaking = remove exactly enough xp from the block to get player to the next level
 			{
-				int neededXP = player.method_7349() - (int)player.experience;
+				int neededXP = player.method_7349() - player.experience;
 				int availableXP = be.removeXP(neededXP);
 
 				player.addExperience(availableXP);
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
-	public void onPlaced(World world, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack) 
+	public void onPlaced(World world, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack)
 	{
 		if(world.isClient || world.getBlockEntity(blockPos) == null || !(livingEntity instanceof PlayerEntity))
 			return;
@@ -83,7 +82,7 @@ public class XPBlock extends Block implements BlockEntityProvider
 			player.networkHandler.sendPacket(PacketHelper.createUpdateXPPacket(blockPos, ((XPBlockEntity) be).getStoredXP()));
 		}
 	}
-	
+
 	@Override
 	public void onBreak(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) //shamelessly stolen from shulker box
 	{
@@ -107,8 +106,8 @@ public class XPBlock extends Block implements BlockEntityProvider
 
 		super.onBreak(worldIn, pos, state, player);
 	}
-	
-	public BlockRenderLayer getRenderLayer() 
+
+	public BlockRenderLayer getRenderLayer()
 	{
 		return BlockRenderLayer.CUTOUT;
 	}

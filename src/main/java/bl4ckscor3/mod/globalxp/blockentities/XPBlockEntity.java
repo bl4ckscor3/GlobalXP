@@ -6,16 +6,16 @@ import bl4ckscor3.mod.globalxp.utils.XPUtils;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 
-public class XPBlockEntity extends BlockEntity 
+public class XPBlockEntity extends BlockEntity
 {
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 
-	public XPBlockEntity() 
+	public XPBlockEntity()
 	{
 		super(GlobalXP.XP_BLOCK_ENTITY);
 	}
-	
+
 	/**
 	 * Adds XP to this tile entity and updates all clients within a 64 block range with that change
 	 * @param amount The amount of XP to add
@@ -76,7 +76,7 @@ public class XPBlockEntity extends BlockEntity
 	{
 		return storedLevels;
 	}
-	
+
 	@Override
 	public CompoundTag toTag(CompoundTag tag)
 	{
