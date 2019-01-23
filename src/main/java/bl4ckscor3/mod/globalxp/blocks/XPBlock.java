@@ -90,18 +90,18 @@ public class XPBlock extends Block implements BlockEntityProvider
 
 		if (blockentity instanceof XPBlockEntity)
 		{
-			ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
+			ItemStack itemStack = new ItemStack(Item.getItemFromBlock(this));
 
 			if(((XPBlockEntity)blockentity).getStoredLevels() != 0)
 			{
-				CompoundTag nbttagcompound = new CompoundTag();
-				CompoundTag nbttagcompound1 = new CompoundTag();
+				CompoundTag stackTag = new CompoundTag();
+				CompoundTag beTag = new CompoundTag();
 
-				nbttagcompound.put("BlockEntityTag", ((XPBlockEntity)blockentity).toTag(nbttagcompound1));
-				itemstack.setTag(nbttagcompound);
+				stackTag.put("BlockEntityTag", ((XPBlockEntity)blockentity).toTag(beTag));
+				itemStack.setTag(stackTag);
 			}
 
-			dropStack(worldIn, pos, itemstack);
+			dropStack(worldIn, pos, itemStack);
 		}
 
 		super.onBreak(worldIn, pos, state, player);
