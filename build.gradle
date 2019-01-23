@@ -6,16 +6,16 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 archivesBaseName = "globalxp"
-version = "1.0.0"
+version = "v1.4-01"
 
 minecraft {
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:19w03a"
-	mappings "net.fabricmc:yarn:19w03a.5"
-	modCompile "net.fabricmc:fabric-loader:0.3.2.96"
-	modCompile "net.fabricmc:fabric:0.1.4.75"
+	minecraft "com.mojang:minecraft:19w03c"
+	mappings "net.fabricmc:yarn:19w03c.4"
+	modCompile "net.fabricmc:fabric-loader:0.3.3.99"
+	modCompile "net.fabricmc:fabric:0.1.4.78"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
