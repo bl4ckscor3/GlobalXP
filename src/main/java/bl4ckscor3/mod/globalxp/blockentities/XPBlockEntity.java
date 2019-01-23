@@ -90,5 +90,4 @@ public class XPBlockEntity extends BlockEntity
 		setStoredXP(tag.getInt("stored_xp"));
 		super.fromTag(tag);
 	}
-
 }

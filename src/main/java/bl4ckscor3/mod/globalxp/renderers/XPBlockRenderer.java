@@ -36,5 +36,4 @@ public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.disableBlend();
 	}
-
 }

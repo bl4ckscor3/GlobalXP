@@ -43,5 +43,4 @@ public class GlobalXP implements ModInitializer
 				((XPBlockEntity) player.getEntityWorld().getBlockEntity(pos)).addXP(packetByteBuf.readInt());
 		});
 	}
-
 }

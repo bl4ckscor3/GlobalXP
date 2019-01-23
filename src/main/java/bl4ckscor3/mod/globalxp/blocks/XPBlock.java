@@ -62,6 +62,7 @@ public class XPBlock extends Block implements BlockEntityProvider
 		return false;
 	}
 
+	@Override
 	public void onPlaced(World world, BlockPos blockPos, BlockState blockState, LivingEntity livingEntity, ItemStack itemStack)
 	{
 		if(world.isClient || world.getBlockEntity(blockPos) == null || !(livingEntity instanceof PlayerEntity))
@@ -84,29 +85,30 @@ public class XPBlock extends Block implements BlockEntityProvider
 	}
 
 	@Override
-	public void onBreak(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) //shamelessly stolen from shulker box
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) //shamelessly stolen from shulker box
 	{
-		BlockEntity blockentity = worldIn.getBlockEntity(pos);
+		BlockEntity blockEntity = world.getBlockEntity(pos);
 
-		if (blockentity instanceof XPBlockEntity)
+		if (blockEntity instanceof XPBlockEntity)
 		{
 			ItemStack itemStack = new ItemStack(Item.getItemFromBlock(this));
 
-			if(((XPBlockEntity)blockentity).getStoredLevels() != 0)
+			if(((XPBlockEntity)blockEntity).getStoredLevels() != 0)
 			{
 				CompoundTag stackTag = new CompoundTag();
 				CompoundTag beTag = new CompoundTag();
 
-				stackTag.put("BlockEntityTag", ((XPBlockEntity)blockentity).toTag(beTag));
+				stackTag.put("BlockEntityTag", ((XPBlockEntity)blockEntity).toTag(beTag));
 				itemStack.setTag(stackTag);
 			}
 
-			dropStack(worldIn, pos, itemStack);
+			dropStack(world, pos, itemStack);
 		}
 
-		super.onBreak(worldIn, pos, state, player);
+		super.onBreak(world, pos, state, player);
 	}
 
+	@Override
 	public BlockRenderLayer getRenderLayer()
 	{
 		return BlockRenderLayer.CUTOUT;
@@ -119,8 +121,8 @@ public class XPBlock extends Block implements BlockEntityProvider
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockView view) {
+	public BlockEntity createBlockEntity(BlockView view)
+	{
 		return new XPBlockEntity();
 	}
-
 }

@@ -14,7 +14,6 @@ public class PacketHelper
 
 		buf.writeLong(pos.asLong());
 		buf.writeInt(storedXP);
-
 		return new CustomPayloadClientPacket(GlobalXP.UPDATE_XP_BLOCK, buf);
 	}
 }
