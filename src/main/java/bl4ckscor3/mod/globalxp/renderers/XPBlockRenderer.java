@@ -38,7 +38,7 @@ public class XPBlockRenderer extends BlockEntityRenderer<XPBlockEntity>
 
 
 		double offset = Math.sin((be.getWorld().getTime() + partialTicks) * bobSpeed / 8.0D) / 10.0D; //TODO: config option to change bobSpeed
-		BakedModel model = MinecraftClient.getInstance().getItemRenderer().method_4028(emerald, be.getWorld(), null);
+		BakedModel model = MinecraftClient.getInstance().getItemRenderer().getModel(emerald, be.getWorld(), null);
 
 		GlStateManager.enableRescaleNormal();
 		GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
