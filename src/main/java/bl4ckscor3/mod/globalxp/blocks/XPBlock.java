@@ -3,7 +3,7 @@ package bl4ckscor3.mod.globalxp.blocks;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.blockentities.XPBlockEntity;
 import bl4ckscor3.mod.globalxp.network.packets.PacketHelper;
-import net.fabricmc.fabric.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderLayer;
