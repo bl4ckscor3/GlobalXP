@@ -5,10 +5,9 @@ import java.util.List;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public class ItemBlockXPBlock extends ItemBlock
 {
@@ -18,7 +17,7 @@ public class ItemBlockXPBlock extends ItemBlock
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
 	{
 		if(!stack.hasTagCompound())
 		{

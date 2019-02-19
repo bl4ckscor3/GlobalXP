@@ -1,8 +1,8 @@
 package bl4ckscor3.mod.globalxp.imc.top;
 
-import java.util.function.Function;
-
 import javax.annotation.Nullable;
+
+import com.google.common.base.Function;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import mcjty.theoneprobe.api.IProbeHitData;

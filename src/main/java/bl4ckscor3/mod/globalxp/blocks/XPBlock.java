@@ -36,7 +36,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		setHardness(12.5F);
 		setResistance(2000.0F);
 		setSoundType(SoundType.METAL);
-		setTranslationKey("xp_block");
+		setUnlocalizedName("xp_block");
 		setRegistryName("xp_block");
 	}
 
@@ -104,7 +104,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public BlockRenderLayer getRenderLayer()
+	public BlockRenderLayer getBlockLayer()
 	{
 		return BlockRenderLayer.CUTOUT;
 	}

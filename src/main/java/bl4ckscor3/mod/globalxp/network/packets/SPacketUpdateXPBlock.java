@@ -27,7 +27,7 @@ public class SPacketUpdateXPBlock implements IMessage
 	/**
 	 * Initializes this packet
 	 * @param p The position of the tile entity
-	 * @param sL The amount of XP stored in it
+	 * @param sL The amount of xp stored in it
 	 */
 	public SPacketUpdateXPBlock(BlockPos p, int sX)
 	{
