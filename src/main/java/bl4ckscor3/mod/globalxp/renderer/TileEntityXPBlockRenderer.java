@@ -22,7 +22,7 @@ public class TileEntityXPBlockRenderer extends TileEntitySpecialRenderer<TileEnt
 	private ItemStack emerald = new ItemStack(Items.EMERALD, 1);
 
 	@Override
-	public void render(TileEntityXPBlock te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
+	public void renderTileEntityAt(TileEntityXPBlock te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
 		if(GlobalXP.config.renderNameplate)
 		{

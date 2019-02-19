@@ -10,6 +10,9 @@ import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -22,7 +25,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.registries.GameData;
 
 @Mod(modid=GlobalXP.MOD_ID, name=GlobalXP.NAME, version=GlobalXP.VERSION, acceptedMinecraftVersions="[" + GlobalXP.MC_VERSION + "]", guiFactory=GlobalXP.GUI_FACTORY)
 public class GlobalXP
@@ -30,7 +32,7 @@ public class GlobalXP
 	public static final String MOD_ID = "globalxp";
 	public static final String NAME = "Global XP";
 	public static final String VERSION = "v1.4";
-	public static final String MC_VERSION = "1.12"; //1.12.1 and 1.12.2 also work
+	public static final String MC_VERSION = "1.11.2";
 	public static final String GUI_FACTORY = "bl4ckscor3.mod.globalxp.gui.GUIFactory";
 	public static Block xp_block;
 	@SidedProxy(clientSide = "bl4ckscor3.mod.globalxp.network.ClientProxy", serverSide = "bl4ckscor3.mod.globalxp.network.ServerProxy")
@@ -55,11 +57,12 @@ public class GlobalXP
 		network.registerMessage(new SPacketUpdateXPBlock.Handler(), SPacketUpdateXPBlock.class, 0, Side.CLIENT);
 		network.registerMessage(new CPacketRequestXPBlockUpdate.Handler(), CPacketRequestXPBlockUpdate.class, 1, Side.SERVER);
 		xp_block = new XPBlock(Material.IRON);
-		GameData.register_impl(xp_block);
-		GameData.register_impl(new ItemBlockXPBlock(xp_block).setRegistryName(xp_block.getRegistryName().toString()));
+		GameRegistry.register(xp_block);
+		GameRegistry.register(new ItemBlockXPBlock(xp_block).setRegistryName(xp_block.getRegistryName().toString()));
 		GameRegistry.registerTileEntity(TileEntityXPBlock.class, xp_block.getRegistryName().toString());
 		serverProxy.loadModels();
 		serverProxy.registerRenderers();
+		GameRegistry.addRecipe(new ItemStack(xp_block, 1), "XXX", "XYX", "XXX", 'X', Blocks.IRON_BARS, 'Y', Items.EMERALD);
 	}
 
 	@EventHandler
