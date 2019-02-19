@@ -37,10 +37,10 @@ public class WailaDataProvider implements IWailaPlugin, IComponentProvider
 		{
 			TileEntityXPBlock te = ((TileEntityXPBlock)accessor.getTileEntity());
 
-			tooltip.add(new TextComponentTranslation("info.levels", String.format("%.2f", te.getStoredLevels())));
+			tooltip.add(new TextComponentTranslation("info.globalxp.levels", String.format("%.2f", te.getStoredLevels())));
 
 			if(accessor.getPlayer().isSneaking())
-				tooltip.add(new TextComponentTranslation("info.xp", te.getStoredXP()));
+				tooltip.add(new TextComponentTranslation("info.globalxp.xp", te.getStoredXP()));
 		}
 	}
 

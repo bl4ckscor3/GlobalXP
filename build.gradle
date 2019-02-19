@@ -47,10 +47,15 @@ minecraft {
     }
 }
 
+repositories {  
+    maven {
+		url "http://tehnut.info/maven"
+	}
+}
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.13.2-25.0.32'
-    //hwyla api in /libs
+    compile "mcp.mobius.waila:Hwyla:1.10.0-B52_1.13.2"
 }
 
 jar {
