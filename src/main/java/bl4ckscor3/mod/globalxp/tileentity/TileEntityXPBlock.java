@@ -1,15 +1,21 @@
 package bl4ckscor3.mod.globalxp.tileentity;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
-import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
-import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
+import bl4ckscor3.mod.globalxp.network.packets.RequestXPBlockUpdate;
+import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
 public class TileEntityXPBlock extends TileEntity
 {
+	public TileEntityXPBlock()
+	{
+		super(GlobalXP.teTypeXpBlock);
+	}
+
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 
@@ -22,7 +28,7 @@ public class TileEntityXPBlock extends TileEntity
 		storedXP += amount;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+		GlobalXP.channel.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 64, world.getDimension().getType())), new UpdateXPBlock(this));
 	}
 
 	/**
@@ -41,7 +47,7 @@ public class TileEntityXPBlock extends TileEntity
 		storedXP -= amountRemoved;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+		GlobalXP.channel.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 64, world.getDimension().getType())), new UpdateXPBlock(this));
 		return amountRemoved;
 	}
 
@@ -75,23 +81,23 @@ public class TileEntityXPBlock extends TileEntity
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound tag)
+	public NBTTagCompound write(NBTTagCompound tag)
 	{
-		tag.setInteger("stored_xp", storedXP);
-		return super.writeToNBT(tag);
+		tag.putInt("stored_xp", storedXP);
+		return super.write(tag);
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound tag)
+	public void read(NBTTagCompound tag)
 	{
-		setStoredXP(tag.getInteger("stored_xp"));
-		super.readFromNBT(tag);
+		setStoredXP(tag.getInt("stored_xp"));
+		super.read(tag);
 	}
 
 	@Override
 	public void onLoad()
 	{
 		if(world.isRemote)
-			GlobalXP.network.sendToServer(new CPacketRequestXPBlockUpdate(this));
+			GlobalXP.channel.sendToServer(new RequestXPBlockUpdate(this));
 	}
 }

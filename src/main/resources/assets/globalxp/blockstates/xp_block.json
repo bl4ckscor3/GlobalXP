@@ -1,7 +1,7 @@
 {
     "variants": {
-        "normal": [
-            { "model": "globalxp:xp_block" }
+        "": [
+            { "model": "globalxp:block/xp_block" }
         ]
     }
 }

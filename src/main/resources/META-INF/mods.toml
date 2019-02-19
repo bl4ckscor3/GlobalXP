@@ -1,0 +1,25 @@
+modLoader="javafml" #mandatory
+loaderVersion="[25,)" #mandatory
+
+[[mods]] #mandatory
+	modId="globalxp" #mandatory
+	version="v1.4" #mandatory
+	displayName="Global XP" #mandatory
+	description='''Adds a fast way to store XP and share it with your friends!''' #mandatory
+	issueTrackerURL="https://github.com/bl4ckscor3/GlobalXP/issues"
+	displayURL="http://minecraft.curseforge.com/projects/global-xp"
+	authors="bl4ckscor3"
+
+[[dependencies.globalxp]]
+    modId="forge"
+    mandatory=true
+    versionRange="[25,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.globalxp]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.13.2]"
+    ordering="NONE"
+    side="BOTH"

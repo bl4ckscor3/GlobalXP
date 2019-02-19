@@ -1,100 +1,83 @@
 package bl4ckscor3.mod.globalxp.blocks;
 
-import java.util.Random;
-
 import bl4ckscor3.mod.globalxp.GlobalXP;
-import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
-import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
+import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
-import mcjty.theoneprobe.api.IProbeHitData;
-import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
-public class XPBlock extends Block implements ITOPInfoProvider
+public class XPBlock extends Block /*implements ITOPInfoProvider*/
 {
-	public XPBlock(Material materialIn)
+	public XPBlock()
 	{
-		super(materialIn);
+		super(Block.Properties.create(Material.IRON).hardnessAndResistance(12.5F, 2000.0F).sound(SoundType.METAL));
 
-		setCreativeTab(CreativeTabs.MISC);
-		setHardness(12.5F);
-		setResistance(2000.0F);
-		setSoundType(SoundType.METAL);
-		setTranslationKey("xp_block");
-		setRegistryName("xp_block");
+		setRegistryName(GlobalXP.MOD_ID + ":xp_block");
 	}
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
-		if(worldIn.isRemote || !stack.hasTagCompound())
+		if(worldIn.isRemote || !stack.hasTag())
 			return;
 
 		TileEntity te = worldIn.getTileEntity(pos);
 
 		if(te instanceof TileEntityXPBlock)
 		{
-			NBTTagCompound tag = stack.getTagCompound().getCompoundTag("BlockEntityTag");
+			NBTTagCompound tag = stack.getTag().getCompound("BlockEntityTag");
 
-			tag.setInteger("x", pos.getX());
-			tag.setInteger("y", pos.getY());
-			tag.setInteger("z", pos.getZ());
-			((TileEntityXPBlock)te).readFromNBT(tag);
+			tag.putInt("x", pos.getX());
+			tag.putInt("y", pos.getY());
+			tag.putInt("z", pos.getZ());
+			((TileEntityXPBlock)te).read(tag);
 			((TileEntityXPBlock)te).markDirty();
-			GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock((TileEntityXPBlock)te), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+			GlobalXP.channel.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 64, worldIn.getDimension().getType())), new UpdateXPBlock((TileEntityXPBlock)te));
 		}
 	}
 
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) //shamelessly stolen from shulker box
+	public void onReplaced(IBlockState state, World worldIn, BlockPos pos, IBlockState newState, boolean isMoving)
 	{
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 
 		if (tileentity instanceof TileEntityXPBlock)
 		{
-			ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
+			ItemStack itemstack = new ItemStack(asItem());
 
 			if(((TileEntityXPBlock)tileentity).getStoredLevels() != 0)
 			{
 				NBTTagCompound nbttagcompound = new NBTTagCompound();
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
 
-				nbttagcompound.setTag("BlockEntityTag", ((TileEntityXPBlock)tileentity).writeToNBT(nbttagcompound1));
-				itemstack.setTagCompound(nbttagcompound);
+				nbttagcompound.put("BlockEntityTag", ((TileEntityXPBlock)tileentity).write(nbttagcompound1));
+				itemstack.setTag(nbttagcompound);
 			}
 
 			spawnAsEntity(worldIn, pos, itemstack);
 		}
 
-		super.breakBlock(worldIn, pos, state);
+		super.onReplaced(state, worldIn, pos, newState, isMoving);
 	}
 
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune)
+	public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune)
 	{
-		return null;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state)
-	{
-		return false;
+		return () -> Blocks.AIR.asItem();
 	}
 
 	@Override
@@ -109,14 +92,6 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		return BlockRenderLayer.CUTOUT;
 	}
 
-	/**
-	 * Gets the stack that is being displayed in the WAILA toolip
-	 */
-	public ItemStack getWailaDisplayStack()
-	{
-		return new ItemStack(this);
-	}
-
 	@Override
 	public boolean hasTileEntity(IBlockState state)
 	{
@@ -124,24 +99,24 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world)
 	{
 		return new TileEntityXPBlock();
 	}
 
-	@Override
-	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
-	{
-		TileEntity te1 = world.getTileEntity(data.getPos());
-
-		if(te1 instanceof TileEntityXPBlock)
-		{
-			TileEntityXPBlock te2 = (TileEntityXPBlock)te1;
-
-			probeInfo.horizontal().text(I18n.format("info.levels", String.format("%.2f", te2.getStoredLevels())));
-
-			if(mode == ProbeMode.EXTENDED)
-				probeInfo.horizontal().text(I18n.format("info.xp", te2.getStoredXP()));
-		}
-	}
+	//	@Override
+	//	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
+	//	{
+	//		TileEntity te1 = world.getTileEntity(data.getPos());
+	//
+	//		if(te1 instanceof TileEntityXPBlock)
+	//		{
+	//			TileEntityXPBlock te2 = (TileEntityXPBlock)te1;
+	//
+	//			probeInfo.horizontal().text(I18n.format("info.levels", String.format("%.2f", te2.getStoredLevels())));
+	//
+	//			if(mode == ProbeMode.EXTENDED)
+	//				probeInfo.horizontal().text(I18n.format("info.xp", te2.getStoredXP()));
+	//		}
+	//	}
 }
