@@ -1,5 +1,10 @@
 # GlobalXP Changelog
 
+#### v1.4.1
+- Added russian translation (Thanks matrsinkevic!)
+- Fixed XP Block dropping in creative even when it's empty
+- Fixed a crash in 1.13.2
+
 ### v1.4
 - Added TheOneProbe integration (Thanks Konlii!)
 - The XP Block now stores XP instead of individual levels (Thanks CplPibald and Konlii!)
