@@ -77,9 +77,8 @@ public class XPBlock extends Block implements ITOPInfoProvider
 
 				nbttagcompound.setTag("BlockEntityTag", ((TileEntityXPBlock)tileentity).writeToNBT(nbttagcompound1));
 				itemstack.setTagCompound(nbttagcompound);
+				spawnAsEntity(worldIn, pos, itemstack);
 			}
-
-			spawnAsEntity(worldIn, pos, itemstack);
 		}
 
 		super.breakBlock(worldIn, pos, state);
