@@ -66,8 +66,8 @@ public class UpdateXPBlock
 		Minecraft.getInstance().addScheduledTask(() -> {
 			if(Minecraft.getInstance().world.getTileEntity(message.pos) instanceof TileEntityXPBlock)
 				((TileEntityXPBlock)Minecraft.getInstance().world.getTileEntity(message.pos)).setStoredXP(message.storedXP);
-
-			ctx.get().setPacketHandled(true);
 		});
+
+		ctx.get().setPacketHandled(true);
 	}
 }
