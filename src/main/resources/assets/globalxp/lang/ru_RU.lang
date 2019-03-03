@@ -1,0 +1,10 @@
+//Translation by martsinkevic
+tile.xp_block.name=Блок Опыта
+info.levels=%s уровней сохранено
+info.xp=%s опыта сохранено
+globalxp.config.spinspeed=Скорость вращения изумруда
+globalxp.config.spinspeed.tooltip=Насколько быстро изумруд должен вращаться (множитель стандартной скорости)
+globalxp.config.bobspeed=Скорость подпрыгивания изумруда
+globalxp.config.bobspeed.tooltip=Насколько быстро изумруд должен подпрыгивать (множитель стандартной скорости)
+globalxp.config.renderNameplate=Отображать информацию об опыте
+globalxp.config.renderNameplate.tooltip=Должна ли информация о сохранённом опыте отображаться над блоком опыта
