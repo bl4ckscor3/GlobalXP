@@ -24,7 +24,6 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
@@ -41,13 +40,13 @@ public class GlobalXP
 	public GlobalXP()
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CONFIG_SPEC);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onFMLCommonSetup);
 		MinecraftForge.EVENT_BUS.addListener(this::onModelRegistry);
 		MinecraftForge.EVENT_BUS.addListener(this::onRightClickBlock);
 		//		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe");
 	}
 
-	public void onFMLCommonSetup(FMLCommonSetupEvent event)
+	@SubscribeEvent
+	public static void onFMLCommonSetup(FMLCommonSetupEvent event)
 	{
 		int index = 0;
 
