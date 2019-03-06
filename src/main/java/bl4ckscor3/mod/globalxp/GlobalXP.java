@@ -1,6 +1,7 @@
 package bl4ckscor3.mod.globalxp;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
+import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
 import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
 import bl4ckscor3.mod.globalxp.network.packets.RequestXPBlockUpdate;
 import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
@@ -17,6 +18,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -24,6 +26,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
@@ -42,7 +45,6 @@ public class GlobalXP
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CONFIG_SPEC);
 		MinecraftForge.EVENT_BUS.addListener(this::onModelRegistry);
 		MinecraftForge.EVENT_BUS.addListener(this::onRightClickBlock);
-		//		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe");
 	}
 
 	@SubscribeEvent
@@ -52,6 +54,12 @@ public class GlobalXP
 
 		channel.registerMessage(index++, RequestXPBlockUpdate.class, RequestXPBlockUpdate::encode, RequestXPBlockUpdate::decode, RequestXPBlockUpdate::onMessage);
 		channel.registerMessage(index++, UpdateXPBlock.class, UpdateXPBlock::encode, UpdateXPBlock::decode, UpdateXPBlock::onMessage);
+	}
+
+	@SubscribeEvent
+	public static void onInterModEnqueue(InterModEnqueueEvent event)
+	{
+		InterModComms.sendTo("theoneprobe", "getTheOneProbe", GetTheOneProbe::new);
 	}
 
 	@SubscribeEvent

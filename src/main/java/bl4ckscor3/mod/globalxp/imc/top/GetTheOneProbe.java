@@ -1,10 +1,21 @@
 package bl4ckscor3.mod.globalxp.imc.top;
 
-public class GetTheOneProbe //implements Function<ITheOneProbe, Void>
-{
-	/*	public static ITheOneProbe probe;
+import java.util.function.Function;
 
-	@Nullable
+import bl4ckscor3.mod.globalxp.GlobalXP;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.IProbeInfoProvider;
+import mcjty.theoneprobe.api.ITheOneProbe;
+import mcjty.theoneprobe.api.ProbeMode;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+
+public class GetTheOneProbe implements Function<ITheOneProbe, Void>
+{
+	public static ITheOneProbe probe;
+
 	@Override
 	public Void apply(ITheOneProbe theOneProbe)
 	{
@@ -24,5 +35,5 @@ public class GetTheOneProbe //implements Function<ITheOneProbe, Void>
 			}
 		});
 		return null;
-	}*/
+	}
 }

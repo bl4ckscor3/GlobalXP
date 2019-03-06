@@ -2,6 +2,7 @@
 
 #### v1.4.1
 - Added russian translation (Thanks matrsinkevic!)
+- Add back The One Probe support for 1.13.2
 - Fixed XP Block dropping in creative even when it's empty
 - Fixed a crash in 1.13.2
 

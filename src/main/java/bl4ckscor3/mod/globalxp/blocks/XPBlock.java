@@ -1,13 +1,19 @@
 package bl4ckscor3.mod.globalxp.blocks;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
+import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,7 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
-public class XPBlock extends Block /*implements ITOPInfoProvider*/
+public class XPBlock extends Block implements ITOPInfoProvider
 {
 	public XPBlock()
 	{
@@ -103,19 +109,19 @@ public class XPBlock extends Block /*implements ITOPInfoProvider*/
 		return new TileEntityXPBlock();
 	}
 
-	//	@Override
-	//	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
-	//	{
-	//		TileEntity te1 = world.getTileEntity(data.getPos());
-	//
-	//		if(te1 instanceof TileEntityXPBlock)
-	//		{
-	//			TileEntityXPBlock te2 = (TileEntityXPBlock)te1;
-	//
-	//			probeInfo.horizontal().text(I18n.format("info.levels", String.format("%.2f", te2.getStoredLevels())));
-	//
-	//			if(mode == ProbeMode.EXTENDED)
-	//				probeInfo.horizontal().text(I18n.format("info.xp", te2.getStoredXP()));
-	//		}
-	//	}
+	@Override
+	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
+	{
+		TileEntity te1 = world.getTileEntity(data.getPos());
+
+		if(te1 instanceof TileEntityXPBlock)
+		{
+			TileEntityXPBlock te2 = (TileEntityXPBlock)te1;
+
+			probeInfo.horizontal().text(I18n.format("info.globalxp.levels", String.format("%.2f", te2.getStoredLevels())));
+
+			if(mode == ProbeMode.EXTENDED)
+				probeInfo.horizontal().text(I18n.format("info.globalxp.xp", te2.getStoredXP()));
+		}
+	}
 }
