@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.2
+- Fix crash in 1.13.2 when loading the mod without TheOneProbe
+
 #### v1.4.1
 - Added russian translation (Thanks matrsinkevic!)
 - Add back The One Probe support for 1.13.2
