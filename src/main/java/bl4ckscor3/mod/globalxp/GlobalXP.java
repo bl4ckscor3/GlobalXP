@@ -19,6 +19,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -59,7 +60,8 @@ public class GlobalXP
 	@SubscribeEvent
 	public static void onInterModEnqueue(InterModEnqueueEvent event)
 	{
-		InterModComms.sendTo("theoneprobe", "getTheOneProbe", GetTheOneProbe::new);
+		if(ModList.get().isLoaded("theoneprobe"))
+			InterModComms.sendTo("theoneprobe", "getTheOneProbe", GetTheOneProbe::new);
 	}
 
 	@SubscribeEvent
