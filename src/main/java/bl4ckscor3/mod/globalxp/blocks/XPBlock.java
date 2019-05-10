@@ -41,12 +41,12 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
 	{
-		if(worldIn.isRemote || !stack.hasTagCompound())
+		if(world.isRemote || !stack.hasTagCompound())
 			return;
 
-		TileEntity te = worldIn.getTileEntity(pos);
+		TileEntity te = world.getTileEntity(pos);
 
 		if(te instanceof TileEntityXPBlock)
 		{
@@ -57,7 +57,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			tag.setInteger("z", pos.getZ());
 			((TileEntityXPBlock)te).readFromNBT(tag);
 			((TileEntityXPBlock)te).markDirty();
-			GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock((TileEntityXPBlock)te), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+			GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock((TileEntityXPBlock)te), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
 		}
 	}
 
@@ -71,28 +71,27 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) //shamelessly stolen from shulker box
+	public void breakBlock(World world, BlockPos pos, IBlockState state) //shamelessly stolen from shulker box
 	{
-		TileEntity tileentity = worldIn.getTileEntity(pos);
+		TileEntity te = world.getTileEntity(pos);
 
-		if (tileentity instanceof TileEntityXPBlock)
+		if(te instanceof TileEntityXPBlock)
 		{
-			ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
+			ItemStack stack = new ItemStack(Item.getItemFromBlock(this));
 
-			if(((TileEntityXPBlock)tileentity).getStoredLevels() != 0)
+			if(((TileEntityXPBlock)te).getStoredLevels() != 0)
 			{
-				NBTTagCompound nbttagcompound = new NBTTagCompound();
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				NBTTagCompound stackTag = new NBTTagCompound();
 
-				nbttagcompound.setTag("BlockEntityTag", ((TileEntityXPBlock)tileentity).writeToNBT(nbttagcompound1));
-				itemstack.setTagCompound(nbttagcompound);
-				spawnAsEntity(worldIn, pos, itemstack);
+				stackTag.setTag("BlockEntityTag", ((TileEntityXPBlock)te).writeToNBT(new NBTTagCompound()));
+				stack.setTagCompound(stackTag);
+				spawnAsEntity(world, pos, stack);
 			}
-			else if(!((TileEntityXPBlock)tileentity).isDestroyedByCreativePlayer())
-				spawnAsEntity(worldIn, pos, itemstack);
+			else if(!((TileEntityXPBlock)te).isDestroyedByCreativePlayer())
+				spawnAsEntity(world, pos, stack);
 		}
 
-		super.breakBlock(worldIn, pos, state);
+		super.breakBlock(world, pos, state);
 	}
 
 	@Override
@@ -142,16 +141,14 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	@Override
 	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
 	{
-		TileEntity te1 = world.getTileEntity(data.getPos());
+		TileEntity te = world.getTileEntity(data.getPos());
 
-		if(te1 instanceof TileEntityXPBlock)
+		if(te instanceof TileEntityXPBlock)
 		{
-			TileEntityXPBlock te2 = (TileEntityXPBlock)te1;
-
-			probeInfo.horizontal().text(I18n.format("info.levels", String.format("%.2f", te2.getStoredLevels())));
+			probeInfo.horizontal().text(I18n.format("info.levels", String.format("%.2f", ((TileEntityXPBlock)te).getStoredLevels())));
 
 			if(mode == ProbeMode.EXTENDED)
-				probeInfo.horizontal().text(I18n.format("info.xp", te2.getStoredXP()));
+				probeInfo.horizontal().text(I18n.format("info.xp", ((TileEntityXPBlock)te).getStoredXP()));
 		}
 	}
 }
