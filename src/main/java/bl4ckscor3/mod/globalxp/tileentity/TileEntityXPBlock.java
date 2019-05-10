@@ -18,6 +18,7 @@ public class TileEntityXPBlock extends TileEntity
 
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
+	private boolean destroyedByCreativePlayer;
 
 	/**
 	 * Adds XP to this tile entity and updates all clients within a 64 block range with that change
@@ -78,6 +79,22 @@ public class TileEntityXPBlock extends TileEntity
 	public float getStoredLevels()
 	{
 		return storedLevels;
+	}
+
+	/**
+	 * Sets whether the corresponding block will be destroyed by a creative player. Used to determine drops
+	 */
+	public void setDestroyedByCreativePlayer(boolean destroyedByCreativePlayer)
+	{
+		this.destroyedByCreativePlayer = destroyedByCreativePlayer;
+	}
+
+	/**
+	 * @return true if the corresponding block was destroyed by a creative player, false otherwhise
+	 */
+	public boolean isDestroyedByCreativePlayer()
+	{
+		return destroyedByCreativePlayer;
 	}
 
 	@Override

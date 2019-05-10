@@ -11,14 +11,14 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.13.2-v1.4.2'
+version = '1.13.2-v1.4.3'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190318-1.13.2'
+    mappings channel: 'snapshot', version: '20190510-1.13.2'
 	
     runs {
         client {
@@ -58,7 +58,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.13.2-25.0.77'
+    minecraft 'net.minecraftforge:forge:1.13.2-25.0.193'
     compile "mcp.mobius.waila:Hwyla:1.10.0-B52_1.13.2"
 	compile "mcjty.theoneprobe:workspace:1.13-1.4.30-1"
 }
