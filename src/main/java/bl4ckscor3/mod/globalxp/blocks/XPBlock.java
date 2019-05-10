@@ -62,6 +62,15 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
+	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+	{
+		TileEntity te = world.getTileEntity(pos);
+
+		if(world.getTileEntity(pos) instanceof TileEntityXPBlock)
+			((TileEntityXPBlock)te).setDestroyedByCreativePlayer(player.capabilities.isCreativeMode);
+	}
+
+	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) //shamelessly stolen from shulker box
 	{
 		TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -79,6 +88,8 @@ public class XPBlock extends Block implements ITOPInfoProvider
 				itemstack.setTagCompound(nbttagcompound);
 				spawnAsEntity(worldIn, pos, itemstack);
 			}
+			else if(!((TileEntityXPBlock)tileentity).isDestroyedByCreativePlayer())
+				spawnAsEntity(worldIn, pos, itemstack);
 		}
 
 		super.breakBlock(worldIn, pos, state);
