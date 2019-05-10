@@ -11,14 +11,14 @@ import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
 public class TileEntityXPBlock extends TileEntity
 {
+	private int storedXP = 0;
+	private float storedLevels = 0.0F;
+	private boolean destroyedByCreativePlayer;
+
 	public TileEntityXPBlock()
 	{
 		super(GlobalXP.teTypeXpBlock);
 	}
-
-	private int storedXP = 0;
-	private float storedLevels = 0.0F;
-	private boolean destroyedByCreativePlayer;
 
 	/**
 	 * Adds XP to this tile entity and updates all clients within a 64 block range with that change

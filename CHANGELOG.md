@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.3
+- Fix empty XP Block not dropping in survival mode
+
 #### v1.4.2
 - Fix crash in 1.13.2 when loading the mod without TheOneProbe
 
