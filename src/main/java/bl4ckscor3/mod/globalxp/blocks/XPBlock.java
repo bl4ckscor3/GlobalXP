@@ -8,18 +8,16 @@ import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -36,7 +34,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
 		if(world.isRemote || !stack.hasTag())
 			return;
@@ -45,7 +43,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 
 		if(te instanceof TileEntityXPBlock)
 		{
-			NBTTagCompound tag = stack.getTag().getCompound("BlockEntityTag");
+			CompoundNBT tag = stack.getTag().getCompound("BlockEntityTag");
 
 			tag.putInt("x", pos.getX());
 			tag.putInt("y", pos.getY());
@@ -57,7 +55,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player)
+	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player)
 	{
 		TileEntity te = world.getTileEntity(pos);
 
@@ -66,7 +64,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void onReplaced(IBlockState state, World world, BlockPos pos, IBlockState newState, boolean isMoving)
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		TileEntity te = world.getTileEntity(pos);
 
@@ -76,9 +74,9 @@ public class XPBlock extends Block implements ITOPInfoProvider
 
 			if(((TileEntityXPBlock)te).getStoredLevels() != 0)
 			{
-				NBTTagCompound stackTag = new NBTTagCompound();
+				CompoundNBT stackTag = new CompoundNBT();
 
-				stackTag.put("BlockEntityTag", ((TileEntityXPBlock)te).write(new NBTTagCompound()));
+				stackTag.put("BlockEntityTag", ((TileEntityXPBlock)te).write(new CompoundNBT()));
 				stack.setTag(stackTag);
 				spawnAsEntity(world, pos, stack);
 			}
@@ -90,37 +88,25 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune)
-	{
-		return Blocks.AIR.asItem();
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state)
-	{
-		return false;
-	}
-
-	@Override
 	public BlockRenderLayer getRenderLayer()
 	{
 		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state)
+	public boolean hasTileEntity(BlockState state)
 	{
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(IBlockState state, IBlockReader world)
+	public TileEntity createTileEntity(BlockState state, IBlockReader world)
 	{
 		return new TileEntityXPBlock();
 	}
 
 	@Override
-	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world, IBlockState blockState, IProbeHitData data)
+	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data)
 	{
 		TileEntity te = world.getTileEntity(data.getPos());
 

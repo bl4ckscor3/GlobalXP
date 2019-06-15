@@ -63,7 +63,7 @@ public class UpdateXPBlock
 
 	public static void onMessage(UpdateXPBlock message, Supplier<NetworkEvent.Context> ctx)
 	{
-		Minecraft.getInstance().addScheduledTask(() -> {
+		Minecraft.getInstance().execute(() -> {
 			if(Minecraft.getInstance().world.getTileEntity(message.pos) instanceof TileEntityXPBlock)
 				((TileEntityXPBlock)Minecraft.getInstance().world.getTileEntity(message.pos)).setStoredXP(message.storedXP);
 		});

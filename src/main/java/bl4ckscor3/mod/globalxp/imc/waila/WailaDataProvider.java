@@ -15,7 +15,7 @@ import mcp.mobius.waila.api.WailaPlugin;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 @WailaPlugin(GlobalXP.MOD_ID)
 public class WailaDataProvider implements IWailaPlugin, IComponentProvider
@@ -37,10 +37,10 @@ public class WailaDataProvider implements IWailaPlugin, IComponentProvider
 		{
 			TileEntityXPBlock te = ((TileEntityXPBlock)accessor.getTileEntity());
 
-			tooltip.add(new TextComponentTranslation("info.globalxp.levels", String.format("%.2f", te.getStoredLevels())));
+			tooltip.add(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", te.getStoredLevels())));
 
 			if(accessor.getPlayer().isSneaking())
-				tooltip.add(new TextComponentTranslation("info.globalxp.xp", te.getStoredXP()));
+				tooltip.add(new TranslationTextComponent("info.globalxp.xp", te.getStoredXP()));
 		}
 	}
 

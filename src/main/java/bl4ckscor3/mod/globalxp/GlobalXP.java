@@ -5,15 +5,13 @@ import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
 import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
 import bl4ckscor3.mod.globalxp.network.packets.RequestXPBlockUpdate;
 import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
-import bl4ckscor3.mod.globalxp.renderer.TileEntityXPBlockRenderer;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
@@ -21,7 +19,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -30,6 +27,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.registries.ObjectHolder;
 
 @Mod(GlobalXP.MOD_ID)
 @EventBusSubscriber(bus=Bus.MOD)
@@ -38,13 +36,13 @@ public class GlobalXP
 	public static final String MOD_ID = "globalxp";
 	public static final String PROTOCOL_VERSION = "1.0"; //for channel
 	public static Block xp_block;
+	@ObjectHolder(MOD_ID + ":xp_block")
 	public static TileEntityType<TileEntityXPBlock> teTypeXpBlock;
 	public static SimpleChannel channel = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
 	public GlobalXP()
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CONFIG_SPEC);
-		MinecraftForge.EVENT_BUS.addListener(this::onModelRegistry);
 		MinecraftForge.EVENT_BUS.addListener(this::onRightClickBlock);
 	}
 
@@ -73,7 +71,7 @@ public class GlobalXP
 	@SubscribeEvent
 	public static void onRegisterTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
 	{
-		teTypeXpBlock = TileEntityType.register(xp_block.getRegistryName().toString(), TileEntityType.Builder.create(TileEntityXPBlock::new));
+		event.getRegistry().register(TileEntityType.Builder.create(TileEntityXPBlock::new, xp_block).build(null).setRegistryName(new ResourceLocation(xp_block.getRegistryName().toString())));
 	}
 
 	@SubscribeEvent
@@ -82,14 +80,9 @@ public class GlobalXP
 		event.getRegistry().register(new ItemBlockXPBlock(xp_block).setRegistryName(xp_block.getRegistryName()));
 	}
 
-	public void onModelRegistry(ModelRegistryEvent event)
-	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXPBlock.class, new TileEntityXPBlockRenderer());
-	}
-
 	public void onRightClickBlock(RightClickBlock event)
 	{
-		if(!(event.getWorld().getBlockState(event.getPos()).getBlock() instanceof XPBlock) || event.getHand() != EnumHand.MAIN_HAND)
+		if(!(event.getWorld().getBlockState(event.getPos()).getBlock() instanceof XPBlock) || event.getHand() != Hand.MAIN_HAND)
 			return;
 
 		if(!event.getWorld().isRemote)
@@ -102,7 +95,7 @@ public class GlobalXP
 			else //not sneaking = remove exactly enough xp from the block to get player to the next level
 			{
 				TileEntityXPBlock te = ((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos()));
-				EntityPlayer player = event.getEntityPlayer();
+				PlayerEntity player = event.getEntityPlayer();
 				int neededXP = player.xpBarCap() - (int)player.experience;
 				int availableXP = te.removeXP(neededXP);
 
