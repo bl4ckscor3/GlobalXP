@@ -25,7 +25,7 @@ public class RequestXPBlockUpdate
 	 */
 	public RequestXPBlockUpdate(TileEntityXPBlock te)
 	{
-		this(te.getPos(), te.getWorld().getWorldInfo().getDimension());
+		this(te.getPos(), te.getWorld().getDimension().getType().getId());
 	}
 
 	/**

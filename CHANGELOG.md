@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.4
+- Add chinese translation (Thanks xuyu0v0!)
+
 #### v1.4.3
 - Fix empty XP Block not dropping in survival mode
 
@@ -7,7 +10,7 @@
 - Fix crash in 1.13.2 when loading the mod without TheOneProbe
 
 #### v1.4.1
-- Added russian translation (Thanks matrsinkevic!)
+- Added russian translation (Thanks martsinkevic!)
 - Add back The One Probe support for 1.13.2
 - Fixed XP Block dropping in creative even when it's empty
 - Fixed a crash in 1.13.2
