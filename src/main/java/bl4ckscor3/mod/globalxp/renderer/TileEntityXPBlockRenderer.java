@@ -26,7 +26,7 @@ public class TileEntityXPBlockRenderer extends TileEntityRenderer<TileEntityXPBl
 	private ItemStack emerald = new ItemStack(Items.EMERALD, 1);
 
 	@Override
-	public void func_199341_a(TileEntityXPBlock te, double x, double y, double z, float partialTicks, int destroyStage)
+	public void render(TileEntityXPBlock te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
 		if(Configuration.CONFIG.renderNameplate.get())
 		{
