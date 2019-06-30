@@ -7,6 +7,7 @@ import bl4ckscor3.mod.globalxp.network.packets.RequestXPBlockUpdate;
 import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
 import bl4ckscor3.mod.globalxp.renderer.TileEntityXPBlockRenderer;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
+import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -31,6 +32,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ObjectHolder;
+import openmods.utils.EnchantmentUtils;
 
 @Mod(GlobalXP.MOD_ID)
 @EventBusSubscriber(bus=Bus.MOD)
@@ -96,19 +98,22 @@ public class GlobalXP
 
 		if(!event.getWorld().isRemote)
 		{
-			if(event.getEntityPlayer().isSneaking()) //sneaking = add all player xp to the block
+			PlayerEntity player = event.getEntityPlayer();
+
+			if(player.isSneaking()) //sneaking = add all player xp to the block
 			{
-				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addXP(event.getEntityPlayer().experienceTotal);
-				event.getEntityPlayer().addExperienceLevel(-event.getEntityPlayer().experienceLevel - 1); // set player xp to 0
+				int playerXP = EnchantmentUtils.getPlayerXP(player);
+
+				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addXP(playerXP);
+				EnchantmentUtils.addPlayerXP(player, -playerXP); // set player xp to 0
 			}
 			else //not sneaking = remove exactly enough xp from the block to get player to the next level
 			{
 				TileEntityXPBlock te = ((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos()));
-				PlayerEntity player = event.getEntityPlayer();
-				int neededXP = player.xpBarCap() - (int)player.experience;
+				int neededXP = XPUtils.getXPToNextLevel(EnchantmentUtils.getPlayerXP(player));
 				int availableXP = te.removeXP(neededXP);
 
-				player.giveExperiencePoints(availableXP);
+				EnchantmentUtils.addPlayerXP(player, availableXP);
 			}
 		}
 	}

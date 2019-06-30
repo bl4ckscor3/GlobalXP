@@ -1,5 +1,7 @@
 package bl4ckscor3.mod.globalxp.util;
 
+import openmods.utils.EnchantmentUtils;
+
 public class XPUtils
 {
 	/**
@@ -14,7 +16,7 @@ public class XPUtils
 
 		while(xp > 0)
 		{
-			int xpToNextLevel = getXPForLevel((int)storedLevels);
+			int xpToNextLevel = EnchantmentUtils.xpBarCap((int)storedLevels);
 
 			if(xp < xpToNextLevel)
 			{
@@ -30,15 +32,15 @@ public class XPUtils
 	}
 
 	/**
-	 * Gets the amount of XP required to go from level to the next level
-	 * Formula copied from EntityPlayer.java
-	 * @param level The level to get the XP for
-	 * @return The amount of XP required to go from level to the next level
+	 * Gets the amount of XP needed until reaching the next level
+	 * @param currentXP The XP that the player already has
+	 * @return
 	 */
-	public static int getXPForLevel(int level)
+	public static int getXPToNextLevel(int currentXP)
 	{
-		if(level >= 30)
-			return 112 + (level - 30) * 9;
-		return level >= 15 ? 37 + (level - 15) * 5 : 7 + level * 2;
+		int level = EnchantmentUtils.getLevelForExperience(currentXP);
+		int nextLevelXP = EnchantmentUtils.getExperienceForLevel(level + 1);
+
+		return nextLevelXP - currentXP;
 	}
 }
