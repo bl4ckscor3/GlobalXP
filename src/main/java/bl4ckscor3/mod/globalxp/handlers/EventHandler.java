@@ -8,13 +8,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import openmods.utils.EnchantmentUtils;
 
+@EventBusSubscriber(modid=GlobalXP.MOD_ID)
 public class EventHandler
 {
 	@SubscribeEvent
-	public void onRightClickBlock(RightClickBlock event)
+	public static void onRightClickBlock(RightClickBlock event)
 	{
 		if(!(event.getWorld().getBlockState(event.getPos()).getBlock() instanceof XPBlock) || event.getHand() != EnumHand.MAIN_HAND)
 			return;
@@ -42,7 +44,7 @@ public class EventHandler
 	}
 
 	@SubscribeEvent
-	public void onOnConfigChanged(OnConfigChangedEvent event) //yes, this is how i name my event listener methods
+	public static void onOnConfigChanged(OnConfigChangedEvent event) //yes, this is how i name my event listener methods
 	{
 		if(event.getModID().equals(GlobalXP.MOD_ID))
 		{

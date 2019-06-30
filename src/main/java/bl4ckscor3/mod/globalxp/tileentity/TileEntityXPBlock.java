@@ -1,12 +1,10 @@
 package bl4ckscor3.mod.globalxp.tileentity;
 
-import bl4ckscor3.mod.globalxp.GlobalXP;
-import bl4ckscor3.mod.globalxp.network.packets.CPacketRequestXPBlockUpdate;
-import bl4ckscor3.mod.globalxp.network.packets.SPacketUpdateXPBlock;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 public class TileEntityXPBlock extends TileEntity
 {
@@ -23,7 +21,7 @@ public class TileEntityXPBlock extends TileEntity
 		storedXP += amount;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 	}
 
 	/**
@@ -42,8 +40,26 @@ public class TileEntityXPBlock extends TileEntity
 		storedXP -= amountRemoved;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.network.sendToAllAround(new SPacketUpdateXPBlock(this), new NetworkRegistry.TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 64));
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 		return amountRemoved;
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag()
+	{
+		return writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket()
+	{
+		return new SPacketUpdateTileEntity(pos, 1, getUpdateTag());
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
+	{
+		readFromNBT(pkt.getNbtCompound());
 	}
 
 	/**
@@ -108,7 +124,7 @@ public class TileEntityXPBlock extends TileEntity
 	@Override
 	public void onLoad()
 	{
-		if(world.isRemote)
-			GlobalXP.network.sendToServer(new CPacketRequestXPBlockUpdate(this));
+		//		if(world.isRemote)
+		//			GlobalXP.network.sendToServer(new CPacketRequestXPBlockUpdate(this));
 	}
 }
