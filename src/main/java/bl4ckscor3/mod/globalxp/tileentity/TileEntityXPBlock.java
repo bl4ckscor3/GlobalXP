@@ -1,13 +1,11 @@
 package bl4ckscor3.mod.globalxp.tileentity;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
-import bl4ckscor3.mod.globalxp.network.packets.RequestXPBlockUpdate;
-import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
 public class TileEntityXPBlock extends TileEntity
 {
@@ -29,7 +27,7 @@ public class TileEntityXPBlock extends TileEntity
 		storedXP += amount;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.channel.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 64, world.getDimension().getType())), new UpdateXPBlock(this));
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 	}
 
 	/**
@@ -48,8 +46,26 @@ public class TileEntityXPBlock extends TileEntity
 		storedXP -= amountRemoved;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		markDirty();
-		GlobalXP.channel.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 64, world.getDimension().getType())), new UpdateXPBlock(this));
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 		return amountRemoved;
+	}
+
+	@Override
+	public CompoundNBT getUpdateTag()
+	{
+		return write(new CompoundNBT());
+	}
+
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket()
+	{
+		return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+	{
+		read(pkt.getNbtCompound());
 	}
 
 	/**
@@ -109,12 +125,5 @@ public class TileEntityXPBlock extends TileEntity
 	{
 		setStoredXP(tag.getInt("stored_xp"));
 		super.read(tag);
-	}
-
-	@Override
-	public void onLoad()
-	{
-		if(world.isRemote)
-			GlobalXP.channel.sendToServer(new RequestXPBlockUpdate(this));
 	}
 }

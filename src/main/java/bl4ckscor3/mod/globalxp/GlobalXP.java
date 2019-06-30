@@ -3,8 +3,6 @@ package bl4ckscor3.mod.globalxp;
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
 import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
-import bl4ckscor3.mod.globalxp.network.packets.RequestXPBlockUpdate;
-import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
 import bl4ckscor3.mod.globalxp.renderer.TileEntityXPBlockRenderer;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
@@ -27,10 +25,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ObjectHolder;
 import openmods.utils.EnchantmentUtils;
 
@@ -39,25 +34,14 @@ import openmods.utils.EnchantmentUtils;
 public class GlobalXP
 {
 	public static final String MOD_ID = "globalxp";
-	public static final String PROTOCOL_VERSION = "1.0"; //for channel
 	public static Block xp_block;
 	@ObjectHolder(MOD_ID + ":xp_block")
 	public static TileEntityType<TileEntityXPBlock> teTypeXpBlock;
-	public static SimpleChannel channel = NetworkRegistry.newSimpleChannel(new ResourceLocation(MOD_ID, MOD_ID), () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
 
 	public GlobalXP()
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CONFIG_SPEC);
 		MinecraftForge.EVENT_BUS.addListener(this::onRightClickBlock);
-	}
-
-	@SubscribeEvent
-	public static void onFMLCommonSetup(FMLCommonSetupEvent event)
-	{
-		int index = 0;
-
-		channel.registerMessage(index++, RequestXPBlockUpdate.class, RequestXPBlockUpdate::encode, RequestXPBlockUpdate::decode, RequestXPBlockUpdate::onMessage);
-		channel.registerMessage(index++, UpdateXPBlock.class, UpdateXPBlock::encode, UpdateXPBlock::decode, UpdateXPBlock::onMessage);
 	}
 
 	@SubscribeEvent

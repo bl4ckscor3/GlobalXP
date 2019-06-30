@@ -2,7 +2,6 @@ package bl4ckscor3.mod.globalxp.blocks;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
-import bl4ckscor3.mod.globalxp.network.packets.UpdateXPBlock;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
@@ -21,8 +20,6 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 
 public class XPBlock extends Block implements ITOPInfoProvider
 {
@@ -50,7 +47,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			tag.putInt("z", pos.getZ());
 			((TileEntityXPBlock)te).read(tag);
 			((TileEntityXPBlock)te).markDirty();
-			GlobalXP.channel.send(PacketDistributor.NEAR.with(() -> new TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 64, world.getDimension().getType())), new UpdateXPBlock((TileEntityXPBlock)te));
+			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 		}
 	}
 

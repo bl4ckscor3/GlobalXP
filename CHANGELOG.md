@@ -1,13 +1,16 @@
 # GlobalXP Changelog
 
+#### v1.4.5
+- Fixed XP not being calculated correctly leading to duping or loosing XP
+
 #### v1.4.4
-- Add chinese translation (Thanks xuyu0v0!)
+- Added chinese translation (Thanks xuyu0v0!)
 
 #### v1.4.3
-- Fix empty XP Block not dropping in survival mode
+- Fixed empty XP Block not dropping in survival mode
 
 #### v1.4.2
-- Fix crash in 1.13.2 when loading the mod without TheOneProbe
+- Fixed crash in 1.13.2 when loading the mod without TheOneProbe
 
 #### v1.4.1
 - Added russian translation (Thanks martsinkevic!)
