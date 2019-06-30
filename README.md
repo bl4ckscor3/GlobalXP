@@ -1,1 +1,1 @@
-Download link: https://minecraft.curseforge.com/projects/global-xp
+Download link: https://curseforge.com/minecraft/mc-mods/global-xp
