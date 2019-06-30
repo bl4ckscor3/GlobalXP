@@ -3,7 +3,6 @@ package bl4ckscor3.mod.globalxp;
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
 import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
-import bl4ckscor3.mod.globalxp.renderer.TileEntityXPBlockRenderer;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.block.Block;
@@ -19,12 +18,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.registries.ObjectHolder;
 import openmods.utils.EnchantmentUtils;
@@ -42,12 +39,6 @@ public class GlobalXP
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CONFIG_SPEC);
 		MinecraftForge.EVENT_BUS.addListener(this::onRightClickBlock);
-	}
-
-	@SubscribeEvent
-	public static void onFMLClientSetup(FMLClientSetupEvent event)
-	{
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXPBlock.class, new TileEntityXPBlockRenderer());
 	}
 
 	@SubscribeEvent

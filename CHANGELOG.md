@@ -2,6 +2,7 @@
 
 #### v1.4.5
 - Fixed XP not being calculated correctly leading to duping or loosing XP
+- Fixed the mod not working on servers
 
 #### v1.4.4
 - Added chinese translation (Thanks xuyu0v0!)

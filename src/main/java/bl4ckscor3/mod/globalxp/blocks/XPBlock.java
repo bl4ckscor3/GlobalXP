@@ -10,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -18,6 +17,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -109,10 +109,10 @@ public class XPBlock extends Block implements ITOPInfoProvider
 
 		if(te instanceof TileEntityXPBlock)
 		{
-			probeInfo.horizontal().text(I18n.format("info.globalxp.levels", String.format("%.2f", ((TileEntityXPBlock)te).getStoredLevels())));
+			probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", ((TileEntityXPBlock)te).getStoredLevels())).getFormattedText());
 
 			if(mode == ProbeMode.EXTENDED)
-				probeInfo.horizontal().text(I18n.format("info.globalxp.xp", ((TileEntityXPBlock)te).getStoredXP()));
+				probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.xp", ((TileEntityXPBlock)te).getStoredXP()).getFormattedText());
 		}
 	}
 }
