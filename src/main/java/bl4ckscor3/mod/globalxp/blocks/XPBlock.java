@@ -3,6 +3,7 @@ package bl4ckscor3.mod.globalxp.blocks;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
+import bl4ckscor3.mod.globalxp.util.XPUtils;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -16,10 +17,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import openmods.utils.EnchantmentUtils;
 
 public class XPBlock extends Block implements ITOPInfoProvider
 {
@@ -49,6 +53,33 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			((TileEntityXPBlock)te).markDirty();
 			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 		}
+	}
+
+	@Override
+	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
+	{
+		if(!world.isRemote && hand == Hand.MAIN_HAND)
+		{
+			if(player.isSneaking()) //sneaking = add all player xp to the block
+			{
+				int playerXP = EnchantmentUtils.getPlayerXP(player);
+
+				((TileEntityXPBlock)world.getTileEntity(pos)).addXP(playerXP);
+				EnchantmentUtils.addPlayerXP(player, -playerXP); // set player xp to 0
+			}
+			else //not sneaking = remove exactly enough xp from the block to get player to the next level
+			{
+				TileEntityXPBlock te = ((TileEntityXPBlock)world.getTileEntity(pos));
+				int neededXP = XPUtils.getXPToNextLevel(EnchantmentUtils.getPlayerXP(player));
+				int availableXP = te.removeXP(neededXP);
+
+				EnchantmentUtils.addPlayerXP(player, availableXP);
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
