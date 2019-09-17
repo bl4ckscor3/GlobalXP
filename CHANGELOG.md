@@ -2,6 +2,7 @@
 
 #### v1.4.6
 - Fixed block not being accessible when holding something in the offhand
+- Fixed block break particles missing when breaking the block
 
 #### v1.4.5
 - Fixed XP not being calculated correctly leading to duping or loosing XP

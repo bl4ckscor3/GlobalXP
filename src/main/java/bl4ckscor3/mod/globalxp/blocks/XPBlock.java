@@ -58,6 +58,8 @@ public class XPBlock extends Block implements ITOPInfoProvider
 
 		if(world.getTileEntity(pos) instanceof TileEntityXPBlock)
 			((TileEntityXPBlock)te).setDestroyedByCreativePlayer(player.isCreative());
+
+		super.onBlockHarvested(world, pos, state, player);
 	}
 
 	@Override
