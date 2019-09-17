@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.6
+- Fixed block not being accessible when holding something in the offhand
+
 #### v1.4.5
 - Fixed XP not being calculated correctly leading to duping or loosing XP
 - Fixed the mod not working on servers
