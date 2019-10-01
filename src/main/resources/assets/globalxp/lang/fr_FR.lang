@@ -1,0 +1,10 @@
+//Translation by Lykrast
+block.globalxp.xp_block=Bloc d'expérience
+info.globalxp.levels=%s niveaux stockés
+info.globalxp.xp=%s expérience stockée
+globalxp.config.spinspeed=Vitesse rotation émeraude
+globalxp.config.spinspeed.tooltip=À quelle vitesse tourne l'émeraude (multiplié par la vitesse par défaut)
+globalxp.config.bobspeed=Vitesse remuement émeraude
+globalxp.config.bobspeed.tooltip=À quelle vitesse l'émeraude remue de haut en bas (multiplié par la vitesse par défaut)
+globalxp.config.renderNameplate=Montrer information d'expérience
+globalxp.config.renderNameplate.tooltip=Si la quantité d'expérience et de niveaux stockées est affichée au dessus du bloc
