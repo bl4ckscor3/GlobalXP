@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.7
+- Added French translation (Thanks Lykrast!)
+
 #### v1.4.6
 - Fixed block not being accessible when holding something in the offhand
 - Fixed block break particles missing when breaking the block
@@ -9,7 +12,7 @@
 - Fixed the mod not working on servers
 
 #### v1.4.4
-- Added chinese translation (Thanks xuyu0v0!)
+- Added Chinese translation (Thanks xuyu0v0!)
 
 #### v1.4.3
 - Fixed empty XP Block not dropping in survival mode
@@ -18,7 +21,7 @@
 - Fixed crash in 1.13.2 when loading the mod without TheOneProbe
 
 #### v1.4.1
-- Added russian translation (Thanks martsinkevic!)
+- Added Russian translation (Thanks martsinkevic!)
 - Add back The One Probe support for 1.13.2
 - Fixed XP Block dropping in creative even when it's empty
 - Fixed a crash in 1.13.2
@@ -33,7 +36,7 @@
 - Added configuration option to change the speed at which the emerald is bobbing up and down
 
 #### v1.2.1
-- Added spanish translation (Thanks Dorzar!)
+- Added Spanish translation (Thanks Dorzar!)
 
 ### v1.2
 - Ported to 1.12

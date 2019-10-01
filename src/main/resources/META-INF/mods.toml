@@ -3,7 +3,7 @@ loaderVersion="[28,)" #mandatory
 
 [[mods]] #mandatory
 	modId="globalxp" #mandatory
-	version="v1.4.6" #mandatory
+	version="v1.4.7" #mandatory
 	displayName="Global XP" #mandatory
 	description='''Adds a fast way to store XP and share it with your friends!''' #mandatory
 	issueTrackerURL="https://github.com/bl4ckscor3/GlobalXP/issues"
