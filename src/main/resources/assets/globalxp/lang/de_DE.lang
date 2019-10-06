@@ -8,3 +8,5 @@ globalxp.config.bobspeed=Smaragd Auf-Ab-Bewegung
 globalxp.config.bobspeed.tooltip=Wie schnell sich der Smaragd hoch und runter bewegen soll (wird mit Standardschnelligkeit multipliziert)
 globalxp.config.renderNameplate=Anzeigen der XP
 globalxp.config.renderNameplate.tooltip=Ob eine Info der gespeichterten Level über dem XP Block angezeigt werden soll
+globalxp.config.xpForComparator=XP für Komparator-Ausgang
+globalxp.config.xpForComparator.tooltip=Die Menge an XP die der Komparator benötigt um ein Redstonesignal der Stärke eins auszugeben. Standardmäßig ist das Signal auf voller Stärke, wenn der Block 30 Level gespeichert hat.
