@@ -1,71 +1,72 @@
 {
-    "parent": "block/block",
-    "ambientocclusion": false,
-    "textures": {
-        "particle": "globalxp:blocks/iron_bars",
-        "bars": "globalxp:blocks/iron_bars"
-    },
-    "elements": [
-        {
-            "name": "outside",
-            "from": [ 0.0, 0.0, 0.0 ],
-            "to": [ 16.0, 16.0, 16.0 ],
-            "faces": {
-                "down":  { "uv": [ 0.0, 0.0, 16.0, 16.0 ], "texture": "#bars" },
-                "up":    { "uv": [ 0.0, 0.0, 16.0, 16.0 ], "texture": "#bars" },
-                "north": { "uv": [ 0.0, 0.0, 16.0, 16.0 ], "texture": "#bars" },
-                "south": { "uv": [ 0.0, 0.0, 16.0, 16.0 ], "texture": "#bars" },
-                "west":  { "uv": [ 0.0, 0.0, 16.0, 16.0 ], "texture": "#bars" },
-                "east":  { "uv": [ 0.0, 0.0, 16.0, 16.0 ], "texture": "#bars" }
-            }
-        },
-        {
-            "name": "northInside",
-            "from": [ 0.0, 0.0, 16.0 ], 
-            "to": [ 16.0, 16.0, 16.0 ], 
-            "faces": {
-                "north": { "texture": "#bars", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-            }
-        },
-        {
-            "name": "eastInside",
-            "from": [ 0.0, 0.0, 0.0 ], 
-            "to": [ 0.0, 16.0, 16.0 ], 
-            "faces": {
-                "east": { "texture": "#bars", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-            }
-        },
-        {
-            "name": "southInside",
-            "from": [ 0.0, 0.0, 0.0 ], 
-            "to": [ 16.0, 16.0, 0.0 ], 
-            "faces": {
-                "south": { "texture": "#bars", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-            }
-        },
-        {
-            "name": "westInside",
-            "from": [ 16.0, 0.0, 0.0 ], 
-            "to": [ 16.0, 16.0, 16.0 ], 
-            "faces": {
-                "west": { "texture": "#bars", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-            }
-        },
-        {
-            "name": "upInside",
-            "from": [ 0.0, 0.0, 0.0 ], 
-            "to": [ 16.0, 0.0, 16.0 ], 
-            "faces": {
-                "up": { "texture": "#bars", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-            }
-        },
-        {
-            "name": "downInside",
-            "from": [ 0.0, 16.0, 0.0 ], 
-            "to": [ 16.0, 16.0, 16.0 ], 
-            "faces": {
-                "down": { "texture": "#bars", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
-            }
-        }
-    ]
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"bars": "globalxp:blocks/iron_bars",
+		"particle": "globalxp:blocks/iron_bars"
+	},
+	"elements": [
+		{
+			"name": "outside",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#bars"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#bars"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#bars"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#bars"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#bars"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+			"name": "northInside",
+			"from": [0, 0, 15.999],
+			"to": [16, 16, 15.999],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+			"name": "eastInside",
+			"from": [0.001, 0, 0],
+			"to": [0.001, 16, 16],
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+			"name": "southInside",
+			"from": [0, 0, 0.001],
+			"to": [16, 16, 0.001],
+			"faces": {
+				"south": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+			"name": "westInside",
+			"from": [15.999, 0, 0],
+			"to": [15.999, 16, 16],
+			"faces": {
+				"west": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+			"name": "upInside",
+			"from": [0, 0.001, 0],
+			"to": [16, 0.001, 16],
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+			"name": "downInside",
+			"from": [0, 15.999, 0],
+			"to": [16, 15.999, 16],
+			"faces": {
+				"down": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		}
+	]
 }
