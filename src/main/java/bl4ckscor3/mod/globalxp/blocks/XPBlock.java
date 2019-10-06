@@ -1,5 +1,6 @@
 package bl4ckscor3.mod.globalxp.blocks;
 
+import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
@@ -28,6 +29,22 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		super(Block.Properties.create(Material.IRON).hardnessAndResistance(12.5F, 2000.0F).sound(SoundType.METAL));
 
 		setRegistryName(GlobalXP.MOD_ID + ":xp_block");
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride(BlockState state)
+	{
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride(BlockState state, World world, BlockPos pos)
+	{
+		TileEntity te = world.getTileEntity(pos);
+
+		if(te instanceof TileEntityXPBlock)
+			return Math.min(15, Math.floorDiv(((TileEntityXPBlock)te).getStoredXP(), Configuration.CONFIG.xpForComparator.get()));
+		else return 0;
 	}
 
 	@Override
