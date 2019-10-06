@@ -26,13 +26,13 @@ public class Configuration
 	Configuration(ForgeConfigSpec.Builder builder)
 	{
 		spinSpeed = builder
-				.comment("globalxp.config.spinspeed.tooltip")
+				.comment("How fast the emerald should spin (multiplier of the default speed)")
 				.defineInRange("spinSpeed", 1.0D, 0.0D, Double.MAX_VALUE);
 		bobSpeed = builder
-				.comment("globalxp.config.bobspeed.tooltip")
+				.comment("How fast the emerald should bob up and down (multiplier of the default speed)")
 				.defineInRange("bobSpeed", 1.0D, 0.0D, Double.MAX_VALUE);
 		renderNameplate = builder
-				.translation("globalxp.config.renderNameplate.tooltip")
+				.comment("Whether info about the saved levels should be shown above the XP Block")
 				.define("renderNameplate", true);
 	}
 }
