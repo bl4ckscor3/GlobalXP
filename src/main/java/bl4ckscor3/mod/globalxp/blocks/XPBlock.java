@@ -2,6 +2,7 @@ package bl4ckscor3.mod.globalxp.blocks;
 
 import java.util.Random;
 
+import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
 import mcjty.theoneprobe.api.IProbeHitData;
@@ -35,6 +36,22 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		setSoundType(SoundType.METAL);
 		setTranslationKey("xp_block");
 		setRegistryName("xp_block");
+	}
+
+	@Override
+	public boolean hasComparatorInputOverride(IBlockState state)
+	{
+		return true;
+	}
+
+	@Override
+	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos)
+	{
+		TileEntity te = world.getTileEntity(pos);
+
+		if(te instanceof TileEntityXPBlock)
+			return Math.min(15, Math.floorDiv(((TileEntityXPBlock)te).getStoredXP(), GlobalXP.config.xpForComparator));
+		else return 0;
 	}
 
 	@Override

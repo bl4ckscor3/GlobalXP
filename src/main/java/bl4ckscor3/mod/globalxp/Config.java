@@ -10,6 +10,7 @@ public class Config extends Configuration
 	public double spinSpeed;
 	public double bobSpeed;
 	public boolean renderNameplate;
+	public int xpForComparator;
 
 	/**
 	 * Sets up this mod's config file
@@ -42,6 +43,10 @@ public class Config extends Configuration
 		prop = get("options", "renderNameplate", true);
 		prop.setLanguageKey("globalxp.config.renderNameplate");
 		renderNameplate = prop.getBoolean(true);
+
+		prop = get("options", "xpForComparator", 1395 / 15);
+		prop.setLanguageKey("globalxp.config.xpForComparator");
+		xpForComparator = Math.max(0, prop.getInt(1395 / 15));
 
 		if(hasChanged())
 			save();
