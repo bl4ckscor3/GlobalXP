@@ -1,5 +1,11 @@
 # GlobalXP Changelog
 
+#### v1.4.8
+- Added comparator functionality. It can now read how much XP is in the block and gives off a redstone signal based on that. 30 levels is a full signal.
+- Added configuration option to change how much XP is needed for the comparator to output a redstone signal of strength one
+- Fixed block model flickering
+- Fixed configuration file comments
+
 #### v1.4.7
 - Added French translation (Thanks Lykrast!)
 
