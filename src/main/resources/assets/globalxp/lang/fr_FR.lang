@@ -1,7 +1,7 @@
 //Translation by Lykrast
-block.globalxp.xp_block=Bloc d'expérience
-info.globalxp.levels=%s niveaux stockés
-info.globalxp.xp=%s expérience stockée
+tile.xp_block.name=Bloc d'expérience
+info.levels=%s niveaux stockés
+info.xp=%s expérience stockée
 globalxp.config.spinspeed=Vitesse rotation émeraude
 globalxp.config.spinspeed.tooltip=À quelle vitesse tourne l'émeraude (multiplié par la vitesse par défaut)
 globalxp.config.bobspeed=Vitesse remuement émeraude
