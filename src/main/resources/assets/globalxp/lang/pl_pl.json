@@ -1,0 +1,11 @@
+{
+    "block.globalxp.xp_block": "XP Block",
+    "info.globalxp.levels": "Zapisano %s poziomy",
+    "info.globalxp.xp": "Zapisano %s XP",
+    "globalxp.config.spinspeed": "Prędkość wirowania szmaragdu",
+    "globalxp.config.spinspeed.tooltip": "Jak szybko szmaragd powinien się obracać (mnożnik domyślnej prędkości)",
+    "globalxp.config.bobspeed": "Emerald bob speed",
+    "globalxp.config.bobspeed.tooltip": "Jak szybko szmaragd powinien się poruszać w górę iw dół (mnożnik domyślnej prędkości)",
+    "globalxp.config.renderNameplate": "Pokaż informacje o XP",
+    "globalxp.config.renderNameplate.tooltip": "Czy informacje o zapisanych poziomach powinny być wyświetlane powyżej bloku XP"
+}
