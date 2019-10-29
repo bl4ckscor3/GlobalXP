@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.10
+- Added Polish translation (Thanks kacpergibas438!)
+
 #### v1.4.9
 - Translation fixes
 
