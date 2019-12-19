@@ -1,9 +1,8 @@
 package bl4ckscor3.mod.globalxp.blocks;
 
 import bl4ckscor3.mod.globalxp.Configuration;
-import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
-import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
+import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -26,8 +25,6 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	public XPBlock()
 	{
 		super(Block.Properties.create(Material.IRON).hardnessAndResistance(12.5F, 2000.0F).sound(SoundType.METAL));
-
-		setRegistryName(GlobalXP.MOD_ID + ":xp_block");
 	}
 
 	@Override
@@ -47,8 +44,8 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	{
 		TileEntity te = world.getTileEntity(pos);
 
-		if(te instanceof TileEntityXPBlock)
-			return Math.min(15, Math.floorDiv(((TileEntityXPBlock)te).getStoredXP(), Configuration.CONFIG.xpForComparator.get()));
+		if(te instanceof XPBlockTileEntity)
+			return Math.min(15, Math.floorDiv(((XPBlockTileEntity)te).getStoredXP(), Configuration.CONFIG.xpForComparator.get()));
 		else return 0;
 	}
 
@@ -60,15 +57,15 @@ public class XPBlock extends Block implements ITOPInfoProvider
 
 		TileEntity te = world.getTileEntity(pos);
 
-		if(te instanceof TileEntityXPBlock)
+		if(te instanceof XPBlockTileEntity)
 		{
 			CompoundNBT tag = stack.getTag().getCompound("BlockEntityTag");
 
 			tag.putInt("x", pos.getX());
 			tag.putInt("y", pos.getY());
 			tag.putInt("z", pos.getZ());
-			((TileEntityXPBlock)te).read(tag);
-			((TileEntityXPBlock)te).markDirty();
+			((XPBlockTileEntity)te).read(tag);
+			((XPBlockTileEntity)te).markDirty();
 			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 		}
 	}
@@ -78,8 +75,8 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	{
 		TileEntity te = world.getTileEntity(pos);
 
-		if(world.getTileEntity(pos) instanceof TileEntityXPBlock)
-			((TileEntityXPBlock)te).setDestroyedByCreativePlayer(player.isCreative());
+		if(world.getTileEntity(pos) instanceof XPBlockTileEntity)
+			((XPBlockTileEntity)te).setDestroyedByCreativePlayer(player.isCreative());
 
 		super.onBlockHarvested(world, pos, state, player);
 	}
@@ -89,19 +86,19 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	{
 		TileEntity te = world.getTileEntity(pos);
 
-		if(te instanceof TileEntityXPBlock)
+		if(te instanceof XPBlockTileEntity)
 		{
 			ItemStack stack = new ItemStack(asItem());
 
-			if(((TileEntityXPBlock)te).getStoredLevels() != 0)
+			if(((XPBlockTileEntity)te).getStoredLevels() != 0)
 			{
 				CompoundNBT stackTag = new CompoundNBT();
 
-				stackTag.put("BlockEntityTag", ((TileEntityXPBlock)te).write(new CompoundNBT()));
+				stackTag.put("BlockEntityTag", ((XPBlockTileEntity)te).write(new CompoundNBT()));
 				stack.setTag(stackTag);
 				spawnAsEntity(world, pos, stack);
 			}
-			else if(!((TileEntityXPBlock)te).isDestroyedByCreativePlayer())
+			else if(!((XPBlockTileEntity)te).isDestroyedByCreativePlayer())
 				spawnAsEntity(world, pos, stack);
 		}
 
@@ -117,7 +114,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world)
 	{
-		return new TileEntityXPBlock();
+		return new XPBlockTileEntity();
 	}
 	//
 	//	@Override

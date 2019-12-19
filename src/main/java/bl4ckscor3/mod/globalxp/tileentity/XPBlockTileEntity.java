@@ -7,13 +7,13 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityXPBlock extends TileEntity
+public class XPBlockTileEntity extends TileEntity
 {
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 	private boolean destroyedByCreativePlayer;
 
-	public TileEntityXPBlock()
+	public XPBlockTileEntity()
 	{
 		super(GlobalXP.teTypeXpBlock);
 	}

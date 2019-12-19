@@ -2,8 +2,8 @@ package bl4ckscor3.mod.globalxp;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
-import bl4ckscor3.mod.globalxp.itemblocks.ItemBlockXPBlock;
-import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
+import bl4ckscor3.mod.globalxp.itemblocks.XPItemBlock;
+import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,9 +31,10 @@ import openmods.utils.EnchantmentUtils;
 public class GlobalXP
 {
 	public static final String MOD_ID = "globalxp";
+	@ObjectHolder(MOD_ID + ":xp_block")
 	public static Block xp_block;
 	@ObjectHolder(MOD_ID + ":xp_block")
-	public static TileEntityType<TileEntityXPBlock> teTypeXpBlock;
+	public static TileEntityType<XPBlockTileEntity> teTypeXpBlock;
 
 	public GlobalXP()
 	{
@@ -51,19 +52,19 @@ public class GlobalXP
 	@SubscribeEvent
 	public static void onRegisterBlocks(RegistryEvent.Register<Block> event)
 	{
-		event.getRegistry().register(xp_block = new XPBlock());
+		event.getRegistry().register(new XPBlock().setRegistryName("xp_block"));
 	}
 
 	@SubscribeEvent
 	public static void onRegisterTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
 	{
-		event.getRegistry().register(TileEntityType.Builder.create(TileEntityXPBlock::new, xp_block).build(null).setRegistryName(new ResourceLocation(xp_block.getRegistryName().toString())));
+		event.getRegistry().register(TileEntityType.Builder.create(XPBlockTileEntity::new, xp_block).build(null).setRegistryName(new ResourceLocation(xp_block.getRegistryName().toString())));
 	}
 
 	@SubscribeEvent
 	public static void onRegisterItems(RegistryEvent.Register<Item> event)
 	{
-		event.getRegistry().register(new ItemBlockXPBlock(xp_block).setRegistryName(xp_block.getRegistryName()));
+		event.getRegistry().register(new XPItemBlock(xp_block).setRegistryName(xp_block.getRegistryName()));
 	}
 
 	public void onRightClickBlock(RightClickBlock event)
@@ -79,12 +80,12 @@ public class GlobalXP
 			{
 				int playerXP = EnchantmentUtils.getPlayerXP(player);
 
-				((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos())).addXP(playerXP);
+				((XPBlockTileEntity)event.getWorld().getTileEntity(event.getPos())).addXP(playerXP);
 				EnchantmentUtils.addPlayerXP(player, -playerXP); // set player xp to 0
 			}
 			else //not sneaking = remove exactly enough xp from the block to get player to the next level
 			{
-				TileEntityXPBlock te = ((TileEntityXPBlock)event.getWorld().getTileEntity(event.getPos()));
+				XPBlockTileEntity te = ((XPBlockTileEntity)event.getWorld().getTileEntity(event.getPos()));
 				int neededXP = XPUtils.getXPToNextLevel(EnchantmentUtils.getPlayerXP(player));
 				int availableXP = te.removeXP(neededXP);
 

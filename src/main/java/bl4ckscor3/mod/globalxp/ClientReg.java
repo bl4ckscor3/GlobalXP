@@ -1,6 +1,6 @@
 package bl4ckscor3.mod.globalxp;
 
-import bl4ckscor3.mod.globalxp.renderer.TileEntityXPBlockRenderer;
+import bl4ckscor3.mod.globalxp.renderer.XPBlockTileEntityRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,7 +16,7 @@ public class ClientReg
 	@SubscribeEvent
 	public static void onFMLClientSetup(FMLClientSetupEvent event)
 	{
-		ClientRegistry.bindTileEntityRenderer(GlobalXP.teTypeXpBlock, new TileEntityXPBlockRenderer());
+		ClientRegistry.bindTileEntityRenderer(GlobalXP.teTypeXpBlock, new XPBlockTileEntityRenderer());
 		RenderTypeLookup.setRenderLayer(GlobalXP.xp_block, RenderType.func_228643_e_());
 	}
 }

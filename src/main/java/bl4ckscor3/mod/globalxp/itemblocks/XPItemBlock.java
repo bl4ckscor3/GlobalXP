@@ -15,9 +15,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class ItemBlockXPBlock extends BlockItem
+public class XPItemBlock extends BlockItem
 {
-	public ItemBlockXPBlock(Block block)
+	public XPItemBlock(Block block)
 	{
 		super(block, new Item.Properties().group(ItemGroup.MISC));
 	}

@@ -3,7 +3,7 @@ package bl4ckscor3.mod.globalxp.renderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import bl4ckscor3.mod.globalxp.Configuration;
-import bl4ckscor3.mod.globalxp.tileentity.TileEntityXPBlock;
+import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Quaternion;
@@ -15,17 +15,17 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
-public class TileEntityXPBlockRenderer extends TileEntityRenderer<TileEntityXPBlock>
+public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEntity>
 {
 	private ItemStack emerald = new ItemStack(Items.EMERALD, 1);
 
-	public TileEntityXPBlockRenderer()
+	public XPBlockTileEntityRenderer()
 	{
 		super(TileEntityRendererDispatcher.instance);
 	}
 
 	@Override
-	public void func_225616_a_(TileEntityXPBlock te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int p_225616_5_, int p_225616_6_)
+	public void func_225616_a_(XPBlockTileEntity te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int p_225616_5_, int p_225616_6_)
 	{
 		//TODO: fix nameplate rendering
 		//		if(Configuration.CONFIG.renderNameplate.get())
