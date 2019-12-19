@@ -11,19 +11,18 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.14.4-v1.4.10'
+version = '1.15.1-v1.4.10'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190912-1.14.3'
+    mappings channel: 'snapshot', version: '20191217-1.14.3'
 	
     runs {
         client {
             workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -35,7 +34,6 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -58,9 +56,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.0'
-    compile "mcp.mobius.waila:Hwyla:1.10.3-B61_1.14.2"
-	compile "mcjty.theoneprobe:TheOneProbe-1.14:1.14-1.4.30-6"
+    minecraft 'net.minecraftforge:forge:1.15.1-30.0.11'
+    //compile "mcp.mobius.waila:Hwyla:1.10.3-B61_1.14.2"
+	//compile "mcjty.theoneprobe:TheOneProbe-1.14:1.14-1.4.30-6"
 }
 
 jar {

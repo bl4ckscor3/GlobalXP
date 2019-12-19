@@ -73,9 +73,9 @@ public class GlobalXP
 
 		if(!event.getWorld().isRemote)
 		{
-			PlayerEntity player = event.getEntityPlayer();
+			PlayerEntity player = event.getPlayer();
 
-			if(player.isSneaking()) //sneaking = add all player xp to the block
+			if(player.func_225608_bj_()) //crouching = add all player xp to the block
 			{
 				int playerXP = EnchantmentUtils.getPlayerXP(player);
 
