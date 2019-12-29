@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.11
+- Fixed compatibility with Forge 30.0.17+
+
 #### v1.4.10
 - Added Polish translation (Thanks kacpergibas438!)
 

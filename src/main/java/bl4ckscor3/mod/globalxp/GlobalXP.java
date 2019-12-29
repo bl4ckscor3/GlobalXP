@@ -76,7 +76,7 @@ public class GlobalXP
 		{
 			PlayerEntity player = event.getPlayer();
 
-			if(player.func_225608_bj_()) //crouching = add all player xp to the block
+			if(player.isCrouching()) //add all player xp to the block
 			{
 				int playerXP = EnchantmentUtils.getPlayerXP(player);
 

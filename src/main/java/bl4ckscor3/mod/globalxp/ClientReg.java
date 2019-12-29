@@ -16,7 +16,7 @@ public class ClientReg
 	@SubscribeEvent
 	public static void onFMLClientSetup(FMLClientSetupEvent event)
 	{
-		ClientRegistry.bindTileEntityRenderer(GlobalXP.teTypeXpBlock, new XPBlockTileEntityRenderer());
+		ClientRegistry.bindTileEntityRenderer(GlobalXP.teTypeXpBlock, XPBlockTileEntityRenderer::new);
 		RenderTypeLookup.setRenderLayer(GlobalXP.xp_block, RenderType.func_228643_e_());
 	}
 }

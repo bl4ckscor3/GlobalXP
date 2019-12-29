@@ -25,9 +25,9 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 {
 	private ItemStack emerald = new ItemStack(Items.EMERALD, 1);
 
-	public XPBlockTileEntityRenderer()
+	public XPBlockTileEntityRenderer(TileEntityRendererDispatcher terd)
 	{
-		super(TileEntityRendererDispatcher.instance);
+		super(terd);
 	}
 
 	@Override
