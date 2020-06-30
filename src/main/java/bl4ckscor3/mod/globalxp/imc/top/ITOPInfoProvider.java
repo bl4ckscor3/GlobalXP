@@ -1,12 +1,5 @@
 package bl4ckscor3.mod.globalxp.imc.top;
 
-import mcjty.theoneprobe.api.IProbeHitData;
-import mcjty.theoneprobe.api.IProbeInfo;
-import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.World;
-
 public interface ITOPInfoProvider
 {
 	/**
@@ -18,5 +11,5 @@ public interface ITOPInfoProvider
 	 * @param blockState The block state of the block being looked at
 	 * @param data Access information about where the probe hit the block
 	 */
-	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data);
+	//public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data);
 }

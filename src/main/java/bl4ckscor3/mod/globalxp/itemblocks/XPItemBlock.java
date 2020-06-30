@@ -10,13 +10,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class XPItemBlock extends BlockItem
 {
+	private static final Style STYLE = Style.field_240709_b_.func_240712_a_(TextFormatting.GRAY); //INSTANCE, setTextFormatting
+
 	public XPItemBlock(Block block)
 	{
 		super(block, new Item.Properties().group(ItemGroup.MISC));
@@ -27,15 +29,15 @@ public class XPItemBlock extends BlockItem
 	{
 		if(!stack.hasTag())
 		{
-			tooltip.add(new StringTextComponent(TextFormatting.GRAY + new TranslationTextComponent("info.globalxp.levels", 0).getFormattedText()));
-			tooltip.add(new StringTextComponent(TextFormatting.GRAY + new TranslationTextComponent("info.globalxp.xp", 0).getFormattedText()));
+			tooltip.add(new TranslationTextComponent("info.globalxp.levels", 0).func_230530_a_(STYLE));
+			tooltip.add(new TranslationTextComponent("info.globalxp.xp", 0).func_230530_a_(STYLE));
 		}
 		else
 		{
 			int storedXP = stack.getTag().getCompound("BlockEntityTag").getInt("stored_xp");
 
-			tooltip.add(new StringTextComponent(TextFormatting.GRAY + new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", XPUtils.calculateStoredLevels(storedXP))).getFormattedText()));
-			tooltip.add(new StringTextComponent(TextFormatting.GRAY + new TranslationTextComponent("info.globalxp.xp", storedXP).getFormattedText()));
+			tooltip.add(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", XPUtils.calculateStoredLevels(storedXP))).func_230530_a_(STYLE)); //setStyle
+			tooltip.add(new TranslationTextComponent("info.globalxp.xp", storedXP).func_230530_a_(STYLE));
 		}
 	}
 }

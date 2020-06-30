@@ -11,14 +11,14 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.15.2-v1.4.11'
+version = '1.16.1-v1.4.11'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200130-1.15.1'
+    mappings channel: 'snapshot', version: '20200514-1.16'
 	
     runs {
         client {
@@ -47,7 +47,7 @@ minecraft {
 
 repositories {  
     maven {
-		url "http://tehnut.info/maven"
+		url "http://maven.tehnut.info"
 	}
 	maven { // TOP
 		name 'tterrag maven'
@@ -56,9 +56,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.0.14'
-    compile "mcp.mobius.waila:Hwyla:1.10.7-B71_1.15.1"
-	compile "mcjty.theoneprobe:TheOneProbe-1.15:1.15-2.0.0-3"
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.34'
+//    compile "mcp.mobius.waila:Hwyla:1.10.7-B71_1.15.1"
+//    compile "mcjty.theoneprobe:TheOneProbe-1.15:1.15-2.0.0-3"
 }
 
 jar {

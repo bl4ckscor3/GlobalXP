@@ -2,6 +2,7 @@ package bl4ckscor3.mod.globalxp.tileentity;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -65,7 +66,7 @@ public class XPBlockTileEntity extends TileEntity
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
-		read(pkt.getNbtCompound());
+		func_230337_a_(getBlockState(), pkt.getNbtCompound());
 	}
 
 	/**
@@ -121,9 +122,9 @@ public class XPBlockTileEntity extends TileEntity
 	}
 
 	@Override
-	public void read(CompoundNBT tag)
+	public void func_230337_a_(BlockState state, CompoundNBT tag) //read
 	{
 		setStoredXP(tag.getInt("stored_xp"));
-		super.read(tag);
+		super.func_230337_a_(state, tag);
 	}
 }

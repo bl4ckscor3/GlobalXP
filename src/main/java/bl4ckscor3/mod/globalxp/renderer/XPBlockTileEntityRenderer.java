@@ -7,8 +7,6 @@ import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Matrix4f;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -18,6 +16,8 @@ import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.StringTextComponent;
 
 public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEntity>
@@ -30,7 +30,7 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 	}
 
 	@Override
-	public void render(XPBlockTileEntity te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int p_225616_5_, int p_225616_6_)
+	public void render(XPBlockTileEntity te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay)
 	{
 		if(Configuration.CONFIG.renderNameplate.get())
 		{
@@ -38,20 +38,20 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 
 			if(te != null && te.getPos() != null && rtr != null && rtr.getType() == Type.BLOCK && ((BlockRayTraceResult)rtr).getPos() != null && ((BlockRayTraceResult)rtr).getPos().equals(te.getPos()))
 			{
-				String levelsString = new StringTextComponent((int)te.getStoredLevels() + " (" + te.getStoredXP() + ")").getFormattedText();
+				StringTextComponent levelsString = new StringTextComponent((int)te.getStoredLevels() + " (" + te.getStoredXP() + ")");
 				float opacity = Minecraft.getInstance().gameSettings.getTextBackgroundOpacity(0.25F);
 				int j = (int)(opacity * 255.0F) << 24;
 				FontRenderer fontRenderer = renderDispatcher.fontRenderer;
-				float halfWidth = -fontRenderer.getStringWidth(levelsString) / 2;
+				float halfWidth = -fontRenderer.func_238414_a_(levelsString) / 2; //getStringWidth
 				Matrix4f positionMatrix;
 
 				stack.push();
 				stack.translate(0.5D, 1.5D, 0.5D);
 				stack.rotate(Minecraft.getInstance().getRenderManager().getCameraOrientation());
 				stack.scale(-0.025F, -0.025F, 0.025F);
-				positionMatrix = stack.getLast().getPositionMatrix();
-				fontRenderer.renderString(levelsString, halfWidth, 0, 553648127, false, positionMatrix, buffer, true, j, p_225616_5_);
-				fontRenderer.renderString(levelsString, halfWidth, 0, -1, false, positionMatrix, buffer, false, 0, p_225616_5_);
+				positionMatrix = stack.getLast().getMatrix();
+				fontRenderer.func_238416_a_(levelsString, halfWidth, 0, 553648127, false, positionMatrix, buffer, true, j, combinedLight); //renderString
+				fontRenderer.func_238416_a_(levelsString, halfWidth, 0, -1, false, positionMatrix, buffer, false, 0, combinedLight);
 				stack.pop();
 			}
 		}
@@ -62,6 +62,6 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 
 		stack.translate(0.5D, 0.4D + offset, 0.5D);
 		stack.rotate(Vector3f.YP.rotationDegrees(time * 4.0F * Configuration.CONFIG.spinSpeed.get().floatValue()));
-		Minecraft.getInstance().getItemRenderer().renderItem(emerald, TransformType.GROUND, false, stack, buffer, p_225616_5_, p_225616_6_, model);
+		Minecraft.getInstance().getItemRenderer().renderItem(emerald, TransformType.GROUND, false, stack, buffer, combinedLight, combinedOverlay, model);
 	}
 }
