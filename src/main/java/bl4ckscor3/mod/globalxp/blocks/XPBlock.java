@@ -3,6 +3,9 @@ package bl4ckscor3.mod.globalxp.blocks;
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
+import mcjty.theoneprobe.api.IProbeHitData;
+import mcjty.theoneprobe.api.IProbeInfo;
+import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
@@ -15,6 +18,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -117,17 +121,17 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		return new XPBlockTileEntity();
 	}
 
-	//	@Override
-	//	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data)
-	//	{
-	//		TileEntity te = world.getTileEntity(data.getPos());
-	//
-	//		if(te instanceof XPBlockTileEntity)
-	//		{
-	//			probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", ((XPBlockTileEntity)te).getStoredLevels())).getFormattedText());
-	//
-	//			if(mode == ProbeMode.EXTENDED)
-	//				probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.xp", ((XPBlockTileEntity)te).getStoredXP()).getFormattedText());
-	//		}
-	//	}
+	@Override
+	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data)
+	{
+		TileEntity te = world.getTileEntity(data.getPos());
+
+		if(te instanceof XPBlockTileEntity)
+		{
+			probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", ((XPBlockTileEntity)te).getStoredLevels())));
+
+			if(mode == ProbeMode.EXTENDED)
+				probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.xp", ((XPBlockTileEntity)te).getStoredXP()));
+		}
+	}
 }
