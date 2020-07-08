@@ -18,7 +18,7 @@ archivesBaseName = 'globalxp'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200514-1.16'
+    mappings channel: 'snapshot', version: '20200707-1.16.1'
 	
     runs {
         client {
@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.1-32.0.34'
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.57'
 //    compile "mcp.mobius.waila:Hwyla:1.10.7-B71_1.15.1"
 //    compile "mcjty.theoneprobe:TheOneProbe-1.15:1.15-2.0.0-3"
 }

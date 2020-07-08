@@ -66,7 +66,7 @@ public class XPBlockTileEntity extends TileEntity
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
-		func_230337_a_(getBlockState(), pkt.getNbtCompound());
+		read(getBlockState(), pkt.getNbtCompound());
 	}
 
 	/**
@@ -122,9 +122,9 @@ public class XPBlockTileEntity extends TileEntity
 	}
 
 	@Override
-	public void func_230337_a_(BlockState state, CompoundNBT tag) //read
+	public void read(BlockState state, CompoundNBT tag)
 	{
 		setStoredXP(tag.getInt("stored_xp"));
-		super.func_230337_a_(state, tag);
+		super.read(state, tag);
 	}
 }

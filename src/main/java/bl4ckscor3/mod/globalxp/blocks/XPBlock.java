@@ -64,7 +64,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			tag.putInt("x", pos.getX());
 			tag.putInt("y", pos.getY());
 			tag.putInt("z", pos.getZ());
-			((XPBlockTileEntity)te).func_230337_a_(state, tag);
+			((XPBlockTileEntity)te).read(state, tag);
 			((XPBlockTileEntity)te).markDirty();
 			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 		}

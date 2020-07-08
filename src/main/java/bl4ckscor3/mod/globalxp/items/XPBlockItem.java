@@ -1,4 +1,4 @@
-package bl4ckscor3.mod.globalxp.itemblocks;
+package bl4ckscor3.mod.globalxp.items;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class XPItemBlock extends BlockItem
+public class XPBlockItem extends BlockItem
 {
-	private static final Style STYLE = Style.field_240709_b_.func_240712_a_(TextFormatting.GRAY); //INSTANCE, setTextFormatting
+	private static final Style STYLE = Style.EMPTY.applyFormatting(TextFormatting.GRAY);
 
-	public XPItemBlock(Block block)
+	public XPBlockItem(Block block)
 	{
 		super(block, new Item.Properties().group(ItemGroup.MISC));
 	}

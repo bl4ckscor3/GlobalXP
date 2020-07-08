@@ -2,7 +2,7 @@ package bl4ckscor3.mod.globalxp;
 
 import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
-import bl4ckscor3.mod.globalxp.itemblocks.XPItemBlock;
+import bl4ckscor3.mod.globalxp.items.XPBlockItem;
 import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.block.Block;
@@ -64,7 +64,7 @@ public class GlobalXP
 	@SubscribeEvent
 	public static void onRegisterItems(RegistryEvent.Register<Item> event)
 	{
-		event.getRegistry().register(new XPItemBlock(xp_block).setRegistryName(xp_block.getRegistryName()));
+		event.getRegistry().register(new XPBlockItem(xp_block).setRegistryName(xp_block.getRegistryName()));
 	}
 
 	public void onRightClickBlock(RightClickBlock event)
