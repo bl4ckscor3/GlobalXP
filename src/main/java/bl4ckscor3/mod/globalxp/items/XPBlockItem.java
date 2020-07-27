@@ -29,15 +29,15 @@ public class XPBlockItem extends BlockItem
 	{
 		if(!stack.hasTag())
 		{
-			tooltip.add(new TranslationTextComponent("info.globalxp.levels", 0).func_230530_a_(STYLE));
-			tooltip.add(new TranslationTextComponent("info.globalxp.xp", 0).func_230530_a_(STYLE));
+			tooltip.add(new TranslationTextComponent("info.globalxp.levels", 0).setStyle(STYLE));
+			tooltip.add(new TranslationTextComponent("info.globalxp.xp", 0).setStyle(STYLE));
 		}
 		else
 		{
 			int storedXP = stack.getTag().getCompound("BlockEntityTag").getInt("stored_xp");
 
-			tooltip.add(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", XPUtils.calculateStoredLevels(storedXP))).func_230530_a_(STYLE)); //setStyle
-			tooltip.add(new TranslationTextComponent("info.globalxp.xp", storedXP).func_230530_a_(STYLE));
+			tooltip.add(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", XPUtils.calculateStoredLevels(storedXP))).setStyle(STYLE));
+			tooltip.add(new TranslationTextComponent("info.globalxp.xp", storedXP).setStyle(STYLE));
 		}
 	}
 }

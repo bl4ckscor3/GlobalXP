@@ -11,14 +11,14 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.16.1-v1.4.12'
+version = '1.16.1-v1.4.13'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200707-1.16.1'
+    mappings channel: 'snapshot', version: '20200723-1.16.1'
 	
     runs {
         client {
@@ -56,8 +56,8 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.1-32.0.57'
-//    compile "mcp.mobius.waila:Hwyla:1.10.7-B71_1.15.1"
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.75'
+    implementation fg.deobf("mcp.mobius.waila:Hwyla:1.10.9-B76_1.16.1")
 	implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.0-beta-3")
 }
 
@@ -65,9 +65,9 @@ jar {
     manifest {
         attributes(["Specification-Title": "Global XP",
                     "Specification-Vendor": "bl4ckscor3",
-                    "Specification-Version": "v1.4.12",
+                    "Specification-Version": "v1.4.13",
                     "Implementation-Title": "Global XP",
-                    "Implementation-Version": "v1.4.12",
+                    "Implementation-Version": "v1.4.13",
                     "Implementation-Vendor" :"bl4ckscor3",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }

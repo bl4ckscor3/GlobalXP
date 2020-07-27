@@ -1,5 +1,11 @@
 # GlobalXP Changelog
 
+#### v1.4.13
+- Reenable HWYLA integration
+
+#### v1.4.12
+- Reenable and fix The One Probe integration
+
 #### v1.4.11
 - Fixed compatibility with Forge 30.0.17+
 
