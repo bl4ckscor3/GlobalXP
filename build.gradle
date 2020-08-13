@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.16.1-v1.4.13'
+version = '1.16.2-v1.4.13'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp'
 
@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.1-32.0.75'
+    minecraft 'net.minecraftforge:forge:1.16.2-33.0.0'
     implementation fg.deobf("mcp.mobius.waila:Hwyla:1.10.9-B76_1.16.1")
 	implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.0-beta-3")
 }
