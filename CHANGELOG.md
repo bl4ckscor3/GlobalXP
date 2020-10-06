@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.14
+- Fixed block interaction in claimed FTB Chunks
+
 #### v1.4.13
 - Reenable HWYLA integration
 

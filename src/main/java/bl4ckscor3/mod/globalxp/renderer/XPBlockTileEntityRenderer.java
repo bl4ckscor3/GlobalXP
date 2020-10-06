@@ -42,7 +42,7 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 				float opacity = Minecraft.getInstance().gameSettings.getTextBackgroundOpacity(0.25F);
 				int j = (int)(opacity * 255.0F) << 24;
 				FontRenderer fontRenderer = renderDispatcher.fontRenderer;
-				float halfWidth = -fontRenderer.func_238414_a_(levelsString) / 2; //getStringWidth
+				float halfWidth = -fontRenderer.getStringPropertyWidth(levelsString) / 2;
 				Matrix4f positionMatrix;
 
 				stack.push();

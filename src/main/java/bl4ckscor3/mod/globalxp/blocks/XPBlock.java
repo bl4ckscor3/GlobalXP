@@ -3,6 +3,7 @@ package bl4ckscor3.mod.globalxp.blocks;
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
+import bl4ckscor3.mod.globalxp.util.XPUtils;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -15,12 +16,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import openmods.utils.EnchantmentUtils;
 
 public class XPBlock extends Block implements ITOPInfoProvider
 {
@@ -35,6 +40,39 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
 		return SHAPE;
+	}
+
+	@Override
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
+	{
+		TileEntity tile = world.getTileEntity(pos);
+
+		if(tile instanceof XPBlockTileEntity)
+		{
+			if(!world.isRemote)
+			{
+				XPBlockTileEntity te = (XPBlockTileEntity)tile;
+
+				if(player.isCrouching()) //add all player xp to the block
+				{
+					int playerXP = EnchantmentUtils.getPlayerXP(player);
+
+					((XPBlockTileEntity)world.getTileEntity(pos)).addXP(playerXP);
+					EnchantmentUtils.addPlayerXP(player, -playerXP); // set player xp to 0
+				}
+				else //not sneaking = remove exactly enough xp from the block to get player to the next level
+				{
+					int neededXP = XPUtils.getXPToNextLevel(EnchantmentUtils.getPlayerXP(player));
+					int availableXP = te.removeXP(neededXP);
+
+					EnchantmentUtils.addPlayerXP(player, availableXP);
+				}
+			}
+
+			return ActionResultType.SUCCESS;
+		}
+
+		return ActionResultType.FAIL;
 	}
 
 	@Override
