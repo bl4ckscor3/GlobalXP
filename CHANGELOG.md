@@ -1,4 +1,6 @@
 # GlobalXP Changelog
+#### v1.4.12
+- Fixed block interaction when using FTB Utilities' claimed chunks
 
 #### v1.4.11
 - Fixed compatibility with Forge 30.0.17+

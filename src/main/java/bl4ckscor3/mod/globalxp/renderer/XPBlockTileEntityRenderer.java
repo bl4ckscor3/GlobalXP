@@ -49,7 +49,7 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 				stack.translate(0.5D, 1.5D, 0.5D);
 				stack.rotate(Minecraft.getInstance().getRenderManager().getCameraOrientation());
 				stack.scale(-0.025F, -0.025F, 0.025F);
-				positionMatrix = stack.getLast().getPositionMatrix();
+				positionMatrix = stack.getLast().getMatrix();
 				fontRenderer.renderString(levelsString, halfWidth, 0, 553648127, false, positionMatrix, buffer, true, j, p_225616_5_);
 				fontRenderer.renderString(levelsString, halfWidth, 0, -1, false, positionMatrix, buffer, false, 0, p_225616_5_);
 				stack.pop();
