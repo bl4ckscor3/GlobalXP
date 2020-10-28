@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.4.15
+- Tentative fix for [#22](https://github.com/bl4ckscor3/GlobalXP/issues/22)
+
 #### v1.4.14
 - Fixed block interaction in claimed FTB Chunks
 

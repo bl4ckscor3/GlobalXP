@@ -32,6 +32,8 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 	@Override
 	public void render(XPBlockTileEntity te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay)
 	{
+		stack.push();
+
 		if(Configuration.CONFIG.renderNameplate.get())
 		{
 			RayTraceResult rtr = renderDispatcher.cameraHitResult;
@@ -63,5 +65,6 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 		stack.translate(0.5D, 0.4D + offset, 0.5D);
 		stack.rotate(Vector3f.YP.rotationDegrees(time * 4.0F * Configuration.CONFIG.spinSpeed.get().floatValue()));
 		Minecraft.getInstance().getItemRenderer().renderItem(emerald, TransformType.GROUND, false, stack, buffer, combinedLight, combinedOverlay, model);
+		stack.pop();
 	}
 }
