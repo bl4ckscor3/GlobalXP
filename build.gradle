@@ -61,9 +61,7 @@ dependencies {
 	implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.3-beta-6")
 }
 
-processResources { 
-	exclude ".cache"
- 
+processResources {  
 	//replace ${version} in mods.toml
 	inputs.property 'version', project.version
 
