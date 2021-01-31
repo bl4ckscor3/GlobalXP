@@ -16,6 +16,7 @@ public class Configuration
 	public DoubleValue bobSpeed;
 	public BooleanValue renderNameplate;
 	public IntValue xpForComparator;
+	public BooleanValue captureXP;
 
 	static
 	{
@@ -39,5 +40,8 @@ public class Configuration
 		xpForComparator = builder
 				.comment("The amount of XP needed for the comparator to output a redstone signal of strength one. By default, the signal will be at full strength if the block has 30 levels stored.")
 				.defineInRange("xpForComparator", 1395 / 15, 0, Integer.MAX_VALUE / 15);
+		captureXP = builder
+				.comment("Whether the XP Block will pickup any XP orbs around it")
+				.define("captureXP", true);
 	}
 }

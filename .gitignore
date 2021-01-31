@@ -5,3 +5,28 @@
 /.gradle
 /libs
 /logs
+/.idea/
+
+# eclipse
+bin
+eclipse
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+logs
+
+# other
+run
