@@ -1,5 +1,9 @@
 # GlobalXP Changelog
 
+### v1.5
+- Added ability to pick up XP orbs (Thanks Bletch1971!)
+- Fixed configuration option for comparator output not working properly. The config option has been moved to server config (found in the serverconfig folder in the world folder)
+
 #### v1.4.15
 - Tentative fix for [#22](https://github.com/bl4ckscor3/GlobalXP/issues/22)
 

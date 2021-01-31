@@ -34,7 +34,7 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 	{
 		stack.push();
 
-		if(Configuration.CONFIG.renderNameplate.get())
+		if(Configuration.CLIENT.renderNameplate.get())
 		{
 			RayTraceResult rtr = renderDispatcher.cameraHitResult;
 
@@ -59,11 +59,11 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 		}
 
 		float time = te.getWorld().getWorldInfo().getGameTime() + partialTicks;
-		double offset = Math.sin(time * Configuration.CONFIG.bobSpeed.get() / 8.0D) / 10.0D;
+		double offset = Math.sin(time * Configuration.CLIENT.bobSpeed.get() / 8.0D) / 10.0D;
 		IBakedModel model = Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(emerald, te.getWorld(), null);
 
 		stack.translate(0.5D, 0.4D + offset, 0.5D);
-		stack.rotate(Vector3f.YP.rotationDegrees(time * 4.0F * Configuration.CONFIG.spinSpeed.get().floatValue()));
+		stack.rotate(Vector3f.YP.rotationDegrees(time * 4.0F * Configuration.CLIENT.spinSpeed.get().floatValue()));
 		Minecraft.getInstance().getItemRenderer().renderItem(emerald, TransformType.GROUND, false, stack, buffer, combinedLight, combinedOverlay, model);
 		stack.pop();
 	}
