@@ -1,12 +1,3 @@
-/bin
-/build
-/.project
-/.classpath
-/.gradle
-/libs
-/logs
-/.idea/
-
 # eclipse
 bin
 eclipse
