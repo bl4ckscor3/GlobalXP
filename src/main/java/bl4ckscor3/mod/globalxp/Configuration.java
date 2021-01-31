@@ -9,9 +9,14 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class Configuration
 {
+	private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+	private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
+
+	public static final ForgeConfigSpec CONFIG_COMMON;
 	public static final ForgeConfigSpec CONFIG_SPEC;
 	public static final Configuration CONFIG;
 
+	public static BooleanValue captureXP;
 	public DoubleValue spinSpeed;
 	public DoubleValue bobSpeed;
 	public BooleanValue renderNameplate;
@@ -19,8 +24,13 @@ public class Configuration
 
 	static
 	{
-		Pair<Configuration,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Configuration::new);
+		// needs to be a configuration option for both Client and Server.
+		captureXP = COMMON_BUILDER
+				.comment("Whether the XP Block will pickup any XP orbs around it")
+				.define("captureXP", true);
+		CONFIG_COMMON = COMMON_BUILDER.build();
 
+		Pair<Configuration,ForgeConfigSpec> specPair = CLIENT_BUILDER.configure(Configuration::new);
 		CONFIG_SPEC = specPair.getRight();
 		CONFIG = specPair.getLeft();
 	}
