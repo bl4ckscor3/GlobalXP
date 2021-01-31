@@ -1,14 +1,20 @@
 package bl4ckscor3.mod.globalxp.tileentity;
 
+import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.math.AxisAlignedBB;
 
-public class XPBlockTileEntity extends TileEntity
-{
+import java.util.List;
+
+public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity {
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 	private boolean destroyedByCreativePlayer;
@@ -125,5 +131,71 @@ public class XPBlockTileEntity extends TileEntity
 	{
 		setStoredXP(tag.getInt("stored_xp"));
 		super.read(tag);
+	}
+
+	private int modifierAmount = 0;
+
+	@Override
+	public void tick() {
+		if (getWorld().isRemote || !Configuration.captureXP.get()) {
+			return;
+		}
+
+		if (getWorld().getGameTime() % 5 == 0) {
+			captureDroppedXP();
+		}
+	}
+
+	private void captureDroppedXP() {
+		for (ExperienceOrbEntity entity : getCaptureXP()) {
+			int amount = entity.getXpValue();
+			if (entity.isAlive() && getStoredXP() + amount <= getCapacity()) {
+				addXP(amount);
+				entity.remove();
+			}
+		}
+	}
+
+	/**
+	 * Gets all the xp orbs within a certain area around the tile entity.
+	 */
+	private List<ExperienceOrbEntity> getCaptureXP() {
+		return getWorld().<ExperienceOrbEntity>getEntitiesWithinAABB(ExperienceOrbEntity.class, getAABBWithModifiers(), EntityPredicates.IS_ALIVE);
+	}
+
+	/**
+	 * Gets the area around the tile entity to search for xp orbs.
+	 */
+	private AxisAlignedBB getAABBWithModifiers() {
+		double x = getPos().getX() + 0.5D;
+		double y = getPos().getY() + 0.5D;
+		double z = getPos().getZ() + 0.5D;
+
+		return new AxisAlignedBB(x - 3.5D - getModifierAmount(), y - 3.5D - getModifierAmount(), z - 3.5D - getModifierAmount(), x + 3.5D + getModifierAmount(), y + 3.5D + getModifierAmount(), z + 3.5D + getModifierAmount());
+	}
+
+	/**
+	 * Gets the total amount of XP that can be stored in this tile entity
+	 * @return The total amount of XP that can be stored in this tile entity
+	 */
+	public int getCapacity() {
+		return Integer.MAX_VALUE;
+	}
+
+	/**
+	 * Gets the amount of the area modifier.
+	 * Used to increase/decrease the search area.
+	 * @return The modifier amount to increase the search area.
+	 */
+	public int getModifierAmount() {
+		return modifierAmount;
+	}
+
+	/**
+	 * Sets the amount of the area modifier.
+	 * Used to increase/decrease the search area.
+	 */
+	public void setModifierAmount(int amount) {
+		modifierAmount = Math.max(0, amount);
 	}
 }

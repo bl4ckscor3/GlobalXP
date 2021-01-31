@@ -33,6 +33,7 @@ public class GlobalXP
 	public GlobalXP()
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CONFIG_SPEC);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Configuration.CONFIG_COMMON);
 	}
 
 	@SubscribeEvent
