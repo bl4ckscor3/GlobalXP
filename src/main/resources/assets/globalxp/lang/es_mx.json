@@ -1,11 +1,5 @@
 {
     "block.globalxp.xp_block": "Almacenador de EXP",
     "info.globalxp.levels": "%s niveles almacenados",
-    "info.globalxp.xp": "%s EXP almacenados",
-    "globalxp.config.spinspeed": "Velocidad de giro",
-    "globalxp.config.spinspeed.tooltip": "¿Qué tan rápido debe girar la esmeralda? (multiplica la velocidad predeterminada).",
-    "globalxp.config.bobspeed": "Velocidad de animación",
-    "globalxp.config.bobspeed.tooltip": "¿Qué tan rápido la esmeralda debe hacer la animación de subir y bajar? (multiplica la velocidad predeterminada).",
-    "globalxp.config.renderNameplate": "Mostrar información en el bloque",
-    "globalxp.config.renderNameplate.tooltip": "Ajusta si la información de los niveles almacenados se debe mostrar encima del bloque de XP"
+    "info.globalxp.xp": "%s EXP almacenados"
 }

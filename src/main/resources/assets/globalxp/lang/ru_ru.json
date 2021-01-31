@@ -1,11 +1,5 @@
 {
     "block.globalxp.xp_block": "Блок Опыта",
     "info.globalxp.levels": "%s уровней сохранено",
-    "info.globalxp.xp": "%s опыта сохранено",
-    "globalxp.config.spinspeed": "Скорость вращения изумруда",
-    "globalxp.config.spinspeed.tooltip": "Насколько быстро изумруд должен вращаться (множитель стандартной скорости)",
-    "globalxp.config.bobspeed": "Скорость подпрыгивания изумруда",
-    "globalxp.config.bobspeed.tooltip": "Насколько быстро изумруд должен подпрыгивать (множитель стандартной скорости)",
-    "globalxp.config.renderNameplate": "Отображать информацию об опыте",
-    "globalxp.config.renderNameplate.tooltip": "Должна ли информация о сохранённом опыте отображаться над блоком опыта"
+    "info.globalxp.xp": "%s опыта сохранено"
 }
