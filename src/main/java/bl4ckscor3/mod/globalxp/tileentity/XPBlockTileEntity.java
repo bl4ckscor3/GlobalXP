@@ -1,5 +1,7 @@
 package bl4ckscor3.mod.globalxp.tileentity;
 
+import java.util.List;
+
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
@@ -13,12 +15,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
 
-import java.util.List;
-
-public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity {
+public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
+{
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 	private boolean destroyedByCreativePlayer;
+	private int modifierAmount = 0;
 
 	public XPBlockTileEntity()
 	{
@@ -134,23 +136,24 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 		super.read(state, tag);
 	}
 
-	private int modifierAmount = 0;
-
 	@Override
-	public void tick() {
-		if (getWorld().isRemote || !Configuration.captureXP.get()) {
+	public void tick()
+	{
+		if(world.isRemote || !Configuration.captureXP.get())
 			return;
-		}
 
-		if (getWorld().getGameTime() % 5 == 0) {
+		if(world.getGameTime() % 5 == 0)
 			captureDroppedXP();
-		}
 	}
 
-	private void captureDroppedXP() {
-		for (ExperienceOrbEntity entity : getCaptureXP()) {
+	private void captureDroppedXP()
+	{
+		for(ExperienceOrbEntity entity : getXPOrbsToCapture())
+		{
 			int amount = entity.getXpValue();
-			if (entity.isAlive() && getStoredXP() + amount <= getCapacity()) {
+
+			if(entity.isAlive() && getStoredXP() + amount <= getCapacity())
+			{
 				addXP(amount);
 				entity.remove();
 			}
@@ -158,16 +161,18 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	/**
-	 * Gets all the xp orbs within a certain area around the tile entity.
+	 * @return All the xp orbs within a certain area around the tile entity.
 	 */
-	private List<ExperienceOrbEntity> getCaptureXP() {
-		return getWorld().<ExperienceOrbEntity>getEntitiesWithinAABB(ExperienceOrbEntity.class, getAABBWithModifiers(), EntityPredicates.IS_ALIVE);
+	private List<ExperienceOrbEntity> getXPOrbsToCapture()
+	{
+		return world.<ExperienceOrbEntity>getEntitiesWithinAABB(ExperienceOrbEntity.class, getAABBWithModifiers(), EntityPredicates.IS_ALIVE);
 	}
 
 	/**
-	 * Gets the area around the tile entity to search for xp orbs.
+	 * @return The area around the tile entity to search for xp orbs.
 	 */
-	private AxisAlignedBB getAABBWithModifiers() {
+	private AxisAlignedBB getAABBWithModifiers()
+	{
 		double x = getPos().getX() + 0.5D;
 		double y = getPos().getY() + 0.5D;
 		double z = getPos().getZ() + 0.5D;
@@ -179,7 +184,8 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	 * Gets the total amount of XP that can be stored in this tile entity
 	 * @return The total amount of XP that can be stored in this tile entity
 	 */
-	public int getCapacity() {
+	public int getCapacity()
+	{
 		return Integer.MAX_VALUE;
 	}
 
@@ -188,7 +194,8 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	 * Used to increase/decrease the search area.
 	 * @return The modifier amount to increase the search area.
 	 */
-	public int getModifierAmount() {
+	public int getModifierAmount()
+	{
 		return modifierAmount;
 	}
 
@@ -196,7 +203,8 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	 * Sets the amount of the area modifier.
 	 * Used to increase/decrease the search area.
 	 */
-	public void setModifierAmount(int amount) {
+	public void setModifierAmount(int amount)
+	{
 		modifierAmount = Math.max(0, amount);
 	}
 }
