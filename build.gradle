@@ -61,6 +61,21 @@ dependencies {
 	implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.15:1.15-2.0.0-3")
 }
 
+processResources {  
+	//replace ${version} in mods.toml
+	inputs.property 'version', project.version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include 'META-INF/mods.toml'
+
+		expand 'version': project.version
+	}
+
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'META-INF/mods.toml'
+	}
+}
+
 jar {
     manifest {
         attributes(["Specification-Title": "Global XP",

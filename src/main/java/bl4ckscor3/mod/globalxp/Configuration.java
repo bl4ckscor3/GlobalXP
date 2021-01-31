@@ -47,16 +47,20 @@ public class Configuration
 	public static class Server
 	{
 		public IntValue xpForComparator;
-		public BooleanValue captureXP;
+		public BooleanValue pickupXP;
+		public DoubleValue pickupRange;
 
 		Server(ForgeConfigSpec.Builder builder)
 		{
 			xpForComparator = builder
 					.comment("The amount of XP needed for the comparator to output a redstone signal of strength one. By default, the signal will be at full strength if the block has 30 levels stored.")
 					.defineInRange("xpForComparator", 1395 / 15, 0, Integer.MAX_VALUE / 15);
-			captureXP = builder
+			pickupXP = builder
 					.comment("Whether the XP Block will pickup any XP orbs around it")
-					.define("captureXP", true);
+					.define("pickupXP", true);
+			pickupRange = builder
+					.comment("The range in blocks around the XP Block in which XP orbs will be picked up")
+					.defineInRange("pickupRange", 3.0D, 0.0D, 50.0D);
 		}
 	}
 }

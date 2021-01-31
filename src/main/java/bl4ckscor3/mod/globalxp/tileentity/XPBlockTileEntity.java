@@ -1,7 +1,5 @@
 package bl4ckscor3.mod.globalxp.tileentity;
 
-import java.util.List;
-
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
@@ -19,7 +17,6 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 	private boolean destroyedByCreativePlayer;
-	private int modifierAmount = 0;
 
 	public XPBlockTileEntity()
 	{
@@ -138,16 +135,16 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void tick()
 	{
-		if(world.isRemote || !Configuration.SERVER.captureXP.get())
+		if(world.isRemote || !Configuration.SERVER.pickupXP.get())
 			return;
 
 		if(world.getGameTime() % 5 == 0)
-			captureDroppedXP();
+			pickupDroppedXP();
 	}
 
-	private void captureDroppedXP()
+	private void pickupDroppedXP()
 	{
-		for(ExperienceOrbEntity entity : getXPOrbsToCapture())
+		for(ExperienceOrbEntity entity : world.<ExperienceOrbEntity>getEntitiesWithinAABB(ExperienceOrbEntity.class, getPickupArea(), EntityPredicates.IS_ALIVE))
 		{
 			int amount = entity.getXpValue();
 
@@ -160,23 +157,16 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	/**
-	 * @return All the xp orbs within a certain area around the tile entity.
-	 */
-	private List<ExperienceOrbEntity> getXPOrbsToCapture()
-	{
-		return world.<ExperienceOrbEntity>getEntitiesWithinAABB(ExperienceOrbEntity.class, getAABBWithModifiers(), EntityPredicates.IS_ALIVE);
-	}
-
-	/**
 	 * @return The area around the tile entity to search for xp orbs.
 	 */
-	private AxisAlignedBB getAABBWithModifiers()
+	private AxisAlignedBB getPickupArea()
 	{
 		double x = getPos().getX() + 0.5D;
 		double y = getPos().getY() + 0.5D;
 		double z = getPos().getZ() + 0.5D;
+		double range = Configuration.SERVER.pickupRange.get() + 0.5D;
 
-		return new AxisAlignedBB(x - 3.5D - getModifierAmount(), y - 3.5D - getModifierAmount(), z - 3.5D - getModifierAmount(), x + 3.5D + getModifierAmount(), y + 3.5D + getModifierAmount(), z + 3.5D + getModifierAmount());
+		return new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range);
 	}
 
 	/**
@@ -186,24 +176,5 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	public int getCapacity()
 	{
 		return Integer.MAX_VALUE;
-	}
-
-	/**
-	 * Gets the amount of the area modifier.
-	 * Used to increase/decrease the search area.
-	 * @return The modifier amount to increase the search area.
-	 */
-	public int getModifierAmount()
-	{
-		return modifierAmount;
-	}
-
-	/**
-	 * Sets the amount of the area modifier.
-	 * Used to increase/decrease the search area.
-	 */
-	public void setModifierAmount(int amount)
-	{
-		modifierAmount = Math.max(0, amount);
 	}
 }
