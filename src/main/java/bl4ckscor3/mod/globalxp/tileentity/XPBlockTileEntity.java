@@ -138,7 +138,7 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void tick()
 	{
-		if(world.isRemote || !Configuration.captureXP.get())
+		if(world.isRemote || !Configuration.SERVER.captureXP.get())
 			return;
 
 		if(world.getGameTime() % 5 == 0)

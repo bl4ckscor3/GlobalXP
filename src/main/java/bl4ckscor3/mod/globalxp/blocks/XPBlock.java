@@ -87,7 +87,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		TileEntity te = world.getTileEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
-			return Math.min(15, Math.floorDiv(((XPBlockTileEntity)te).getStoredXP(), Configuration.CONFIG.xpForComparator.get()));
+			return Math.min(15, Math.floorDiv(((XPBlockTileEntity)te).getStoredXP(), Configuration.SERVER.xpForComparator.get()));
 		else return 0;
 	}
 
