@@ -9,19 +9,28 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
 public class Configuration
 {
+	private static final ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+	private static final ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
+
+	public static final ForgeConfigSpec CONFIG_COMMON;
 	public static final ForgeConfigSpec CONFIG_SPEC;
 	public static final Configuration CONFIG;
 
+	public static BooleanValue captureXP;
 	public DoubleValue spinSpeed;
 	public DoubleValue bobSpeed;
 	public BooleanValue renderNameplate;
 	public IntValue xpForComparator;
-	public BooleanValue captureXP;
 
 	static
 	{
-		Pair<Configuration,ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Configuration::new);
+		// needs to be a configuration option for both Client and Server.
+		captureXP = COMMON_BUILDER
+				.comment("Whether the XP Block will pickup any XP orbs around it")
+				.define("captureXP", true);
+		CONFIG_COMMON = COMMON_BUILDER.build();
 
+		Pair<Configuration,ForgeConfigSpec> specPair = CLIENT_BUILDER.configure(Configuration::new);
 		CONFIG_SPEC = specPair.getRight();
 		CONFIG = specPair.getLeft();
 	}
@@ -40,8 +49,5 @@ public class Configuration
 		xpForComparator = builder
 				.comment("The amount of XP needed for the comparator to output a redstone signal of strength one. By default, the signal will be at full strength if the block has 30 levels stored.")
 				.defineInRange("xpForComparator", 1395 / 15, 0, Integer.MAX_VALUE / 15);
-		captureXP = builder
-				.comment("Whether the XP Block will pickup any XP orbs around it")
-				.define("captureXP", true);
 	}
 }

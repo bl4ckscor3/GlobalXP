@@ -12,7 +12,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -139,7 +138,7 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 
 	@Override
 	public void tick() {
-		if (getWorld().isRemote || !Configuration.CONFIG.captureXP.get()) {
+		if (getWorld().isRemote || !Configuration.captureXP.get()) {
 			return;
 		}
 
