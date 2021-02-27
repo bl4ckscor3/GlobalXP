@@ -1,5 +1,9 @@
 # GlobalXP Changelog
 
+### v1.6
+- Added configuration option to control whether to store only one level or all levels at once
+- Added configuration option to control whether to retrieve only one level or all levels at once
+
 ### v1.5
 - Added ability to pick up XP orbs (Thanks Bletch1971!)
 - Added configuration option to turn off picking up XP orbs

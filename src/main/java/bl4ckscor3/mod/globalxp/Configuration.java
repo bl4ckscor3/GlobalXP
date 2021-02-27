@@ -26,9 +26,9 @@ public class Configuration
 
 	public static class Client
 	{
-		public DoubleValue spinSpeed;
-		public DoubleValue bobSpeed;
-		public BooleanValue renderNameplate;
+		public final DoubleValue spinSpeed;
+		public final DoubleValue bobSpeed;
+		public final BooleanValue renderNameplate;
 
 		Client(ForgeConfigSpec.Builder builder)
 		{
@@ -46,9 +46,11 @@ public class Configuration
 
 	public static class Server
 	{
-		public IntValue xpForComparator;
-		public BooleanValue pickupXP;
-		public DoubleValue pickupRange;
+		public final IntValue xpForComparator;
+		public final BooleanValue pickupXP;
+		public final DoubleValue pickupRange;
+		public final BooleanValue retriveUntilNextLevel;
+		public final BooleanValue storeUntilPreviousLevel;
 
 		Server(ForgeConfigSpec.Builder builder)
 		{
@@ -61,6 +63,12 @@ public class Configuration
 			pickupRange = builder
 					.comment("The range in blocks around the XP Block in which XP orbs will be picked up")
 					.defineInRange("pickupRange", 3.0D, 0.0D, 50.0D);
+			retriveUntilNextLevel = builder
+					.comment("Setting this to true will remove only as much XP from the block at a time as is needed for the player to reach their next level. Setting to false will retrieve all stored XP at once.")
+					.define("retrieve_until_next_level", true);
+			storeUntilPreviousLevel = builder
+					.comment("Setting this to true will store only as much XP from the player's XP bar until reaching the previous level, meaning only one level at maximum will be added to the block's storage at a time. Setting to false will store all the XP the player has.")
+					.define("store_until_previous_level", false);
 		}
 	}
 }
