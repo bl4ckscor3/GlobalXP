@@ -3,7 +3,6 @@ package bl4ckscor3.mod.globalxp.blocks;
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
 import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
-import bl4ckscor3.mod.globalxp.util.XPUtils;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -53,26 +52,52 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			{
 				XPBlockTileEntity te = (XPBlockTileEntity)tile;
 
-				if(player.isCrouching()) //add all player xp to the block
+				if(player.isSneaking())
 				{
-					int playerXP = EnchantmentUtils.getPlayerXP(player);
+					int xpToStore = 0;
 
-					((XPBlockTileEntity)world.getTileEntity(pos)).addXP(playerXP);
-					EnchantmentUtils.addPlayerXP(player, -playerXP); // set player xp to 0
+					if(Configuration.SERVER.storeUntilPreviousLevel.get())
+					{
+						int xpForCurrentLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
+
+						xpToStore = EnchantmentUtils.getPlayerXP(player) - xpForCurrentLevel;
+
+						if(xpToStore == 0 && player.experienceLevel > 0) //player has exactly x > 0 levels (xp bar looks empty)
+							xpToStore = xpForCurrentLevel - EnchantmentUtils.getExperienceForLevel(player.experienceLevel - 1);
+					}
+					else
+						xpToStore = EnchantmentUtils.getPlayerXP(player);
+
+					if(xpToStore == 0)
+						return ActionResultType.PASS;
+
+					te.addXP(xpToStore); //store as much XP as possible
+					EnchantmentUtils.addPlayerXP(player, -xpToStore); //negative value removes xp
+					return ActionResultType.SUCCESS;
 				}
-				else //not sneaking = remove exactly enough xp from the block to get player to the next level
+				else if(!player.isSneaking())
 				{
-					int neededXP = XPUtils.getXPToNextLevel(EnchantmentUtils.getPlayerXP(player));
-					int availableXP = te.removeXP(neededXP);
+					if(Configuration.SERVER.retriveUntilNextLevel.get())
+					{
+						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
+						int actuallyRemoved = te.removeXP(xpToRetrieve);
 
-					EnchantmentUtils.addPlayerXP(player, availableXP);
+						EnchantmentUtils.addPlayerXP(player, actuallyRemoved);
+					}
+					else
+					{
+						EnchantmentUtils.addPlayerXP(player, (int)Math.ceil(te.getStoredXP()));
+						te.setStoredXP(0);
+					}
+
+					return ActionResultType.SUCCESS;
 				}
 			}
 
 			return ActionResultType.SUCCESS;
 		}
 
-		return ActionResultType.FAIL;
+		return ActionResultType.PASS;
 	}
 
 	@Override

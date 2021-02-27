@@ -82,6 +82,8 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		storedXP = xp;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
+		markDirty();
+		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 	}
 
 	/**
