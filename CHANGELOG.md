@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.6.1
+- Fixed XP Block not working properly
+
 ### v1.6
 - Added configuration option to control whether to store only one level or all levels at once
 - Added configuration option to control whether to retrieve only one level or all levels at once
