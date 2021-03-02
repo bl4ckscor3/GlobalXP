@@ -2,6 +2,7 @@ package bl4ckscor3.mod.globalxp.tileentity;
 
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
+import bl4ckscor3.mod.globalxp.blocks.XPBlock;
 import bl4ckscor3.mod.globalxp.util.XPUtils;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -139,10 +140,7 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void tick()
 	{
-		if(world.isRemote || !Configuration.SERVER.pickupXP.get())
-			return;
-
-		if(world.getGameTime() % 5 == 0)
+		if(!world.isRemote && world.getGameTime() % 5 == 0 && Configuration.SERVER.pickupXP.get() && !getBlockState().get(XPBlock.POWERED))
 			pickupDroppedXP();
 	}
 
