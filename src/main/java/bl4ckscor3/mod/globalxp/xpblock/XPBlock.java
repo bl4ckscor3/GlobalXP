@@ -1,8 +1,7 @@
-package bl4ckscor3.mod.globalxp.blocks;
+package bl4ckscor3.mod.globalxp.xpblock;
 
 import bl4ckscor3.mod.globalxp.Configuration;
-import bl4ckscor3.mod.globalxp.imc.top.ITOPInfoProvider;
-import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
+import bl4ckscor3.mod.globalxp.compat.ITOPInfoProvider;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;

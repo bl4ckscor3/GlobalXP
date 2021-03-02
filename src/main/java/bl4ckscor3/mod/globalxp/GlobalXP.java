@@ -1,9 +1,9 @@
 package bl4ckscor3.mod.globalxp;
 
-import bl4ckscor3.mod.globalxp.blocks.XPBlock;
-import bl4ckscor3.mod.globalxp.imc.top.GetTheOneProbe;
-import bl4ckscor3.mod.globalxp.items.XPBlockItem;
-import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
+import bl4ckscor3.mod.globalxp.compat.GetTheOneProbe;
+import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
+import bl4ckscor3.mod.globalxp.xpblock.XPBlockItem;
+import bl4ckscor3.mod.globalxp.xpblock.XPBlockTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;

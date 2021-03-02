@@ -1,9 +1,9 @@
-package bl4ckscor3.mod.globalxp.renderer;
+package bl4ckscor3.mod.globalxp.xpblock.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import bl4ckscor3.mod.globalxp.Configuration;
-import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
+import bl4ckscor3.mod.globalxp.xpblock.XPBlockTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

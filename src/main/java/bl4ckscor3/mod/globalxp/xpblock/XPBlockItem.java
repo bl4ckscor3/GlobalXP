@@ -1,8 +1,8 @@
-package bl4ckscor3.mod.globalxp.items;
+package bl4ckscor3.mod.globalxp.xpblock;
 
 import java.util.List;
 
-import bl4ckscor3.mod.globalxp.util.XPUtils;
+import bl4ckscor3.mod.globalxp.XPUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;
