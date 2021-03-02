@@ -1,10 +1,10 @@
-package bl4ckscor3.mod.globalxp.imc.waila;
+package bl4ckscor3.mod.globalxp.compat;
 
 import java.util.List;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
-import bl4ckscor3.mod.globalxp.blocks.XPBlock;
-import bl4ckscor3.mod.globalxp.tileentity.XPBlockTileEntity;
+import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
+import bl4ckscor3.mod.globalxp.xpblock.XPBlockTileEntity;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;

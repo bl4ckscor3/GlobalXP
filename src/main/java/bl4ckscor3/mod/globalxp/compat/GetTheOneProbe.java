@@ -1,4 +1,4 @@
-package bl4ckscor3.mod.globalxp.imc.top;
+package bl4ckscor3.mod.globalxp.compat;
 
 import java.util.function.Function;
 

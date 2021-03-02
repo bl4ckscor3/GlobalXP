@@ -1,9 +1,8 @@
-package bl4ckscor3.mod.globalxp.tileentity;
+package bl4ckscor3.mod.globalxp.xpblock;
 
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
-import bl4ckscor3.mod.globalxp.blocks.XPBlock;
-import bl4ckscor3.mod.globalxp.util.XPUtils;
+import bl4ckscor3.mod.globalxp.XPUtils;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;

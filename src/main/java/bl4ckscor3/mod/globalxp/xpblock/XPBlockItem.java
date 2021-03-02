@@ -1,8 +1,8 @@
-package bl4ckscor3.mod.globalxp.itemblocks;
+package bl4ckscor3.mod.globalxp.xpblock;
 
 import java.util.List;
 
-import bl4ckscor3.mod.globalxp.util.XPUtils;
+import bl4ckscor3.mod.globalxp.XPUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;
@@ -15,9 +15,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class XPItemBlock extends BlockItem
+public class XPBlockItem extends BlockItem
 {
-	public XPItemBlock(Block block)
+	public XPBlockItem(Block block)
 	{
 		super(block, new Item.Properties().group(ItemGroup.MISC));
 	}

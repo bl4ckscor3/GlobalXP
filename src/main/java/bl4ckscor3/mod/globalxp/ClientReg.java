@@ -1,6 +1,6 @@
 package bl4ckscor3.mod.globalxp;
 
-import bl4ckscor3.mod.globalxp.renderer.XPBlockTileEntityRenderer;
+import bl4ckscor3.mod.globalxp.xpblock.client.XPBlockTileEntityRenderer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
