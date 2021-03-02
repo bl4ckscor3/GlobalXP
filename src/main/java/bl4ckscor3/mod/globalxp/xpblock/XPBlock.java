@@ -36,6 +36,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	public XPBlock()
 	{
 		super(Block.Properties.create(Material.IRON).hardnessAndResistance(12.5F, 2000.0F).sound(SoundType.METAL));
+		setDefaultState(stateContainer.getBaseState().with(POWERED, false));
 	}
 
 	@Override
