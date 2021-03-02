@@ -14,6 +14,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -29,6 +32,7 @@ import openmods.utils.EnchantmentUtils;
 public class XPBlock extends Block implements ITOPInfoProvider
 {
 	private static final VoxelShape SHAPE = Block.makeCuboidShape(0.0001D, 0.0001D, 0.0001D, 15.999D, 15.999D, 15.999D);
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
 	public XPBlock()
 	{
@@ -151,6 +155,9 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	@Override
 	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving)
 	{
+		if(state.getBlock() == newState.getBlock())
+			return;
+
 		TileEntity te = world.getTileEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
@@ -170,6 +177,20 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		}
 
 		super.onReplaced(state, world, pos, newState, isMoving);
+	}
+
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+	{
+		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+
+		world.setBlockState(pos, state.with(POWERED, world.isBlockPowered(pos)));
+	}
+
+	@Override
+	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	{
+		builder.add(POWERED);
 	}
 
 	@Override
