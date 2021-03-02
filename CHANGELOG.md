@@ -1,7 +1,7 @@
 # GlobalXP Changelog
 
 ### v1.7
-- Added ability to turn off picking up XP orbs using redstone. The configuration option will 
+- Added ability to use redstone to turn off picking up XP orbs. The existing configuration option will override this.
 
 #### v1.6.1
 - Fixed XP Block not working properly
