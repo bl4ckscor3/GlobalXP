@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.7.1
+- Added Italian translation (Thanks BlackShadow77!)
+
 ### v1.7
 - Added ability to use redstone to turn off picking up XP orbs. The existing configuration option will override this.
 
