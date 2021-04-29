@@ -50,7 +50,9 @@ public class Configuration
 		public final BooleanValue pickupXP;
 		public final DoubleValue pickupRange;
 		public final BooleanValue retriveUntilNextLevel;
+		public final IntValue retrievalAmount;
 		public final BooleanValue storeUntilPreviousLevel;
+		public final IntValue storingAmount;
 
 		Server(ForgeConfigSpec.Builder builder)
 		{
@@ -66,9 +68,19 @@ public class Configuration
 			retriveUntilNextLevel = builder
 					.comment("Setting this to true will remove only as much XP from the block at a time as is needed for the player to reach their next level. Setting to false will retrieve all stored XP at once.")
 					.define("retrieve_until_next_level", true);
+			retrievalAmount = builder
+					.comment("Sets the amount of XP points that will be removed from the XP Block and added to the player's XP bar when the player interacts with the block",
+							"If this is set to anything other than -1, this setting will override the \"retrieve_until_next_level\" configuration setting.",
+							"As such, setting this to 0 will disable XP retrieval, and setting to -1 will make the XP Block ignore this setting.")
+					.defineInRange("retrieval_amount", -1, -1, Integer.MAX_VALUE);
 			storeUntilPreviousLevel = builder
 					.comment("Setting this to true will store only as much XP from the player's XP bar until reaching the previous level, meaning only one level at maximum will be added to the block's storage at a time. Setting to false will store all the XP the player has.")
 					.define("store_until_previous_level", false);
+			storingAmount = builder
+					.comment("Sets the amount of XP points that will be removed from the player's XP bar and stored in the XP Block when the player interacts with it.",
+							"If this is set to anything other than -1, this setting will override the \"store_until_previous_level\" configuration setting.",
+							"As such, setting this to 0 will disable adding XP to the block, and setting to -1 will make the XP Block ignore this setting.")
+					.defineInRange("storing_amount", -1, -1, Integer.MAX_VALUE);
 		}
 	}
 }
