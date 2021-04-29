@@ -1,5 +1,9 @@
 # GlobalXP Changelog
 
+### v1.8
+- Added configuration option "retrieval_amount" to control how much XP points are retrieved per interaction. See config file for details.
+- Added configuration option "storing_amount" to control how much XP points are stored per interaction. See config file for details.
+
 #### v1.7.1
 - Added Italian translation (Thanks BlackShadow77!)
 
