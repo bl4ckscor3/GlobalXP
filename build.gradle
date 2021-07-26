@@ -8,17 +8,19 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
-
-version = 'v1.8'
+apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
+version = '1.8'
 group = 'bl4ckscor3.mod.globalxp'
-archivesBaseName = 'globalxp-1.16.5'
+archivesBaseName = 'globalxp-1.17.1'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'official', version: '1.16.5'
+    mappings channel: 'official', version: '1.17.1'
 	
     runs {
         client {
@@ -35,6 +37,7 @@ minecraft {
         server {
             workingDirectory project.file('run/server')
             property 'forge.logging.console.level', 'debug'
+			args '-nogui'
 
             mods {
                 globalxp {
@@ -46,34 +49,23 @@ minecraft {
 }
 
 repositories {
-    maven {
-    	url "https://cursemaven.com/"
-    }
-	maven { // TOP
-		name 'tterrag maven'
-		url "https://maven.tterrag.com/"
-	}
+//    maven {
+//    	url "https://cursemaven.com/"
+//        content {
+//            includeGroup "curse.maven"
+//        }
+//    }
+//	maven { // TOP
+//		name 'tterrag maven'
+//		url "https://maven.tterrag.com/"
+//	}
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.13'
-    implementation fg.deobf("curse.maven:hwyla-253449:3033593")
-	implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.3-beta-6")
-}
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.10'
 
-processResources {  
-	//replace ${version} in mods.toml
-	inputs.property 'version', project.version
-
-	from(sourceSets.main.resources.srcDirs) {
-		include 'META-INF/mods.toml'
-
-		expand 'version': project.version
-	}
-
-	from(sourceSets.main.resources.srcDirs) {
-		exclude 'META-INF/mods.toml'
-	}
+    //implementation fg.deobf("curse.maven:jade-324717:3400050")
+	//implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.3-beta-6")
 }
 
 jar {

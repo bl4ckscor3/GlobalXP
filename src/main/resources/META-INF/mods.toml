@@ -1,10 +1,10 @@
 modLoader="javafml" #mandatory
-loaderVersion="[34,)" #mandatory
-license="GNU GPL v3.0 https://github.com/bl4ckscor3/GlobalXP/blob/1.16/LICENSE"
+loaderVersion="[37,)" #mandatory
+license="GNU GPL v3.0 https://github.com/bl4ckscor3/GlobalXP/blob/1.17/LICENSE"
 
 [[mods]] #mandatory
 	modId="globalxp" #mandatory
-	version="${version}" #mandatory
+	version="${file.jarVersion}" #mandatory
 	displayName="Global XP" #mandatory
 	description='''Adds a fast way to store XP and share it with your friends!''' #mandatory
 	issueTrackerURL="https://github.com/bl4ckscor3/GlobalXP/issues"
@@ -14,13 +14,13 @@ license="GNU GPL v3.0 https://github.com/bl4ckscor3/GlobalXP/blob/1.16/LICENSE"
 [[dependencies.globalxp]]
     modId="forge"
     mandatory=true
-    versionRange="[34,)"
+    versionRange="[37,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.globalxp]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16,1.17)"
+    versionRange="[1.17,1.18)"
     ordering="NONE"
     side="BOTH"
