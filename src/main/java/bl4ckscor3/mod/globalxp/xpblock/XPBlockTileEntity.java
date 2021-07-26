@@ -32,8 +32,8 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		storedXP += amount;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
-		markDirty();
-		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
+		setChanged();
+		level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
 	}
 
 	/**
@@ -51,27 +51,27 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 
 		storedXP -= amountRemoved;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
-		markDirty();
-		world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
+		setChanged();
+		level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
 		return amountRemoved;
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag()
 	{
-		return write(new CompoundNBT());
+		return save(new CompoundNBT());
 	}
 
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket()
 	{
-		return new SUpdateTileEntityPacket(pos, 1, getUpdateTag());
+		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
-		read(getBlockState(), pkt.getNbtCompound());
+		load(getBlockState(), pkt.getTag());
 	}
 
 	/**
@@ -82,10 +82,10 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		storedXP = xp;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
-		markDirty();
+		setChanged();
 
-		if(world != null)
-			world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 2);
+		if(level != null)
+			level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
 	}
 
 	/**
@@ -124,31 +124,31 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag)
+	public CompoundNBT save(CompoundNBT tag)
 	{
 		tag.putInt("stored_xp", storedXP);
-		return super.write(tag);
+		return super.save(tag);
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT tag)
+	public void load(BlockState state, CompoundNBT tag)
 	{
 		setStoredXP(tag.getInt("stored_xp"));
-		super.read(state, tag);
+		super.load(state, tag);
 	}
 
 	@Override
 	public void tick()
 	{
-		if(!world.isRemote && world.getGameTime() % 5 == 0 && Configuration.SERVER.pickupXP.get() && !getBlockState().get(XPBlock.POWERED))
+		if(!level.isClientSide && level.getGameTime() % 5 == 0 && Configuration.SERVER.pickupXP.get() && !getBlockState().getValue(XPBlock.POWERED))
 			pickupDroppedXP();
 	}
 
 	private void pickupDroppedXP()
 	{
-		for(ExperienceOrbEntity entity : world.<ExperienceOrbEntity>getEntitiesWithinAABB(ExperienceOrbEntity.class, getPickupArea(), EntityPredicates.IS_ALIVE))
+		for(ExperienceOrbEntity entity : level.<ExperienceOrbEntity>getEntitiesOfClass(ExperienceOrbEntity.class, getPickupArea(), EntityPredicates.ENTITY_STILL_ALIVE))
 		{
-			int amount = entity.getXpValue();
+			int amount = entity.getValue();
 
 			if(entity.isAlive() && getStoredXP() + amount <= getCapacity())
 			{
@@ -163,9 +163,9 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	 */
 	private AxisAlignedBB getPickupArea()
 	{
-		double x = getPos().getX() + 0.5D;
-		double y = getPos().getY() + 0.5D;
-		double z = getPos().getZ() + 0.5D;
+		double x = getBlockPos().getX() + 0.5D;
+		double y = getBlockPos().getY() + 0.5D;
+		double z = getBlockPos().getZ() + 0.5D;
 		double range = Configuration.SERVER.pickupRange.get() + 0.5D;
 
 		return new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range);

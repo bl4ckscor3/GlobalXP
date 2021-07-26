@@ -17,15 +17,15 @@ import net.minecraft.world.World;
 
 public class XPBlockItem extends BlockItem
 {
-	private static final Style STYLE = Style.EMPTY.applyFormatting(TextFormatting.GRAY);
+	private static final Style STYLE = Style.EMPTY.applyFormat(TextFormatting.GRAY);
 
 	public XPBlockItem(Block block)
 	{
-		super(block, new Item.Properties().group(ItemGroup.MISC));
+		super(block, new Item.Properties().tab(ItemGroup.TAB_MISC));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag flag)
 	{
 		if(!stack.hasTag())
 		{
