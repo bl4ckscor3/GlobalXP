@@ -22,7 +22,7 @@
  */
 package openmods.utils;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class EnchantmentUtils {
 
@@ -33,11 +33,11 @@ public class EnchantmentUtils {
 	 * @param player
 	 * @return
 	 */
-	public static int getPlayerXP(PlayerEntity player) {
+	public static int getPlayerXP(Player player) {
 		return (int)(EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + (player.experienceProgress * player.getXpNeededForNextLevel()));
 	}
 
-	public static void addPlayerXP(PlayerEntity player, int amount) {
+	public static void addPlayerXP(Player player, int amount) {
 		int experience = getPlayerXP(player) + amount;
 		player.totalExperience = experience;
 		player.experienceLevel = EnchantmentUtils.getLevelForExperience(experience);

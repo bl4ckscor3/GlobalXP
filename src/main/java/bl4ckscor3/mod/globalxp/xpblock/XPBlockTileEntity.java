@@ -3,17 +3,17 @@ package bl4ckscor3.mod.globalxp.xpblock;
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.XPUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 
-public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
+public class XPBlockTileEntity extends BlockEntity implements TickableBlockEntity
 {
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
@@ -57,19 +57,19 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag()
+	public CompoundTag getUpdateTag()
 	{
-		return save(new CompoundNBT());
+		return save(new CompoundTag());
 	}
 
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket()
+	public ClientboundBlockEntityDataPacket getUpdatePacket()
 	{
-		return new SUpdateTileEntityPacket(worldPosition, 1, getUpdateTag());
+		return new ClientboundBlockEntityDataPacket(worldPosition, 1, getUpdateTag());
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt)
 	{
 		load(getBlockState(), pkt.getTag());
 	}
@@ -124,14 +124,14 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT tag)
+	public CompoundTag save(CompoundTag tag)
 	{
 		tag.putInt("stored_xp", storedXP);
 		return super.save(tag);
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT tag)
+	public void load(BlockState state, CompoundTag tag)
 	{
 		setStoredXP(tag.getInt("stored_xp"));
 		super.load(state, tag);
@@ -146,7 +146,7 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 
 	private void pickupDroppedXP()
 	{
-		for(ExperienceOrbEntity entity : level.<ExperienceOrbEntity>getEntitiesOfClass(ExperienceOrbEntity.class, getPickupArea(), EntityPredicates.ENTITY_STILL_ALIVE))
+		for(ExperienceOrb entity : level.<ExperienceOrb>getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntityPredicates.ENTITY_STILL_ALIVE))
 		{
 			int amount = entity.getValue();
 
@@ -161,14 +161,14 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 	/**
 	 * @return The area around the tile entity to search for xp orbs.
 	 */
-	private AxisAlignedBB getPickupArea()
+	private AABB getPickupArea()
 	{
 		double x = getBlockPos().getX() + 0.5D;
 		double y = getBlockPos().getY() + 0.5D;
 		double z = getBlockPos().getZ() + 0.5D;
 		double range = Configuration.SERVER.pickupRange.get() + 0.5D;
 
-		return new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range);
+		return new AABB(x - range, y - range, z - range, x + range, y + range, z + range);
 	}
 
 	/**

@@ -5,27 +5,26 @@ import bl4ckscor3.mod.globalxp.compat.ITOPInfoProvider;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import openmods.utils.EnchantmentUtils;
 
 public class XPBlock extends Block implements ITOPInfoProvider
@@ -40,15 +39,15 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context)
 	{
 		return SHAPE;
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
 	{
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 
 		if(tile instanceof XPBlockTileEntity)
 		{
@@ -75,11 +74,11 @@ public class XPBlock extends Block implements ITOPInfoProvider
 						xpToStore = EnchantmentUtils.getPlayerXP(player);
 
 					if(xpToStore == 0)
-						return ActionResultType.PASS;
+						return InteractionResult.PASS;
 
 					te.addXP(xpToStore); //store as much XP as possible
 					EnchantmentUtils.addPlayerXP(player, -xpToStore); //negative value removes xp
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 				else if(!player.isShiftKeyDown())
 				{
@@ -102,14 +101,14 @@ public class XPBlock extends Block implements ITOPInfoProvider
 						te.setStoredXP(0);
 					}
 
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Override
@@ -119,9 +118,9 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos)
+	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos)
 	{
-		TileEntity te = world.getBlockEntity(pos);
+		BlockEntity te = world.getBlockEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
 			return Math.min(15, Math.floorDiv(((XPBlockTileEntity)te).getStoredXP(), Configuration.SERVER.xpForComparator.get()));
@@ -129,16 +128,16 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
 		if(world.isClientSide || !stack.hasTag())
 			return;
 
-		TileEntity te = world.getBlockEntity(pos);
+		BlockEntity te = world.getBlockEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
 		{
-			CompoundNBT tag = stack.getTag().getCompound("BlockEntityTag");
+			CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
 
 			tag.putInt("x", pos.getX());
 			tag.putInt("y", pos.getY());
@@ -150,9 +149,9 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player)
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player)
 	{
-		TileEntity te = world.getBlockEntity(pos);
+		BlockEntity te = world.getBlockEntity(pos);
 
 		if(world.getBlockEntity(pos) instanceof XPBlockTileEntity)
 			((XPBlockTileEntity)te).setDestroyedByCreativePlayer(player.isCreative());
@@ -161,12 +160,12 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if(state.getBlock() == newState.getBlock())
 			return;
 
-		TileEntity te = world.getBlockEntity(pos);
+		BlockEntity te = world.getBlockEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
 		{
@@ -174,9 +173,9 @@ public class XPBlock extends Block implements ITOPInfoProvider
 
 			if(((XPBlockTileEntity)te).getStoredLevels() != 0)
 			{
-				CompoundNBT stackTag = new CompoundNBT();
+				CompoundTag stackTag = new CompoundTag();
 
-				stackTag.put("BlockEntityTag", ((XPBlockTileEntity)te).save(new CompoundNBT()));
+				stackTag.put("BlockEntityTag", ((XPBlockTileEntity)te).save(new CompoundTag()));
 				stack.setTag(stackTag);
 				popResource(world, pos, stack);
 			}
@@ -188,7 +187,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+	public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
 	{
 		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
 
@@ -208,22 +207,22 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world)
 	{
 		return new XPBlockTileEntity();
 	}
 
 	@Override
-	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data)
+	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, Player player, Level world, BlockState blockState, IProbeHitData data)
 	{
-		TileEntity te = world.getBlockEntity(data.getPos());
+		BlockEntity te = world.getBlockEntity(data.getPos());
 
 		if(te instanceof XPBlockTileEntity)
 		{
-			probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", ((XPBlockTileEntity)te).getStoredLevels())));
+			probeInfo.horizontal().text(new TranslatableComponent("info.globalxp.levels", String.format("%.2f", ((XPBlockTileEntity)te).getStoredLevels())));
 
 			if(mode == ProbeMode.EXTENDED)
-				probeInfo.horizontal().text(new TranslationTextComponent("info.globalxp.xp", ((XPBlockTileEntity)te).getStoredXP()));
+				probeInfo.horizontal().text(new TranslatableComponent("info.globalxp.xp", ((XPBlockTileEntity)te).getStoredXP()));
 		}
 	}
 }

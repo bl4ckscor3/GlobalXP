@@ -4,10 +4,10 @@ import bl4ckscor3.mod.globalxp.compat.GetTheOneProbe;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockItem;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -28,7 +28,7 @@ public class GlobalXP
 	@ObjectHolder(MOD_ID + ":xp_block")
 	public static Block xp_block;
 	@ObjectHolder(MOD_ID + ":xp_block")
-	public static TileEntityType<XPBlockTileEntity> teTypeXpBlock;
+	public static BlockEntityType<XPBlockTileEntity> teTypeXpBlock;
 
 	public GlobalXP()
 	{
@@ -50,9 +50,9 @@ public class GlobalXP
 	}
 
 	@SubscribeEvent
-	public static void onRegisterTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+	public static void onRegisterTileEntities(RegistryEvent.Register<BlockEntityType<?>> event)
 	{
-		event.getRegistry().register(TileEntityType.Builder.of(XPBlockTileEntity::new, xp_block).build(null).setRegistryName(new ResourceLocation(xp_block.getRegistryName().toString())));
+		event.getRegistry().register(BlockEntityType.Builder.of(XPBlockTileEntity::new, xp_block).build(null).setRegistryName(new ResourceLocation(xp_block.getRegistryName().toString())));
 	}
 
 	@SubscribeEvent

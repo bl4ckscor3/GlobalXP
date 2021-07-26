@@ -12,10 +12,10 @@ import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 @WailaPlugin(GlobalXP.MOD_ID)
 public class WailaDataProvider implements IWailaPlugin, IComponentProvider
@@ -31,16 +31,16 @@ public class WailaDataProvider implements IWailaPlugin, IComponentProvider
 	}
 
 	@Override
-	public void appendBody(List<ITextComponent> tooltip, IDataAccessor accessor, IPluginConfig config)
+	public void appendBody(List<Component> tooltip, IDataAccessor accessor, IPluginConfig config)
 	{
 		if(accessor.getTileEntity() instanceof XPBlockTileEntity)
 		{
 			XPBlockTileEntity te = ((XPBlockTileEntity)accessor.getTileEntity());
 
-			tooltip.add(new TranslationTextComponent("info.globalxp.levels", String.format("%.2f", te.getStoredLevels())));
+			tooltip.add(new TranslatableComponent("info.globalxp.levels", String.format("%.2f", te.getStoredLevels())));
 
 			if(accessor.getPlayer().isCrouching())
-				tooltip.add(new TranslationTextComponent("info.globalxp.xp", te.getStoredXP()));
+				tooltip.add(new TranslatableComponent("info.globalxp.xp", te.getStoredXP()));
 		}
 	}
 
