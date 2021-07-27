@@ -25,7 +25,7 @@ public class XPBlockItem extends BlockItem
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag)
 	{
 		if(!stack.hasTag())
 		{

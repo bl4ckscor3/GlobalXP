@@ -3,25 +3,26 @@ package bl4ckscor3.mod.globalxp.xpblock;
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.XPUtils;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.util.EntityPredicates;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class XPBlockTileEntity extends BlockEntity implements TickableBlockEntity
+public class XPBlockTileEntity extends BlockEntity
 {
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
 	private boolean destroyedByCreativePlayer;
 
-	public XPBlockTileEntity()
+	public XPBlockTileEntity(BlockPos pos, BlockState state)
 	{
-		super(GlobalXP.teTypeXpBlock);
+		super(GlobalXP.teTypeXpBlock, pos, state);
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class XPBlockTileEntity extends BlockEntity implements TickableBlockEntit
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt)
 	{
-		load(getBlockState(), pkt.getTag());
+		load(pkt.getTag());
 	}
 
 	/**
@@ -131,29 +132,28 @@ public class XPBlockTileEntity extends BlockEntity implements TickableBlockEntit
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag)
+	public void load(CompoundTag tag)
 	{
 		setStoredXP(tag.getInt("stored_xp"));
-		super.load(state, tag);
+		super.load(tag);
 	}
 
-	@Override
-	public void tick()
+	public static void serverTick(Level level, BlockPos pos, BlockState state, XPBlockTileEntity te)
 	{
-		if(!level.isClientSide && level.getGameTime() % 5 == 0 && Configuration.SERVER.pickupXP.get() && !getBlockState().getValue(XPBlock.POWERED))
-			pickupDroppedXP();
+		if(level.getGameTime() % 5 == 0 && Configuration.SERVER.pickupXP.get() && !state.getValue(XPBlock.POWERED))
+			te.pickupDroppedXP();
 	}
 
 	private void pickupDroppedXP()
 	{
-		for(ExperienceOrb entity : level.<ExperienceOrb>getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntityPredicates.ENTITY_STILL_ALIVE))
+		for(ExperienceOrb entity : level.<ExperienceOrb>getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE))
 		{
 			int amount = entity.getValue();
 
 			if(entity.isAlive() && getStoredXP() + amount <= getCapacity())
 			{
 				addXP(amount);
-				entity.remove();
+				entity.discard();
 			}
 		}
 	}

@@ -49,23 +49,19 @@ minecraft {
 }
 
 repositories {
-//    maven {
-//    	url "https://cursemaven.com/"
-//        content {
-//            includeGroup "curse.maven"
-//        }
-//    }
-//	maven { // TOP
-//		name 'tterrag maven'
-//		url "https://maven.tterrag.com/"
-//	}
+    maven {
+    	url "https://cursemaven.com/"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.17.1-37.0.10'
 
-    //implementation fg.deobf("curse.maven:jade-324717:3400050")
-	//implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.3-beta-6")
+    implementation fg.deobf("curse.maven:jade-324717:3400050")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3402482")
 }
 
 jar {
