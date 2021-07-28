@@ -11,8 +11,8 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
-version = '1.8'
+
+version = '1.8.1'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.17.1'
 

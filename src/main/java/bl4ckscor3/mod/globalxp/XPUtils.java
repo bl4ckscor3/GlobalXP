@@ -1,6 +1,6 @@
 package bl4ckscor3.mod.globalxp;
 
-import openmods.utils.EnchantmentUtils;
+import bl4ckscor3.mod.globalxp.openmods.utils.EnchantmentUtils;
 
 public class XPUtils
 {

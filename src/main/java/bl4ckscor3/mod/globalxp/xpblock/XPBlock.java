@@ -2,6 +2,7 @@ package bl4ckscor3.mod.globalxp.xpblock;
 
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
+import bl4ckscor3.mod.globalxp.openmods.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -26,7 +27,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import openmods.utils.EnchantmentUtils;
 
 public class XPBlock extends BaseEntityBlock
 {
