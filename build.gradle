@@ -1,7 +1,6 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -12,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.8.1'
+version = '1.8.2'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.17.1'
 
