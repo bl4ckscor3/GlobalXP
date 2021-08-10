@@ -10,6 +10,7 @@ import mcjty.theoneprobe.api.IProbeInfoProvider;
 import mcjty.theoneprobe.api.ITheOneProbe;
 import mcjty.theoneprobe.api.ProbeMode;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,9 +23,9 @@ public class GetTheOneProbe implements Function<ITheOneProbe, Void>
 	{
 		theOneProbe.registerProvider(new IProbeInfoProvider() {
 			@Override
-			public String getID()
+			public ResourceLocation getID()
 			{
-				return GlobalXP.MOD_ID + ":default";
+				return new ResourceLocation(GlobalXP.MOD_ID, "default");
 			}
 
 			@Override

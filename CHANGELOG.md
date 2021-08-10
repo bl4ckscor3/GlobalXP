@@ -1,7 +1,10 @@
 # GlobalXP Changelog
 
+#### v1.8.3
+- Fix compatibility with newer The One Probe releases
+
 #### v1.8.2
-- Fix mining the XP Block with a pickaxe not being faster 
+- Fix mining the XP Block with a pickaxe not being faster
 
 #### v1.8.1
 - Fix incompatibility with XP Tome

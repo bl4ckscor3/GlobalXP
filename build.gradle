@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.8.2'
+version = '1.8.3'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.17.1'
 
@@ -60,7 +60,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.17.1-37.0.10'
 
     implementation fg.deobf("curse.maven:jade-324717:3400050")
-    implementation fg.deobf("curse.maven:the-one-probe-245211:3402482")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3418788")
 }
 
 jar {
