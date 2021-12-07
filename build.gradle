@@ -13,13 +13,13 @@ apply plugin: 'eclipse'
 
 version = '1.8.3'
 group = 'bl4ckscor3.mod.globalxp'
-archivesBaseName = 'globalxp-1.17.1'
+archivesBaseName = 'globalxp-1.18'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'official', version: '1.17.1'
+    mappings channel: 'official', version: '1.18'
 	
     runs {
         client {
@@ -57,10 +57,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.10'
+    minecraft 'net.minecraftforge:forge:1.18-38.0.15'
 
-    implementation fg.deobf("curse.maven:jade-324717:3400050")
-    implementation fg.deobf("curse.maven:the-one-probe-245211:3418788")
+    implementation fg.deobf("curse.maven:jade-324717:3551337")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:3550084")
 }
 
 jar {
