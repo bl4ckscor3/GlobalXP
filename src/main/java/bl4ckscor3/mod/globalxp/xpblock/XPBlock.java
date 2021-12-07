@@ -54,9 +54,7 @@ public class XPBlock extends BaseEntityBlock
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
 	{
-		BlockEntity tile = level.getBlockEntity(pos);
-
-		if(tile instanceof XPBlockTileEntity te)
+		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
 		{
 			if(!level.isClientSide)
 			{
@@ -81,7 +79,7 @@ public class XPBlock extends BaseEntityBlock
 					if(xpToStore == 0)
 						return InteractionResult.PASS;
 
-					te.addXP(xpToStore); //store as much XP as possible
+					xpBlock.addXP(xpToStore); //store as much XP as possible
 					EnchantmentUtils.addPlayerXP(player, -xpToStore); //negative value removes xp
 					return InteractionResult.SUCCESS;
 				}
@@ -89,24 +87,22 @@ public class XPBlock extends BaseEntityBlock
 				{
 					if(Configuration.SERVER.retrievalAmount.get() != -1)
 					{
-						int xpRetrieved = te.removeXP(Configuration.SERVER.retrievalAmount.get());
+						int xpRetrieved = xpBlock.removeXP(Configuration.SERVER.retrievalAmount.get());
 
 						EnchantmentUtils.addPlayerXP(player, xpRetrieved);
 					}
 					else if(Configuration.SERVER.retriveUntilNextLevel.get())
 					{
 						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
-						int actuallyRemoved = te.removeXP(xpToRetrieve);
+						int actuallyRemoved = xpBlock.removeXP(xpToRetrieve);
 
 						EnchantmentUtils.addPlayerXP(player, actuallyRemoved);
 					}
 					else
 					{
-						EnchantmentUtils.addPlayerXP(player, (int)Math.ceil(te.getStoredXP()));
-						te.setStoredXP(0);
+						EnchantmentUtils.addPlayerXP(player, (int)Math.ceil(xpBlock.getStoredXP()));
+						xpBlock.setStoredXP(0);
 					}
-
-					return InteractionResult.SUCCESS;
 				}
 			}
 
@@ -125,10 +121,8 @@ public class XPBlock extends BaseEntityBlock
 	@Override
 	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos)
 	{
-		BlockEntity tile = level.getBlockEntity(pos);
-
-		if(tile instanceof XPBlockTileEntity te)
-			return Math.min(15, Math.floorDiv(te.getStoredXP(), Configuration.SERVER.xpForComparator.get()));
+		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
+			return Math.min(15, Math.floorDiv(xpBlock.getStoredXP(), Configuration.SERVER.xpForComparator.get()));
 		else return 0;
 	}
 
@@ -138,17 +132,15 @@ public class XPBlock extends BaseEntityBlock
 		if(level.isClientSide || !stack.hasTag())
 			return;
 
-		BlockEntity tile = level.getBlockEntity(pos);
-
-		if(tile instanceof XPBlockTileEntity te)
+		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
 		{
 			CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
 
 			tag.putInt("x", pos.getX());
 			tag.putInt("y", pos.getY());
 			tag.putInt("z", pos.getZ());
-			te.load(tag);
-			te.setChanged();
+			xpBlock.load(tag);
+			xpBlock.setChanged();
 			level.sendBlockUpdated(pos, state, state, 2);
 		}
 	}
@@ -156,10 +148,8 @@ public class XPBlock extends BaseEntityBlock
 	@Override
 	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player)
 	{
-		BlockEntity tile = level.getBlockEntity(pos);
-
-		if(tile instanceof XPBlockTileEntity te)
-			te.setDestroyedByCreativePlayer(player.isCreative());
+		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
+			xpBlock.setDestroyedByCreativePlayer(player.isCreative());
 
 		super.playerWillDestroy(level, pos, state, player);
 	}
@@ -170,21 +160,19 @@ public class XPBlock extends BaseEntityBlock
 		if(state.getBlock() == newState.getBlock())
 			return;
 
-		BlockEntity tile = level.getBlockEntity(pos);
-
-		if(tile instanceof XPBlockTileEntity te)
+		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
 		{
 			ItemStack stack = new ItemStack(asItem());
 
-			if(te.getStoredLevels() != 0)
+			if(xpBlock.getStoredLevels() != 0)
 			{
 				CompoundTag stackTag = new CompoundTag();
 
-				stackTag.put("BlockEntityTag", te.save(new CompoundTag()));
+				stackTag.put("BlockEntityTag", xpBlock.save(new CompoundTag()));
 				stack.setTag(stackTag);
 				popResource(level, pos, stack);
 			}
-			else if(!te.isDestroyedByCreativePlayer())
+			else if(!xpBlock.isDestroyedByCreativePlayer())
 				popResource(level, pos, stack);
 		}
 
@@ -208,12 +196,12 @@ public class XPBlock extends BaseEntityBlock
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new XPBlockTileEntity(pos, state);
+		return new XPBlockEntity(pos, state);
 	}
 
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
 	{
-		return level.isClientSide ? null : createTickerHelper(type, GlobalXP.teTypeXpBlock, XPBlockTileEntity::serverTick);
+		return level.isClientSide ? null : createTickerHelper(type, GlobalXP.beTypeXpBlock, XPBlockEntity::serverTick);
 	}
 }

@@ -1,6 +1,6 @@
 package bl4ckscor3.mod.globalxp;
 
-import bl4ckscor3.mod.globalxp.xpblock.client.XPBlockTileEntityRenderer;
+import bl4ckscor3.mod.globalxp.xpblock.client.XPBlockEntityRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
@@ -16,7 +16,7 @@ public class ClientReg
 	@SubscribeEvent
 	public static void onFMLClientSetup(FMLClientSetupEvent event)
 	{
-		event.enqueueWork(() ->	BlockEntityRenderers.register(GlobalXP.teTypeXpBlock, XPBlockTileEntityRenderer::new));
+		event.enqueueWork(() ->	BlockEntityRenderers.register(GlobalXP.beTypeXpBlock, XPBlockEntityRenderer::new));
 		ItemBlockRenderTypes.setRenderLayer(GlobalXP.xp_block, RenderType.cutout());
 	}
 }

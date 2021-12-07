@@ -2,7 +2,7 @@ package bl4ckscor3.mod.globalxp.compat;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
-import bl4ckscor3.mod.globalxp.xpblock.XPBlockTileEntity;
+import bl4ckscor3.mod.globalxp.xpblock.XPBlockEntity;
 import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;
 import mcp.mobius.waila.api.IRegistrar;
@@ -29,12 +29,12 @@ public class WailaDataProvider implements IWailaPlugin, IComponentProvider
 	@Override
 	public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config)
 	{
-		if(accessor.getTooltipPosition() == TooltipPosition.BODY && accessor.getBlockEntity() instanceof XPBlockTileEntity te)
+		if(accessor.getTooltipPosition() == TooltipPosition.BODY && accessor.getBlockEntity() instanceof XPBlockEntity xpBlock)
 		{
-			tooltip.add(new TranslatableComponent("info.globalxp.levels", String.format("%.2f", te.getStoredLevels())));
+			tooltip.add(new TranslatableComponent("info.globalxp.levels", String.format("%.2f", xpBlock.getStoredLevels())));
 
 			if(accessor.getPlayer().isCrouching())
-				tooltip.add(new TranslatableComponent("info.globalxp.xp", te.getStoredXP()));
+				tooltip.add(new TranslatableComponent("info.globalxp.xp", xpBlock.getStoredXP()));
 		}
 	}
 }
