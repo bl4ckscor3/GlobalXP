@@ -60,7 +60,7 @@ public class XPBlockEntity extends BlockEntity
 	@Override
 	public CompoundTag getUpdateTag()
 	{
-		return save(new CompoundTag());
+		return saveWithoutMetadata();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class XPBlockEntity extends BlockEntity
 	}
 
 	/**
-	 * Sets how much XP is stored in this tile entity
+	 * Sets how much XP is stored in this block entity
 	 * @param xp The amount of XP
 	 */
 	public void setStoredXP(int xp)
@@ -90,8 +90,8 @@ public class XPBlockEntity extends BlockEntity
 	}
 
 	/**
-	 * Gets how many XP are stored in this tile entity
-	 * @return The total amount of XP stored in this tile entity
+	 * Gets how many XP are stored in this block entity
+	 * @return The total amount of XP stored in this block entity
 	 */
 	public int getStoredXP()
 	{
@@ -125,10 +125,9 @@ public class XPBlockEntity extends BlockEntity
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag tag)
+	public void saveAdditional(CompoundTag tag)
 	{
 		tag.putInt("stored_xp", storedXP);
-		return super.save(tag);
 	}
 
 	@Override
@@ -159,7 +158,7 @@ public class XPBlockEntity extends BlockEntity
 	}
 
 	/**
-	 * @return The area around the tile entity to search for xp orbs.
+	 * @return The area around the block entity to search for xp orbs.
 	 */
 	private AABB getPickupArea()
 	{
@@ -172,8 +171,8 @@ public class XPBlockEntity extends BlockEntity
 	}
 
 	/**
-	 * Gets the total amount of XP that can be stored in this tile entity
-	 * @return The total amount of XP that can be stored in this tile entity
+	 * Gets the total amount of XP that can be stored in this block entity
+	 * @return The total amount of XP that can be stored in this block entity
 	 */
 	public int getCapacity()
 	{

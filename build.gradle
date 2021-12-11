@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.8.3'
+version = '1.8.4'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.18.1'
 
