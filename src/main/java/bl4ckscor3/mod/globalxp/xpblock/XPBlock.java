@@ -87,20 +87,20 @@ public class XPBlock extends BaseEntityBlock
 				{
 					if(Configuration.SERVER.retrievalAmount.get() != -1)
 					{
-						int xpRetrieved = xpBlock.removeXP(Configuration.SERVER.retrievalAmount.get());
+						int xpRetrieved = (int)(xpBlock.removeXP(Configuration.SERVER.retrievalAmount.get()) * Configuration.SERVER.retrievalPercentage.get());
 
 						EnchantmentUtils.addPlayerXP(player, xpRetrieved);
 					}
 					else if(Configuration.SERVER.retriveUntilNextLevel.get())
 					{
 						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
-						int actuallyRemoved = xpBlock.removeXP(xpToRetrieve);
+						int actuallyRemoved = (int)(xpBlock.removeXP(xpToRetrieve) * Configuration.SERVER.retrievalPercentage.get());
 
 						EnchantmentUtils.addPlayerXP(player, actuallyRemoved);
 					}
 					else
 					{
-						EnchantmentUtils.addPlayerXP(player, (int)Math.ceil(xpBlock.getStoredXP()));
+						EnchantmentUtils.addPlayerXP(player, (int)(xpBlock.getStoredXP() * Configuration.SERVER.retrievalPercentage.get()));
 						xpBlock.setStoredXP(0);
 					}
 				}

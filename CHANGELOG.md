@@ -1,5 +1,11 @@
 # GlobalXP Changelog
 
+### v1.9
+- Added configuration option "retrievalPercentage" to control how much percent of stored XP will be given back to the player
+
+#### v1.8.4
+- Fix XP getting lost on world load
+
 #### v1.8.3
 - Fix compatibility with newer The One Probe releases
 
