@@ -53,6 +53,7 @@ public class Configuration
 		public final IntValue retrievalAmount;
 		public final BooleanValue storeUntilPreviousLevel;
 		public final IntValue storingAmount;
+		public final DoubleValue retrievalPercentage;
 
 		Server(ForgeConfigSpec.Builder builder)
 		{
@@ -81,6 +82,11 @@ public class Configuration
 							"If this is set to anything other than -1, this setting will override the \"store_until_previous_level\" configuration setting.",
 							"As such, setting this to 0 will disable adding XP to the block, and setting to -1 will make the XP Block ignore this setting.")
 					.defineInRange("storing_amount", -1, -1, Integer.MAX_VALUE);
+			retrievalPercentage = builder
+					.comment("The percentage of XP that the XP Block will give back, as a sort of cost of using it.",
+							"Example: If this config value is set to 0.75, and an XP Block has 100 XP stored, attempting to retrieve these 100 XP will give back 75 XP.",
+							"Note: This will not be 100% accurate, as Minecraft's XP does not use decimals.")
+					.defineInRange("retrieval_percentage", 1.0D, 0.0D, 1.0D);
 		}
 	}
 }

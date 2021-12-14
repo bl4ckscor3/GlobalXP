@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+### v1.9
+- Added configuration option "retrievalPercentage" to control how much percent of stored XP will be given back to the player
+
 ### v1.8
 - Added configuration option "retrieval_amount" to control how much XP points are retrieved per interaction. See config file for details.
 - Added configuration option "storing_amount" to control how much XP points are stored per interaction. See config file for details.

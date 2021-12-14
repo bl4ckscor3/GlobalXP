@@ -85,20 +85,20 @@ public class XPBlock extends Block implements ITOPInfoProvider
 				{
 					if(Configuration.SERVER.retrievalAmount.get() != -1)
 					{
-						int xpRetrieved = te.removeXP(Configuration.SERVER.retrievalAmount.get());
+						int xpRetrieved = (int)(te.removeXP(Configuration.SERVER.retrievalAmount.get()) * Configuration.SERVER.retrievalPercentage.get());
 
 						EnchantmentUtils.addPlayerXP(player, xpRetrieved);
 					}
 					else if(Configuration.SERVER.retriveUntilNextLevel.get())
 					{
 						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
-						int actuallyRemoved = te.removeXP(xpToRetrieve);
+						int actuallyRemoved = (int)(te.removeXP(xpToRetrieve) * Configuration.SERVER.retrievalPercentage.get());
 
 						EnchantmentUtils.addPlayerXP(player, actuallyRemoved);
 					}
 					else
 					{
-						EnchantmentUtils.addPlayerXP(player, (int)Math.ceil(te.getStoredXP()));
+						EnchantmentUtils.addPlayerXP(player, (int)(te.getStoredXP() * Configuration.SERVER.retrievalPercentage.get()));
 						te.setStoredXP(0);
 					}
 
