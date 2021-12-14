@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = 'v1.8'
+version = 'v1.9'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.16.5'
 
@@ -63,6 +63,8 @@ dependencies {
 }
 
 processResources {  
+	duplicatesStrategy = 'include'
+
 	//replace ${version} in mods.toml
 	inputs.property 'version', project.version
 
