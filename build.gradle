@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -15,10 +15,11 @@ version = 'v1.8'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.16.5'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'snapshot', version: '20201028-1.16.3'
+    mappings channel: 'snapshot', version: '20210309-1.16.5'
 	
     runs {
         client {
@@ -51,12 +52,12 @@ repositories {
     }
 	maven { // TOP
 		name 'tterrag maven'
-		url "http://maven.tterrag.com/"
+		url "https://maven.tterrag.com/"
 	}
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.0.13'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.20'
     implementation fg.deobf("curse.maven:hwyla-253449:3033593")
 	implementation fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.0.3-beta-6")
 }
