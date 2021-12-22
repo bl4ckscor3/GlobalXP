@@ -168,7 +168,7 @@ public class XPBlock extends BaseEntityBlock
 			{
 				CompoundTag stackTag = new CompoundTag();
 
-				stackTag.put("BlockEntityTag", xpBlock.save(new CompoundTag()));
+				stackTag.put("BlockEntityTag", xpBlock.saveWithoutMetadata());
 				stack.setTag(stackTag);
 				popResource(level, pos, stack);
 			}

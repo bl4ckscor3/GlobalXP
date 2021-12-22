@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.9.1
+- Fix XP Block not retaining XP when being broken
+
 ### v1.9
 - Added configuration option "retrievalPercentage" to control how much percent of stored XP will be given back to the player
 
