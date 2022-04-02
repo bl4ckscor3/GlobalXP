@@ -1,22 +1,25 @@
 # GlobalXP Changelog
 
+#### v1.9.2
+- Added Swiss Italian translation (Thanks BlackShadow77!)
+
 #### v1.9.1
-- Fix XP Block not retaining XP when being broken
+- Fixed XP Block not retaining XP when being broken
 
 ### v1.9
 - Added configuration option "retrievalPercentage" to control how much percent of stored XP will be given back to the player
 
 #### v1.8.4
-- Fix XP getting lost on world load
+- Fixed XP getting lost on world load
 
 #### v1.8.3
-- Fix compatibility with newer The One Probe releases
+- Fixed compatibility with newer The One Probe releases
 
 #### v1.8.2
-- Fix mining the XP Block with a pickaxe not being faster
+- Fixed mining the XP Block with a pickaxe not being faster
 
 #### v1.8.1
-- Fix incompatibility with XP Tome
+- Fixed incompatibility with XP Tome
 
 ### v1.8
 - Added configuration option "retrieval_amount" to control how much XP points are retrieved per interaction. See config file for details.
