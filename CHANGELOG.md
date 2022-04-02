@@ -1,5 +1,8 @@
 # GlobalXP Changelog
 
+#### v1.9.2
+- Added Swiss Italian translation (Thanks BlackShadow77!)
+
 ### v1.9
 - Added configuration option "retrievalPercentage" to control how much percent of stored XP will be given back to the player
 
