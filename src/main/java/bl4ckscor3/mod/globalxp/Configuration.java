@@ -54,6 +54,7 @@ public class Configuration
 		public final BooleanValue storeUntilPreviousLevel;
 		public final IntValue storingAmount;
 		public final DoubleValue retrievalPercentage;
+		public final BooleanValue retrieveXPOrbs;
 
 		Server(ForgeConfigSpec.Builder builder)
 		{
@@ -87,6 +88,10 @@ public class Configuration
 							"Example: If this config value is set to 0.75, and an XP Block has 100 XP stored, attempting to retrieve these 100 XP will give back 75 XP.",
 							"Note: This will not be 100% accurate, as Minecraft's XP does not use decimals.")
 					.defineInRange("retrieval_percentage", 1.0D, 0.0D, 1.0D);
+			retrieveXPOrbs = builder
+					.comment("Setting this to true will remove XP from the block in XP orb form. This is useful if you want to use XP from the block for tools enchanted with Mending.",
+							"These XP orbs will not be picked back up by the XP Block, if \"pickupXP\" is true.")
+					.define("retrieve_xp_orbs", false);
 		}
 	}
 }

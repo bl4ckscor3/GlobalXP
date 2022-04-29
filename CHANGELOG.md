@@ -1,5 +1,9 @@
 # GlobalXP Changelog
 
+### v1.10
+- Added configuration option "retrieve_xp_orbs" for making extracted XP spawn as an XP orb, making the block work with the Mending enchantment
+- If you use Jade, the minimum required version is now 4.2.0
+
 #### v1.9.2
 - Added Swiss Italian translation (Thanks BlackShadow77!)
 

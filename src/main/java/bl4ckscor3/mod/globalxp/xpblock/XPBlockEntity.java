@@ -145,7 +145,8 @@ public class XPBlockEntity extends BlockEntity
 
 	private void pickupDroppedXP()
 	{
-		for(ExperienceOrb entity : level.<ExperienceOrb>getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE))
+		//find all orbs in the area around the block, and ignore xp orbs that were spawned as a result of a player removing xp from the block
+		for(ExperienceOrb entity : level.getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE.and(e -> !e.getPersistentData().getBoolean("GlobalXPMarker"))))
 		{
 			int amount = entity.getValue();
 
