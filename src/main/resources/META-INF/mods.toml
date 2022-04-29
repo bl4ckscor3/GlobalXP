@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[38,)" #mandatory
+loaderVersion="[40,)" #mandatory
 license="GNU GPL v3.0 https://github.com/bl4ckscor3/GlobalXP/blob/1.18/LICENSE"
 
 [[mods]] #mandatory
@@ -14,7 +14,14 @@ license="GNU GPL v3.0 https://github.com/bl4ckscor3/GlobalXP/blob/1.18/LICENSE"
 [[dependencies.globalxp]]
     modId="forge"
     mandatory=true
-    versionRange="[38,)"
+    versionRange="[40,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.globalxp]]
+    modId="jade"
+    mandatory=false
+    versionRange="[4.2.0,)"
     ordering="NONE"
     side="BOTH"
 

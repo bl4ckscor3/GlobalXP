@@ -5,8 +5,8 @@ import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockEntity;
 import mcp.mobius.waila.api.BlockAccessor;
 import mcp.mobius.waila.api.IComponentProvider;
-import mcp.mobius.waila.api.IRegistrar;
 import mcp.mobius.waila.api.ITooltip;
+import mcp.mobius.waila.api.IWailaClientRegistration;
 import mcp.mobius.waila.api.IWailaPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import mcp.mobius.waila.api.WailaPlugin;
@@ -21,9 +21,9 @@ public class WailaDataProvider implements IWailaPlugin, IComponentProvider
 	public static final WailaDataProvider INSTANCE = new WailaDataProvider();
 
 	@Override
-	public void register(IRegistrar registrar)
+	public void registerClient(IWailaClientRegistration registration)
 	{
-		registrar.registerComponentProvider(INSTANCE, TooltipPosition.BODY, XPBlock.class);
+		registration.registerComponentProvider(INSTANCE, TooltipPosition.BODY, XPBlock.class);
 	}
 
 	@Override
