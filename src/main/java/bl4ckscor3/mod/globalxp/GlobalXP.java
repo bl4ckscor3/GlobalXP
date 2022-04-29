@@ -52,7 +52,7 @@ public class GlobalXP
 	@SubscribeEvent
 	public static void onRegisterTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
 	{
-		event.getRegistry().register(TileEntityType.Builder.create(XPBlockTileEntity::new, xp_block).build(null).setRegistryName(new ResourceLocation(xp_block.getRegistryName().toString())));
+		event.getRegistry().register(TileEntityType.Builder.of(XPBlockTileEntity::new, xp_block).build(null).setRegistryName(new ResourceLocation(xp_block.getRegistryName().toString())));
 	}
 
 	@SubscribeEvent

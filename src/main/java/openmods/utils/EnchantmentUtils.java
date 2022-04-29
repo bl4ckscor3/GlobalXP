@@ -34,15 +34,15 @@ public class EnchantmentUtils {
 	 * @return
 	 */
 	public static int getPlayerXP(PlayerEntity player) {
-		return (int)(EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + (player.experience * player.xpBarCap()));
+		return (int)(EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + (player.experienceProgress * player.getXpNeededForNextLevel()));
 	}
 
 	public static void addPlayerXP(PlayerEntity player, int amount) {
 		int experience = getPlayerXP(player) + amount;
-		player.experienceTotal = experience;
+		player.totalExperience = experience;
 		player.experienceLevel = EnchantmentUtils.getLevelForExperience(experience);
 		int expForLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
-		player.experience = (experience - expForLevel) / (float)player.xpBarCap();
+		player.experienceProgress = (experience - expForLevel) / (float)player.getXpNeededForNextLevel();
 	}
 
 	public static int xpBarCap(int level) {

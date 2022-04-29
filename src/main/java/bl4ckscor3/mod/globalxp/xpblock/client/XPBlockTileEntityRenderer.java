@@ -32,39 +32,39 @@ public class XPBlockTileEntityRenderer extends TileEntityRenderer<XPBlockTileEnt
 	@Override
 	public void render(XPBlockTileEntity te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay)
 	{
-		stack.push();
+		stack.pushPose();
 
 		if(Configuration.CLIENT.renderNameplate.get())
 		{
-			RayTraceResult rtr = renderDispatcher.cameraHitResult;
+			RayTraceResult rtr = renderer.cameraHitResult;
 
-			if(te != null && te.getPos() != null && rtr != null && rtr.getType() == Type.BLOCK && ((BlockRayTraceResult)rtr).getPos() != null && ((BlockRayTraceResult)rtr).getPos().equals(te.getPos()))
+			if(te != null && te.getBlockPos() != null && rtr != null && rtr.getType() == Type.BLOCK && ((BlockRayTraceResult)rtr).getBlockPos() != null && ((BlockRayTraceResult)rtr).getBlockPos().equals(te.getBlockPos()))
 			{
 				StringTextComponent levelsString = new StringTextComponent((int)te.getStoredLevels() + " (" + te.getStoredXP() + ")");
-				float opacity = Minecraft.getInstance().gameSettings.getTextBackgroundOpacity(0.25F);
+				float opacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
 				int j = (int)(opacity * 255.0F) << 24;
-				FontRenderer fontRenderer = renderDispatcher.fontRenderer;
-				float halfWidth = -fontRenderer.getStringPropertyWidth(levelsString) / 2;
+				FontRenderer fontRenderer = renderer.font;
+				float halfWidth = -fontRenderer.width(levelsString) / 2;
 				Matrix4f positionMatrix;
 
-				stack.push();
+				stack.pushPose();
 				stack.translate(0.5D, 1.5D, 0.5D);
-				stack.rotate(Minecraft.getInstance().getRenderManager().getCameraOrientation());
+				stack.mulPose(Minecraft.getInstance().getEntityRenderDispatcher().cameraOrientation());
 				stack.scale(-0.025F, -0.025F, 0.025F);
-				positionMatrix = stack.getLast().getMatrix();
-				fontRenderer.func_243247_a(levelsString, halfWidth, 0, 553648127, false, positionMatrix, buffer, true, j, combinedLight); //renderString
-				fontRenderer.func_243247_a(levelsString, halfWidth, 0, -1, false, positionMatrix, buffer, false, 0, combinedLight);
-				stack.pop();
+				positionMatrix = stack.last().pose();
+				fontRenderer.drawInBatch(levelsString, halfWidth, 0, 553648127, false, positionMatrix, buffer, true, j, combinedLight); //renderString
+				fontRenderer.drawInBatch(levelsString, halfWidth, 0, -1, false, positionMatrix, buffer, false, 0, combinedLight);
+				stack.popPose();
 			}
 		}
 
-		float time = te.getWorld().getWorldInfo().getGameTime() + partialTicks;
+		float time = te.getLevel().getLevelData().getGameTime() + partialTicks;
 		double offset = Math.sin(time * Configuration.CLIENT.bobSpeed.get() / 8.0D) / 10.0D;
-		IBakedModel model = Minecraft.getInstance().getItemRenderer().getItemModelWithOverrides(emerald, te.getWorld(), null);
+		IBakedModel model = Minecraft.getInstance().getItemRenderer().getModel(emerald, te.getLevel(), null);
 
 		stack.translate(0.5D, 0.4D + offset, 0.5D);
-		stack.rotate(Vector3f.YP.rotationDegrees(time * 4.0F * Configuration.CLIENT.spinSpeed.get().floatValue()));
-		Minecraft.getInstance().getItemRenderer().renderItem(emerald, TransformType.GROUND, false, stack, buffer, combinedLight, combinedOverlay, model);
-		stack.pop();
+		stack.mulPose(Vector3f.YP.rotationDegrees(time * 4.0F * Configuration.CLIENT.spinSpeed.get().floatValue()));
+		Minecraft.getInstance().getItemRenderer().render(emerald, TransformType.GROUND, false, stack, buffer, combinedLight, combinedOverlay, model);
+		stack.popPose();
 	}
 }

@@ -30,13 +30,13 @@ import openmods.utils.EnchantmentUtils;
 
 public class XPBlock extends Block implements ITOPInfoProvider
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0.0001D, 0.0001D, 0.0001D, 15.999D, 15.999D, 15.999D);
+	private static final VoxelShape SHAPE = Block.box(0.0001D, 0.0001D, 0.0001D, 15.999D, 15.999D, 15.999D);
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
 	public XPBlock()
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(12.5F, 2000.0F).sound(SoundType.METAL));
-		setDefaultState(stateContainer.getBaseState().with(POWERED, false));
+		super(Block.Properties.of(Material.METAL).strength(12.5F, 2000.0F).sound(SoundType.METAL));
+		registerDefaultState(stateDefinition.any().setValue(POWERED, false));
 	}
 
 	@Override
@@ -46,17 +46,17 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit)
 	{
-		TileEntity tile = world.getTileEntity(pos);
+		TileEntity tile = world.getBlockEntity(pos);
 
 		if(tile instanceof XPBlockTileEntity)
 		{
-			if(!world.isRemote)
+			if(!world.isClientSide)
 			{
 				XPBlockTileEntity te = (XPBlockTileEntity)tile;
 
-				if(player.isSneaking())
+				if(player.isShiftKeyDown())
 				{
 					int xpToStore = 0;
 
@@ -81,7 +81,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 					EnchantmentUtils.addPlayerXP(player, -xpToStore); //negative value removes xp
 					return ActionResultType.SUCCESS;
 				}
-				else if(!player.isSneaking())
+				else if(!player.isShiftKeyDown())
 				{
 					if(Configuration.SERVER.retrievalAmount.get() != -1)
 					{
@@ -113,15 +113,15 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public boolean hasComparatorInputOverride(BlockState state)
+	public boolean hasAnalogOutputSignal(BlockState state)
 	{
 		return true;
 	}
 
 	@Override
-	public int getComparatorInputOverride(BlockState state, World world, BlockPos pos)
+	public int getAnalogOutputSignal(BlockState state, World world, BlockPos pos)
 	{
-		TileEntity te = world.getTileEntity(pos);
+		TileEntity te = world.getBlockEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
 			return Math.min(15, Math.floorDiv(((XPBlockTileEntity)te).getStoredXP(), Configuration.SERVER.xpForComparator.get()));
@@ -129,12 +129,12 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
-		if(world.isRemote || !stack.hasTag())
+		if(world.isClientSide || !stack.hasTag())
 			return;
 
-		TileEntity te = world.getTileEntity(pos);
+		TileEntity te = world.getBlockEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
 		{
@@ -143,30 +143,30 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			tag.putInt("x", pos.getX());
 			tag.putInt("y", pos.getY());
 			tag.putInt("z", pos.getZ());
-			((XPBlockTileEntity)te).read(state, tag);
-			((XPBlockTileEntity)te).markDirty();
-			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
+			((XPBlockTileEntity)te).load(state, tag);
+			((XPBlockTileEntity)te).setChanged();
+			world.sendBlockUpdated(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 		}
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player)
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player)
 	{
-		TileEntity te = world.getTileEntity(pos);
+		TileEntity te = world.getBlockEntity(pos);
 
-		if(world.getTileEntity(pos) instanceof XPBlockTileEntity)
+		if(world.getBlockEntity(pos) instanceof XPBlockTileEntity)
 			((XPBlockTileEntity)te).setDestroyedByCreativePlayer(player.isCreative());
 
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if(state.getBlock() == newState.getBlock())
 			return;
 
-		TileEntity te = world.getTileEntity(pos);
+		TileEntity te = world.getBlockEntity(pos);
 
 		if(te instanceof XPBlockTileEntity)
 		{
@@ -176,15 +176,15 @@ public class XPBlock extends Block implements ITOPInfoProvider
 			{
 				CompoundNBT stackTag = new CompoundNBT();
 
-				stackTag.put("BlockEntityTag", ((XPBlockTileEntity)te).write(new CompoundNBT()));
+				stackTag.put("BlockEntityTag", ((XPBlockTileEntity)te).save(new CompoundNBT()));
 				stack.setTag(stackTag);
-				spawnAsEntity(world, pos, stack);
+				popResource(world, pos, stack);
 			}
 			else if(!((XPBlockTileEntity)te).isDestroyedByCreativePlayer())
-				spawnAsEntity(world, pos, stack);
+				popResource(world, pos, stack);
 		}
 
-		super.onReplaced(state, world, pos, newState, isMoving);
+		super.onRemove(state, world, pos, newState, isMoving);
 	}
 
 	@Override
@@ -192,11 +192,11 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	{
 		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
 
-		world.setBlockState(pos, state.with(POWERED, world.isBlockPowered(pos)));
+		world.setBlockAndUpdate(pos, state.setValue(POWERED, world.hasNeighborSignal(pos)));
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(POWERED);
 	}
@@ -216,7 +216,7 @@ public class XPBlock extends Block implements ITOPInfoProvider
 	@Override
 	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, PlayerEntity player, World world, BlockState blockState, IProbeHitData data)
 	{
-		TileEntity te = world.getTileEntity(data.getPos());
+		TileEntity te = world.getBlockEntity(data.getPos());
 
 		if(te instanceof XPBlockTileEntity)
 		{
