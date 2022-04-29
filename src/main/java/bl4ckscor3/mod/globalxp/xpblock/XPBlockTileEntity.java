@@ -146,7 +146,8 @@ public class XPBlockTileEntity extends TileEntity implements ITickableTileEntity
 
 	private void pickupDroppedXP()
 	{
-		for(ExperienceOrbEntity entity : level.<ExperienceOrbEntity>getEntitiesOfClass(ExperienceOrbEntity.class, getPickupArea(), EntityPredicates.ENTITY_STILL_ALIVE))
+		//find all orbs in the area around the block, and ignore xp orbs that were spawned as a result of a player removing xp from the block
+		for(ExperienceOrbEntity entity : level.<ExperienceOrbEntity>getEntitiesOfClass(ExperienceOrbEntity.class, getPickupArea(), EntityPredicates.ENTITY_STILL_ALIVE.and(e -> !e.getPersistentData().getBoolean("GlobalXPMarker"))))
 		{
 			int amount = entity.getValue();
 

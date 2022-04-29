@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -26,6 +27,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import openmods.utils.EnchantmentUtils;
 
 public class XPBlock extends Block implements ITOPInfoProvider
@@ -83,26 +86,24 @@ public class XPBlock extends Block implements ITOPInfoProvider
 				}
 				else if(!player.isShiftKeyDown())
 				{
-					if(Configuration.SERVER.retrievalAmount.get() != -1)
-					{
-						int xpRetrieved = (int)(te.removeXP(Configuration.SERVER.retrievalAmount.get()) * Configuration.SERVER.retrievalPercentage.get());
+					int xpRetrieved;
 
-						EnchantmentUtils.addPlayerXP(player, xpRetrieved);
-					}
+					if(Configuration.SERVER.retrievalAmount.get() != -1)
+						xpRetrieved = (int)(te.removeXP(Configuration.SERVER.retrievalAmount.get()) * Configuration.SERVER.retrievalPercentage.get());
 					else if(Configuration.SERVER.retriveUntilNextLevel.get())
 					{
 						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
-						int actuallyRemoved = (int)(te.removeXP(xpToRetrieve) * Configuration.SERVER.retrievalPercentage.get());
 
-						EnchantmentUtils.addPlayerXP(player, actuallyRemoved);
+						xpRetrieved = (int)(te.removeXP(xpToRetrieve) * Configuration.SERVER.retrievalPercentage.get());
 					}
 					else
 					{
-						EnchantmentUtils.addPlayerXP(player, (int)(te.getStoredXP() * Configuration.SERVER.retrievalPercentage.get()));
+						xpRetrieved = (int)(te.getStoredXP() * Configuration.SERVER.retrievalPercentage.get());
 						te.setStoredXP(0);
 					}
 
-					return ActionResultType.SUCCESS;
+					if(xpRetrieved > 0)
+						addOrSpawnXPForPlayer(player, xpRetrieved);
 				}
 			}
 
@@ -110,6 +111,30 @@ public class XPBlock extends Block implements ITOPInfoProvider
 		}
 
 		return ActionResultType.PASS;
+	}
+
+	private void addOrSpawnXPForPlayer(PlayerEntity player, int amount)
+	{
+		if(Configuration.SERVER.retrieveXPOrbs.get())
+		{
+			if(!player.level.isClientSide)
+			{
+				ExperienceOrbEntity orb = new ExperienceOrbEntity(player.level, player.getX(), player.getY(), player.getZ(), amount);
+
+				orb.getPersistentData().putBoolean("GlobalXPMarker", true); //so the xp block won't pick it back up
+				player.level.addFreshEntity(orb);
+			}
+		}
+		else
+		{
+			int previousLevel = player.experienceLevel;
+
+			MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.XpChange(player, amount));
+			EnchantmentUtils.addPlayerXP(player, amount);
+
+			if(previousLevel != player.experienceLevel)
+				MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.LevelChange(player, player.experienceLevel));
+		}
 	}
 
 	@Override
