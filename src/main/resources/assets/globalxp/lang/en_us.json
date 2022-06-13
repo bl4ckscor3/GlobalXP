@@ -1,5 +1,6 @@
 {
     "block.globalxp.xp_block": "XP Block",
     "info.globalxp.levels": "%s levels saved",
-    "info.globalxp.xp": "%s XP saved"
+    "info.globalxp.xp": "%s XP saved",
+    "config.jade.plugin_globalxp.display": "Display XP Information"
 }

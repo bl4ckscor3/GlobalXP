@@ -22,7 +22,7 @@ public class XPBlockEntity extends BlockEntity
 
 	public XPBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(GlobalXP.beTypeXpBlock, pos, state);
+		super(GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), pos, state);
 	}
 
 	/**

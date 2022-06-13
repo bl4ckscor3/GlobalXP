@@ -16,7 +16,7 @@ public class ClientReg
 	@SubscribeEvent
 	public static void onFMLClientSetup(FMLClientSetupEvent event)
 	{
-		event.enqueueWork(() ->	BlockEntityRenderers.register(GlobalXP.beTypeXpBlock, XPBlockEntityRenderer::new));
-		ItemBlockRenderTypes.setRenderLayer(GlobalXP.xp_block, RenderType.cutout());
+		event.enqueueWork(() ->	BlockEntityRenderers.register(GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), XPBlockEntityRenderer::new));
+		ItemBlockRenderTypes.setRenderLayer(GlobalXP.XP_BLOCK.get(), RenderType.cutout());
 	}
 }

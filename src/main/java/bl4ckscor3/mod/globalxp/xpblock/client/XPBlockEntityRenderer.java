@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.BlockHitResult;
@@ -34,7 +34,7 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 
 			if(be != null && be.getBlockPos() != null && mc.hitResult instanceof BlockHitResult hitResult && be.getBlockPos().equals(hitResult.getBlockPos()))
 			{
-				TextComponent levelsString = new TextComponent((int)be.getStoredLevels() + " (" + be.getStoredXP() + ")");
+				Component levelsString = Component.literal((int)be.getStoredLevels() + " (" + be.getStoredXP() + ")");
 				float opacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
 				int j = (int)(opacity * 255.0F) << 24;
 				float halfWidth = -mc.font.width(levelsString) / 2;
