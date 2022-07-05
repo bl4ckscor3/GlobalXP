@@ -14,7 +14,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 
-version = '1.10'
+version = '1.10.1'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.18.2'
 
@@ -22,7 +22,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'parchment', version: '2022.03.13-1.18.2'
+    mappings channel: 'parchment', version: '2022.07.03-1.18.2'
 	
     runs {
         client {
@@ -60,9 +60,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.18.2-40.1.0'
+    minecraft 'net.minecraftforge:forge:1.18.2-40.1.54'
 
-    implementation fg.deobf("curse.maven:jade-324717:3761542")
+    implementation fg.deobf("curse.maven:jade-324717:3845190")
     implementation fg.deobf("curse.maven:the-one-probe-245211:3671753")
 }
 
