@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 
-version = '1.10.1'
+version = '1.10.2'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.19'
 
@@ -61,7 +61,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19-41.0.64'
+    minecraft 'net.minecraftforge:forge:1.19-41.0.94'
 
     implementation fg.deobf("curse.maven:jade-324717:3824831")
     implementation fg.deobf("curse.maven:the-one-probe-245211:3863653")
