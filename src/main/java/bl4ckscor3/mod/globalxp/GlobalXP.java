@@ -25,9 +25,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 @Mod(GlobalXP.MOD_ID)
-@EventBusSubscriber(bus=Bus.MOD)
-public class GlobalXP
-{
+@EventBusSubscriber(bus = Bus.MOD)
+public class GlobalXP {
 	public static final String MOD_ID = "globalxp";
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID);
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MOD_ID);
@@ -36,8 +35,7 @@ public class GlobalXP
 	public static final RegistryObject<BlockEntityType<XPBlockEntity>> XP_BLOCK_ENTITY_TYPE = BLOCK_ENTITY_TYPES.register("xp_block", () -> BlockEntityType.Builder.of(XPBlockEntity::new, XP_BLOCK.get()).build(null));
 	public static final RegistryObject<XPBlockItem> XP_BLOCK_ITEMS = ITEMS.register("xp_block", () -> new XPBlockItem(XP_BLOCK.get()));
 
-	public GlobalXP()
-	{
+	public GlobalXP() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CLIENT_SPEC);
@@ -48,9 +46,8 @@ public class GlobalXP
 	}
 
 	@SubscribeEvent
-	public static void onInterModEnqueue(InterModEnqueueEvent event)
-	{
-		if(ModList.get().isLoaded("theoneprobe"))
+	public static void onInterModEnqueue(InterModEnqueueEvent event) {
+		if (ModList.get().isLoaded("theoneprobe"))
 			InterModComms.sendTo("theoneprobe", "getTheOneProbe", GetTheOneProbe::new);
 	}
 }

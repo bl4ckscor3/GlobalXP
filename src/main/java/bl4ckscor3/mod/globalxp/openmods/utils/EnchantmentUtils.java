@@ -45,7 +45,7 @@ public class EnchantmentUtils {
 		player.experienceProgress = (experience - expForLevel) / (float)player.getXpNeededForNextLevel();
 	}
 
-	public static int xpBarCap(int level) {
+	public static int xpBarCap(int level) { 
 		if (level >= 30)
 			return 112 + (level - 30) * 9;
 

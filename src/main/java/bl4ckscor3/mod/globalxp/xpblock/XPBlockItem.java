@@ -14,25 +14,20 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-public class XPBlockItem extends BlockItem
-{
+public class XPBlockItem extends BlockItem {
 	private static final Style STYLE = Style.EMPTY.applyFormat(ChatFormatting.GRAY);
 
-	public XPBlockItem(Block block)
-	{
+	public XPBlockItem(Block block) {
 		super(block, new Item.Properties().tab(CreativeModeTab.TAB_MISC));
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag)
-	{
-		if(!stack.hasTag())
-		{
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
+		if (!stack.hasTag()) {
 			tooltip.add(Component.translatable("info.globalxp.levels", 0).setStyle(STYLE));
 			tooltip.add(Component.translatable("info.globalxp.xp", 0).setStyle(STYLE));
 		}
-		else
-		{
+		else {
 			int storedXP = stack.getTag().getCompound("BlockEntityTag").getInt("stored_xp");
 
 			tooltip.add(Component.translatable("info.globalxp.levels", String.format("%.2f", XPUtils.calculateStoredLevels(storedXP))).setStyle(STYLE));

@@ -7,16 +7,15 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 
-public class Configuration
-{
+public class Configuration {
 	public static final ForgeConfigSpec SERVER_SPEC;
 	public static final Client CLIENT;
 	public static final ForgeConfigSpec CLIENT_SPEC;
 	public static final Server SERVER;
 
 	static {
-		Pair<Client,ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
-		Pair<Server,ForgeConfigSpec> serverSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
+		Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
+		Pair<Server, ForgeConfigSpec> serverSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
 
 		CLIENT_SPEC = clientSpecPair.getRight();
 		CLIENT = clientSpecPair.getLeft();
@@ -24,14 +23,13 @@ public class Configuration
 		SERVER = serverSpecPair.getLeft();
 	}
 
-	public static class Client
-	{
+	public static class Client {
 		public final DoubleValue spinSpeed;
 		public final DoubleValue bobSpeed;
 		public final BooleanValue renderNameplate;
 
-		Client(ForgeConfigSpec.Builder builder)
-		{
+		Client(ForgeConfigSpec.Builder builder) {
+			//@formatter:off
 			spinSpeed = builder
 					.comment("How fast the emerald should spin (multiplier of the default speed)")
 					.defineInRange("spinSpeed", 1.0D, 0.0D, Double.MAX_VALUE);
@@ -41,11 +39,11 @@ public class Configuration
 			renderNameplate = builder
 					.comment("Whether info about the saved levels should be shown above the XP Block")
 					.define("renderNameplate", true);
+			//@formatter:on
 		}
 	}
 
-	public static class Server
-	{
+	public static class Server {
 		public final IntValue xpForComparator;
 		public final BooleanValue pickupXP;
 		public final DoubleValue pickupRange;
@@ -56,8 +54,8 @@ public class Configuration
 		public final DoubleValue retrievalPercentage;
 		public final BooleanValue retrieveXPOrbs;
 
-		Server(ForgeConfigSpec.Builder builder)
-		{
+		Server(ForgeConfigSpec.Builder builder) {
+			//@formatter:off
 			xpForComparator = builder
 					.comment("The amount of XP needed for the comparator to output a redstone signal of strength one. By default, the signal will be at full strength if the block has 30 levels stored.")
 					.defineInRange("xpForComparator", 1395 / 15, 0, Integer.MAX_VALUE / 15);
@@ -92,6 +90,7 @@ public class Configuration
 					.comment("Setting this to true will remove XP from the block in XP orb form. This is useful if you want to use XP from the block for tools enchanted with Mending.",
 							"These XP orbs will not be picked back up by the XP Block, if \"pickupXP\" is true.")
 					.define("retrieve_xp_orbs", false);
+			//@formatter:on
 		}
 	}
 }

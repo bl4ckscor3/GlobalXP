@@ -29,80 +29,68 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 
-public class XPBlock extends BaseEntityBlock
-{
+public class XPBlock extends BaseEntityBlock {
 	private static final VoxelShape SHAPE = Block.box(0.0001D, 0.0001D, 0.0001D, 15.999D, 15.999D, 15.999D);
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
-	public XPBlock(Properties properties)
-	{
+	public XPBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(POWERED, false));
 	}
 
 	@Override
-	public RenderShape getRenderShape(BlockState state)
-	{
+	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.MODEL;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context)
-	{
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit)
-	{
-		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
-		{
-			if(!level.isClientSide)
-			{
-				if(player.isShiftKeyDown())
-				{
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock) {
+			if (!level.isClientSide) {
+				if (player.isShiftKeyDown()) {
 					int xpToStore = 0;
 
-					if(Configuration.SERVER.storingAmount.get() != -1)
+					if (Configuration.SERVER.storingAmount.get() != -1)
 						xpToStore = Math.min(Configuration.SERVER.storingAmount.get(), EnchantmentUtils.getPlayerXP(player));
-					else if(Configuration.SERVER.storeUntilPreviousLevel.get())
-					{
+					else if (Configuration.SERVER.storeUntilPreviousLevel.get()) {
 						int xpForCurrentLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
 
 						xpToStore = EnchantmentUtils.getPlayerXP(player) - xpForCurrentLevel;
 
-						if(xpToStore == 0 && player.experienceLevel > 0) //player has exactly x > 0 levels (xp bar looks empty)
+						if (xpToStore == 0 && player.experienceLevel > 0) //player has exactly x > 0 levels (xp bar looks empty)
 							xpToStore = xpForCurrentLevel - EnchantmentUtils.getExperienceForLevel(player.experienceLevel - 1);
 					}
 					else
 						xpToStore = EnchantmentUtils.getPlayerXP(player);
 
-					if(xpToStore == 0)
+					if (xpToStore == 0)
 						return InteractionResult.PASS;
 
 					xpBlock.addXP(xpToStore); //store as much XP as possible
 					EnchantmentUtils.addPlayerXP(player, -xpToStore); //negative value removes xp
 					return InteractionResult.SUCCESS;
 				}
-				else if(!player.isShiftKeyDown())
-				{
+				else if (!player.isShiftKeyDown()) {
 					int xpRetrieved;
 
-					if(Configuration.SERVER.retrievalAmount.get() != -1)
-						xpRetrieved = (int)(xpBlock.removeXP(Configuration.SERVER.retrievalAmount.get()) * Configuration.SERVER.retrievalPercentage.get());
-					else if(Configuration.SERVER.retriveUntilNextLevel.get())
-					{
+					if (Configuration.SERVER.retrievalAmount.get() != -1)
+						xpRetrieved = (int) (xpBlock.removeXP(Configuration.SERVER.retrievalAmount.get()) * Configuration.SERVER.retrievalPercentage.get());
+					else if (Configuration.SERVER.retriveUntilNextLevel.get()) {
 						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
 
-						xpRetrieved = (int)(xpBlock.removeXP(xpToRetrieve) * Configuration.SERVER.retrievalPercentage.get());
+						xpRetrieved = (int) (xpBlock.removeXP(xpToRetrieve) * Configuration.SERVER.retrievalPercentage.get());
 					}
-					else
-					{
-						xpRetrieved = (int)(xpBlock.getStoredXP() * Configuration.SERVER.retrievalPercentage.get());
+					else {
+						xpRetrieved = (int) (xpBlock.getStoredXP() * Configuration.SERVER.retrievalPercentage.get());
 						xpBlock.setStoredXP(0);
 					}
 
-					if(xpRetrieved > 0)
+					if (xpRetrieved > 0)
 						addOrSpawnXPForPlayer(player, xpRetrieved);
 				}
 			}
@@ -113,52 +101,45 @@ public class XPBlock extends BaseEntityBlock
 		return InteractionResult.PASS;
 	}
 
-	private void addOrSpawnXPForPlayer(Player player, int amount)
-	{
-		if(Configuration.SERVER.retrieveXPOrbs.get())
-		{
-			if(!player.level.isClientSide)
-			{
+	private void addOrSpawnXPForPlayer(Player player, int amount) {
+		if (Configuration.SERVER.retrieveXPOrbs.get()) {
+			if (!player.level.isClientSide) {
 				ExperienceOrb orb = new ExperienceOrb(player.level, player.getX(), player.getY(), player.getZ(), amount);
 
 				orb.getPersistentData().putBoolean("GlobalXPMarker", true); //so the xp block won't pick it back up
 				player.level.addFreshEntity(orb);
 			}
 		}
-		else
-		{
+		else {
 			int previousLevel = player.experienceLevel;
 
 			MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.XpChange(player, amount));
 			EnchantmentUtils.addPlayerXP(player, amount);
 
-			if(previousLevel != player.experienceLevel)
+			if (previousLevel != player.experienceLevel)
 				MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.LevelChange(player, player.experienceLevel));
 		}
 	}
 
 	@Override
-	public boolean hasAnalogOutputSignal(BlockState state)
-	{
+	public boolean hasAnalogOutputSignal(BlockState state) {
 		return true;
 	}
 
 	@Override
-	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos)
-	{
-		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
+	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
 			return Math.min(15, Math.floorDiv(xpBlock.getStoredXP(), Configuration.SERVER.xpForComparator.get()));
-		else return 0;
+		else
+			return 0;
 	}
 
 	@Override
-	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
-	{
-		if(level.isClientSide || !stack.hasTag())
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+		if (level.isClientSide || !stack.hasTag())
 			return;
 
-		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
-		{
+		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock) {
 			CompoundTag tag = stack.getTag().getCompound("BlockEntityTag");
 
 			tag.putInt("x", pos.getX());
@@ -171,33 +152,29 @@ public class XPBlock extends BaseEntityBlock
 	}
 
 	@Override
-	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player)
-	{
-		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
+	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
 			xpBlock.setDestroyedByCreativePlayer(player.isCreative());
 
 		super.playerWillDestroy(level, pos, state, player);
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
-	{
-		if(state.getBlock() == newState.getBlock())
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() == newState.getBlock())
 			return;
 
-		if(level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
-		{
+		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock) {
 			ItemStack stack = new ItemStack(asItem());
 
-			if(xpBlock.getStoredLevels() != 0)
-			{
+			if (xpBlock.getStoredLevels() != 0) {
 				CompoundTag stackTag = new CompoundTag();
 
 				stackTag.put("BlockEntityTag", xpBlock.saveWithoutMetadata());
 				stack.setTag(stackTag);
 				popResource(level, pos, stack);
 			}
-			else if(!xpBlock.isDestroyedByCreativePlayer())
+			else if (!xpBlock.isDestroyedByCreativePlayer())
 				popResource(level, pos, stack);
 		}
 
@@ -205,28 +182,24 @@ public class XPBlock extends BaseEntityBlock
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
-	{
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 		super.neighborChanged(state, level, pos, block, fromPos, isMoving);
 
 		level.setBlockAndUpdate(pos, state.setValue(POWERED, level.hasNeighborSignal(pos)));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
-	{
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(POWERED);
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
-	{
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new XPBlockEntity(pos, state);
 	}
 
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type)
-	{
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
 		return level.isClientSide ? null : createTickerHelper(type, GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), XPBlockEntity::serverTick);
 	}
 }

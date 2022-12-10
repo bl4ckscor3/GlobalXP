@@ -17,26 +17,22 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
-{
+public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity> {
 	private ItemStack emerald = new ItemStack(Items.EMERALD, 1);
 
 	public XPBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {}
 
 	@Override
-	public void render(XPBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay)
-	{
+	public void render(XPBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
 		poseStack.pushPose();
 
-		if(Configuration.CLIENT.renderNameplate.get())
-		{
+		if (Configuration.CLIENT.renderNameplate.get()) {
 			Minecraft mc = Minecraft.getInstance();
 
-			if(be != null && be.getBlockPos() != null && mc.hitResult instanceof BlockHitResult hitResult && be.getBlockPos().equals(hitResult.getBlockPos()))
-			{
-				Component levelsString = Component.literal((int)be.getStoredLevels() + " (" + be.getStoredXP() + ")");
+			if (be != null && be.getBlockPos() != null && mc.hitResult instanceof BlockHitResult hitResult && be.getBlockPos().equals(hitResult.getBlockPos())) {
+				Component levelsString = Component.literal((int) be.getStoredLevels() + " (" + be.getStoredXP() + ")");
 				float opacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-				int j = (int)(opacity * 255.0F) << 24;
+				int j = (int) (opacity * 255.0F) << 24;
 				float halfWidth = -mc.font.width(levelsString) / 2;
 				Matrix4f positionMatrix;
 
