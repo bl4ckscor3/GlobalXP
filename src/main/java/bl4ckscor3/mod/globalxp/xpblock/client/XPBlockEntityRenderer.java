@@ -1,8 +1,9 @@
 package bl4ckscor3.mod.globalxp.xpblock.client;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockEntity;
@@ -52,7 +53,7 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 		BakedModel model = Minecraft.getInstance().getItemRenderer().getModel(emerald, be.getLevel(), null, 0);
 
 		poseStack.translate(0.5D, 0.4D + offset, 0.5D);
-		poseStack.mulPose(Vector3f.YP.rotationDegrees(time * 4.0F * Configuration.CLIENT.spinSpeed.get().floatValue()));
+		poseStack.mulPose(Axis.YP.rotationDegrees(time * 4.0F * Configuration.CLIENT.spinSpeed.get().floatValue()));
 		Minecraft.getInstance().getItemRenderer().render(emerald, TransformType.GROUND, false, poseStack, buffer, combinedLight, combinedOverlay, model);
 		poseStack.popPose();
 	}

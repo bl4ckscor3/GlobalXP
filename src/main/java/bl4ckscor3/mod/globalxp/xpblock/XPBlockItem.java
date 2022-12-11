@@ -7,7 +7,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -18,7 +17,7 @@ public class XPBlockItem extends BlockItem {
 	private static final Style STYLE = Style.EMPTY.applyFormat(ChatFormatting.GRAY);
 
 	public XPBlockItem(Block block) {
-		super(block, new Item.Properties().tab(CreativeModeTab.TAB_MISC));
+		super(block, new Item.Properties());
 	}
 
 	@Override

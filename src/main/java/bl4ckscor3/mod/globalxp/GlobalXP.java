@@ -4,11 +4,13 @@ import bl4ckscor3.mod.globalxp.compat.GetTheOneProbe;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockEntity;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -33,7 +35,7 @@ public class GlobalXP {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
 	public static final RegistryObject<XPBlock> XP_BLOCK = BLOCKS.register("xp_block", () -> new XPBlock(Block.Properties.of(Material.METAL).strength(12.5F, 2000.0F).sound(SoundType.METAL)));
 	public static final RegistryObject<BlockEntityType<XPBlockEntity>> XP_BLOCK_ENTITY_TYPE = BLOCK_ENTITY_TYPES.register("xp_block", () -> BlockEntityType.Builder.of(XPBlockEntity::new, XP_BLOCK.get()).build(null));
-	public static final RegistryObject<XPBlockItem> XP_BLOCK_ITEMS = ITEMS.register("xp_block", () -> new XPBlockItem(XP_BLOCK.get()));
+	public static final RegistryObject<XPBlockItem> XP_BLOCK_ITEM = ITEMS.register("xp_block", () -> new XPBlockItem(XP_BLOCK.get()));
 
 	public GlobalXP() {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -49,5 +51,11 @@ public class GlobalXP {
 	public static void onInterModEnqueue(InterModEnqueueEvent event) {
 		if (ModList.get().isLoaded("theoneprobe"))
 			InterModComms.sendTo("theoneprobe", "getTheOneProbe", GetTheOneProbe::new);
+	}
+
+	@SubscribeEvent
+	public static void onCreativeModeTabBuildContents(CreativeModeTabEvent.BuildContents event) {
+		if (event.getTab() == CreativeModeTabs.FUNCTIONAL_BLOCKS || event.getTab() == CreativeModeTabs.REDSTONE_BLOCKS)
+			event.accept(XP_BLOCK_ITEM.get());
 	}
 }
