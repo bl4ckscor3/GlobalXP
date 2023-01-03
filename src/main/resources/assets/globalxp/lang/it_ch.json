@@ -1,5 +1,6 @@
 {
     "block.globalxp.xp_block": "Blocco d'esperienza",
     "info.globalxp.levels": "%s Livelli salvati",
-    "info.globalxp.xp": "%s Esperienza conservata"
+    "info.globalxp.xp": "%s Esperienza conservata",
+    "config.jade.plugin_globalxp.display": "Mostra informazioni sull'esperienza"
 }
