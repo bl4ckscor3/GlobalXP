@@ -15,7 +15,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 
-version = '1.10.2'
+version = '1.10.3'
 group = 'bl4ckscor3.mod.globalxp'
 archivesBaseName = 'globalxp-1.19.3'
 
