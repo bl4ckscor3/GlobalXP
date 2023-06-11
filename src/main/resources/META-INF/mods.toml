@@ -1,6 +1,6 @@
 modLoader="javafml"
-loaderVersion="[44,)"
-license="MIT https://github.com/bl4ckscor3/GlobalXP/blob/1.19/LICENSE"
+loaderVersion="[46,)"
+license="MIT https://github.com/bl4ckscor3/GlobalXP/blob/1.20/LICENSE"
 
 [[mods]]
 	modId="globalxp"
@@ -14,13 +14,13 @@ license="MIT https://github.com/bl4ckscor3/GlobalXP/blob/1.19/LICENSE"
 [[dependencies.globalxp]]
     modId="forge"
     mandatory=true
-    versionRange="[44.0.6,)"
+    versionRange="[46,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.globalxp]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.3,1.20)"
+    versionRange="[1.20,1.21)"
     ordering="NONE"
     side="BOTH"

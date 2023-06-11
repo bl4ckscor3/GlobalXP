@@ -2,28 +2,35 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://maven.parchmentmc.org' }
+		maven { url = 'https://repo.spongepowered.org/maven' }
         mavenCentral()
     }
 
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '[6.0,6.2)', changing: true
+		classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+'
         classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 
 version = '1.10.3'
 group = 'bl4ckscor3.mod.globalxp'
-archivesBaseName = 'globalxp-1.19.4'
+
+base {
+	archivesName = 'globalxp-1.20'
+}
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'parchment', version: '1.19.3-2023.03.12-1.19.4'
+    mappings channel: 'parchment', version: '1.19.3-2023.03.12-1.20'
+	copyIdeResources = true
 	
     runs {
         client {
@@ -61,20 +68,23 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.4-45.0.6'
+	minecraft 'net.minecraftforge:forge:1.20-46.0.12'
 
-    implementation fg.deobf("curse.maven:jade-324717:4439089")
-    implementation fg.deobf("curse.maven:the-one-probe-245211:4159743")
+    implementation fg.deobf("curse.maven:jade-324717:4573193")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:4579432")
 }
 
-jar {
+tasks.named('jar', Jar).configure {
     manifest {
         attributes(["Specification-Title": "Global XP",
                     "Specification-Vendor": "bl4ckscor3",
                     "Specification-Version": "${version}",
                     "Implementation-Title": "Global XP",
                     "Implementation-Version": "${version}",
-                    "Implementation-Vendor": "bl4ckscor3",
-                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
+                    "Implementation-Vendor": "bl4ckscor3"])
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }

@@ -103,11 +103,13 @@ public class XPBlock extends BaseEntityBlock {
 
 	private void addOrSpawnXPForPlayer(Player player, int amount) {
 		if (Configuration.SERVER.retrieveXPOrbs.get()) {
-			if (!player.level.isClientSide) {
-				ExperienceOrb orb = new ExperienceOrb(player.level, player.getX(), player.getY(), player.getZ(), amount);
+			Level level = player.level();
+
+			if (!level.isClientSide) {
+				ExperienceOrb orb = new ExperienceOrb(level, player.getX(), player.getY(), player.getZ(), amount);
 
 				orb.getPersistentData().putBoolean("GlobalXPMarker", true); //so the xp block won't pick it back up
-				player.level.addFreshEntity(orb);
+				level.addFreshEntity(orb);
 			}
 		}
 		else {
