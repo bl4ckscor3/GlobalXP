@@ -1,6 +1,5 @@
 package bl4ckscor3.mod.globalxp.xpblock;
 
-import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.openmods.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
@@ -26,8 +25,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
 
 public class XPBlock extends BaseEntityBlock {
 	private static final VoxelShape SHAPE = Block.box(0.0001D, 0.0001D, 0.0001D, 15.999D, 15.999D, 15.999D);
@@ -55,9 +52,9 @@ public class XPBlock extends BaseEntityBlock {
 				if (player.isShiftKeyDown()) {
 					int xpToStore = 0;
 
-					if (Configuration.SERVER.storingAmount.get() != -1)
-						xpToStore = Math.min(Configuration.SERVER.storingAmount.get(), EnchantmentUtils.getPlayerXP(player));
-					else if (Configuration.SERVER.storeUntilPreviousLevel.get()) {
+					if (GlobalXP.CONFIG.storingAmount != -1)
+						xpToStore = Math.min(GlobalXP.CONFIG.storingAmount, EnchantmentUtils.getPlayerXP(player));
+					else if (GlobalXP.CONFIG.storeUntilPreviousLevel) {
 						int xpForCurrentLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
 
 						xpToStore = EnchantmentUtils.getPlayerXP(player) - xpForCurrentLevel;
@@ -78,15 +75,15 @@ public class XPBlock extends BaseEntityBlock {
 				else if (!player.isShiftKeyDown()) {
 					int xpRetrieved;
 
-					if (Configuration.SERVER.retrievalAmount.get() != -1)
-						xpRetrieved = (int) (xpBlock.removeXP(Configuration.SERVER.retrievalAmount.get()) * Configuration.SERVER.retrievalPercentage.get());
-					else if (Configuration.SERVER.retriveUntilNextLevel.get()) {
+					if (GlobalXP.CONFIG.retrievalAmount != -1)
+						xpRetrieved = (int) (xpBlock.removeXP(GlobalXP.CONFIG.retrievalAmount) * GlobalXP.CONFIG.retrievalPercentage);
+					else if (GlobalXP.CONFIG.retriveUntilNextLevel) {
 						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
 
-						xpRetrieved = (int) (xpBlock.removeXP(xpToRetrieve) * Configuration.SERVER.retrievalPercentage.get());
+						xpRetrieved = (int) (xpBlock.removeXP(xpToRetrieve) * GlobalXP.CONFIG.retrievalPercentage);
 					}
 					else {
-						xpRetrieved = (int) (xpBlock.getStoredXP() * Configuration.SERVER.retrievalPercentage.get());
+						xpRetrieved = (int) (xpBlock.getStoredXP() * GlobalXP.CONFIG.retrievalPercentage);
 						xpBlock.setStoredXP(0);
 					}
 
@@ -102,25 +99,18 @@ public class XPBlock extends BaseEntityBlock {
 	}
 
 	private void addOrSpawnXPForPlayer(Player player, int amount) {
-		if (Configuration.SERVER.retrieveXPOrbs.get()) {
+		if (GlobalXP.CONFIG.retrieveXPOrbs) {
 			Level level = player.level();
 
 			if (!level.isClientSide) {
 				ExperienceOrb orb = new ExperienceOrb(level, player.getX(), player.getY(), player.getZ(), amount);
 
-				orb.getPersistentData().putBoolean("GlobalXPMarker", true); //so the xp block won't pick it back up
+				orb.addTag("GlobalXPMarker"); //so the xp block won't pick it back up
 				level.addFreshEntity(orb);
 			}
 		}
-		else {
-			int previousLevel = player.experienceLevel;
-
-			MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.XpChange(player, amount));
+		else
 			EnchantmentUtils.addPlayerXP(player, amount);
-
-			if (previousLevel != player.experienceLevel)
-				MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.LevelChange(player, player.experienceLevel));
-		}
 	}
 
 	@Override
@@ -131,7 +121,7 @@ public class XPBlock extends BaseEntityBlock {
 	@Override
 	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
 		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
-			return Math.min(15, Math.floorDiv(xpBlock.getStoredXP(), Configuration.SERVER.xpForComparator.get()));
+			return Math.min(15, Math.floorDiv(xpBlock.getStoredXP(), GlobalXP.CONFIG.xpForComparator));
 		else
 			return 0;
 	}
@@ -202,6 +192,6 @@ public class XPBlock extends BaseEntityBlock {
 
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return level.isClientSide ? null : createTickerHelper(type, GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), XPBlockEntity::serverTick);
+		return level.isClientSide ? null : createTickerHelper(type, GlobalXP.XP_BLOCK_ENTITY_TYPE, XPBlockEntity::serverTick);
 	}
 }

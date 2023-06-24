@@ -2,5 +2,17 @@
     "block.globalxp.xp_block": "XP Block",
     "info.globalxp.levels": "%s Level gespeichert",
     "info.globalxp.xp": "%s XP gespeichert",
-    "config.jade.plugin_globalxp.display": "XP-Information anzeigen"
+    "config.jade.plugin_globalxp.display": "XP-Information anzeigen",
+    "text.autoconfig.globalxp.option.spinSpeed": "Drehgeschwindigkeit",
+    "text.autoconfig.globalxp.option.bobSpeed": "Hoch-runter-Geschwindigkeit",
+    "text.autoconfig.globalxp.option.renderNameplate": "XP-Menge über Block anzeigen",
+    "text.autoconfig.globalxp.option.xpForComparator": "XP-Menge für Komparator",
+    "text.autoconfig.globalxp.option.pickupXP": "XP aufheben",
+    "text.autoconfig.globalxp.option.pickupRange": "Aufhebe-Radius",
+    "text.autoconfig.globalxp.option.retriveUntilNextLevel": "Bis zum nächsten Level auffüllen",
+    "text.autoconfig.globalxp.option.retrievalAmount": "Auffüll-Menge",
+    "text.autoconfig.globalxp.option.storeUntilPreviousLevel": "Bis zum vorherigen Level einspeichern",
+    "text.autoconfig.globalxp.option.storingAmount": "Einspeicher-Menge",
+    "text.autoconfig.globalxp.option.retrievalPercentage": "Auffüll-Anteil",
+    "text.autoconfig.globalxp.option.retrieveXPOrbs": "Als XP-Kugeln auffüllen"
 }

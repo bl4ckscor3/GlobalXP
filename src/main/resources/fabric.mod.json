@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "globalxp",
+	"version": "${version}",
+	"name": "Global XP",
+	"description": "Adds a fast way to store XP and share it with your friends!",
+	"authors": [
+		"bl4ckscor3"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/global-xp",
+		"issues": "https://github.com/bl4ckscor3/GlobalXP/issues",
+		"sources": "https://github.com/bl4ckscor3/GlobalXP"
+	},
+	"license": "MIT",
+	"icon": "assets/globalxp/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"bl4ckscor3.mod.globalxp.GlobalXP"
+		],
+		"client": [
+			"bl4ckscor3.mod.globalxp.GlobalXPClient"
+		],
+		"modmenu": [
+			"bl4ckscor3.mod.globalxp.compat.ModMenuIntegration"
+		],
+		"jade": [
+			"bl4ckscor3.mod.globalxp.compat.JadeDataProvider"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*",
+		"cloth-config": ">=11.0.99"
+	},
+	"suggests": {
+		"jade": ">=7.1.0"
+	}
+}

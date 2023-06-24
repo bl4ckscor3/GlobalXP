@@ -2,5 +2,17 @@
     "block.globalxp.xp_block": "XP Block",
     "info.globalxp.levels": "%s levels saved",
     "info.globalxp.xp": "%s XP saved",
-    "config.jade.plugin_globalxp.display": "Display XP Information"
+    "config.jade.plugin_globalxp.display": "Display XP Information",
+    "text.autoconfig.globalxp.option.spinSpeed": "Spin speed",
+    "text.autoconfig.globalxp.option.bobSpeed": "Bob speed",
+    "text.autoconfig.globalxp.option.renderNameplate": "Display XP amount above block",
+    "text.autoconfig.globalxp.option.xpForComparator": "XP amount for comparator",
+    "text.autoconfig.globalxp.option.pickupXP": "Pickup XP",
+    "text.autoconfig.globalxp.option.pickupRange": "Pickup range",
+    "text.autoconfig.globalxp.option.retriveUntilNextLevel": "Retrieve until next level",
+    "text.autoconfig.globalxp.option.retrievalAmount": "Retrieval amount",
+    "text.autoconfig.globalxp.option.storeUntilPreviousLevel": "Store until previous level",
+    "text.autoconfig.globalxp.option.storingAmount": "Storing amount",
+    "text.autoconfig.globalxp.option.retrievalPercentage": "Retrieval percentage",
+    "text.autoconfig.globalxp.option.retrieveXPOrbs": "Retrieve XP orbs"
 }

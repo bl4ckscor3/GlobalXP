@@ -5,7 +5,7 @@ import org.joml.Matrix4f;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 
-import bl4ckscor3.mod.globalxp.Configuration;
+import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font.DisplayMode;
@@ -30,7 +30,7 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 
 		poseStack.pushPose();
 
-		if (Configuration.CLIENT.renderNameplate.get()) {
+		if (GlobalXP.CONFIG.renderNameplate) {
 			if (be != null && be.getBlockPos() != null && mc.hitResult instanceof BlockHitResult hitResult && be.getBlockPos().equals(hitResult.getBlockPos())) {
 				Component levelsString = Component.literal((int) be.getStoredLevels() + " (" + be.getStoredXP() + ")");
 				float opacity = mc.options.getBackgroundOpacity(0.25F);
@@ -50,11 +50,11 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 		}
 
 		float time = be.getLevel().getLevelData().getGameTime() + partialTicks;
-		double offset = Math.sin(time * Configuration.CLIENT.bobSpeed.get() / 8.0D) / 10.0D;
+		double offset = Math.sin(time * GlobalXP.CONFIG.bobSpeed / 8.0D) / 10.0D;
 		BakedModel model = mc.getItemRenderer().getModel(emerald, be.getLevel(), null, 0);
 
 		poseStack.translate(0.5D, 0.4D + offset, 0.5D);
-		poseStack.mulPose(Axis.YP.rotationDegrees(time * 4.0F * Configuration.CLIENT.spinSpeed.get().floatValue()));
+		poseStack.mulPose(Axis.YP.rotationDegrees(time * 4.0F * GlobalXP.CONFIG.spinSpeed));
 		mc.getItemRenderer().render(emerald, ItemDisplayContext.GROUND, false, poseStack, buffer, combinedLight, combinedOverlay, model);
 		poseStack.popPose();
 	}

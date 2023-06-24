@@ -1,11 +1,9 @@
 package bl4ckscor3.mod.globalxp.xpblock;
 
-import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.XPUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -20,7 +18,7 @@ public class XPBlockEntity extends BlockEntity {
 	private boolean destroyedByCreativePlayer;
 
 	public XPBlockEntity(BlockPos pos, BlockState state) {
-		super(GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), pos, state);
+		super(GlobalXP.XP_BLOCK_ENTITY_TYPE, pos, state);
 	}
 
 	/**
@@ -32,7 +30,7 @@ public class XPBlockEntity extends BlockEntity {
 		storedXP += amount;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		setChanged();
-		level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
 	}
 
 	/**
@@ -50,7 +48,7 @@ public class XPBlockEntity extends BlockEntity {
 		storedXP -= amountRemoved;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		setChanged();
-		level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
+		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
 		return amountRemoved;
 	}
 
@@ -62,11 +60,6 @@ public class XPBlockEntity extends BlockEntity {
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
 		return ClientboundBlockEntityDataPacket.create(this);
-	}
-
-	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		load(pkt.getTag());
 	}
 
 	/**
@@ -127,13 +120,13 @@ public class XPBlockEntity extends BlockEntity {
 	}
 
 	public static void serverTick(Level level, BlockPos pos, BlockState state, XPBlockEntity be) {
-		if (level.getGameTime() % 5 == 0 && Configuration.SERVER.pickupXP.get() && !state.getValue(XPBlock.POWERED))
+		if (level.getGameTime() % 5 == 0 && GlobalXP.CONFIG.pickupXP && !state.getValue(XPBlock.POWERED))
 			be.pickupDroppedXP();
 	}
 
 	private void pickupDroppedXP() {
 		//find all orbs in the area around the block, and ignore xp orbs that were spawned as a result of a player removing xp from the block
-		for (ExperienceOrb entity : level.getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE.and(e -> !e.getPersistentData().getBoolean("GlobalXPMarker")))) {
+		for (ExperienceOrb entity : level.getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE.and(e -> !e.getTags().contains("GlobalXPMarker")))) {
 			int amount = entity.getValue();
 
 			if (getStoredXP() + amount <= getCapacity()) {
@@ -150,7 +143,7 @@ public class XPBlockEntity extends BlockEntity {
 		double x = getBlockPos().getX() + 0.5D;
 		double y = getBlockPos().getY() + 0.5D;
 		double z = getBlockPos().getZ() + 0.5D;
-		double range = Configuration.SERVER.pickupRange.get() + 0.5D;
+		double range = GlobalXP.CONFIG.pickupRange + 0.5D;
 
 		return new AABB(x - range, y - range, z - range, x + range, y + range, z + range);
 	}
