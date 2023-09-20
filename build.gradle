@@ -18,7 +18,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 
-version = '1.10.3'
+version = '1.10.4'
 group = 'bl4ckscor3.mod.globalxp'
 
 base {
@@ -29,7 +29,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft {
-    mappings channel: 'parchment', version: '1.19.3-2023.03.12-1.20'
+	mappings channel: 'parchment', version: '2023.08.06-1.20.1'
 	copyIdeResources = true
 	
     runs {
@@ -68,10 +68,10 @@ repositories {
 }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.20-46.0.12'
+	minecraft 'net.minecraftforge:forge:1.20.1-47.1.3'
 
-    implementation fg.deobf("curse.maven:jade-324717:4573193")
-    implementation fg.deobf("curse.maven:the-one-probe-245211:4579432")
+    implementation fg.deobf("curse.maven:jade-324717:4711195")
+    implementation fg.deobf("curse.maven:the-one-probe-245211:4629624")
 }
 
 tasks.named('jar', Jar).configure {
