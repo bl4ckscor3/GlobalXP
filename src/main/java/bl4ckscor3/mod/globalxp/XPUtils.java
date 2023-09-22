@@ -3,6 +3,8 @@ package bl4ckscor3.mod.globalxp;
 import bl4ckscor3.mod.globalxp.openmods.utils.EnchantmentUtils;
 
 public class XPUtils {
+	private XPUtils() {}
+
 	/**
 	 * Calculates the amount of levels the given XP value represents
 	 *

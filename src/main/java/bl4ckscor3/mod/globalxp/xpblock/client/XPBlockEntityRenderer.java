@@ -26,27 +26,28 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 
 	@Override
 	public void render(XPBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+		if (be == null)
+			return;
+
 		Minecraft mc = Minecraft.getInstance();
 
 		poseStack.pushPose();
 
-		if (GlobalXP.CONFIG.renderNameplate) {
-			if (be != null && be.getBlockPos() != null && mc.hitResult instanceof BlockHitResult hitResult && be.getBlockPos().equals(hitResult.getBlockPos())) {
-				Component levelsString = Component.literal((int) be.getStoredLevels() + " (" + be.getStoredXP() + ")");
-				float opacity = mc.options.getBackgroundOpacity(0.25F);
-				int j = (int) (opacity * 255.0F) << 24;
-				float halfWidth = -mc.font.width(levelsString) / 2;
-				Matrix4f positionMatrix;
+		if (GlobalXP.CONFIG.renderNameplate && be.getBlockPos() != null && mc.hitResult instanceof BlockHitResult hitResult && be.getBlockPos().equals(hitResult.getBlockPos())) {
+			Component levelsString = Component.literal((int) be.getStoredLevels() + " (" + be.getStoredXP() + ")");
+			float opacity = mc.options.getBackgroundOpacity(0.25F);
+			int j = (int) (opacity * 255.0F) << 24;
+			float halfWidth = -mc.font.width(levelsString) / 2;
+			Matrix4f positionMatrix;
 
-				poseStack.pushPose();
-				poseStack.translate(0.5D, 1.5D, 0.5D);
-				poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
-				poseStack.scale(-0.025F, -0.025F, 0.025F);
-				positionMatrix = poseStack.last().pose();
-				mc.font.drawInBatch(levelsString, halfWidth, 0, 553648127, false, positionMatrix, buffer, DisplayMode.SEE_THROUGH, j, combinedLight); //renderString
-				mc.font.drawInBatch(levelsString, halfWidth, 0, -1, false, positionMatrix, buffer, DisplayMode.NORMAL, 0, combinedLight);
-				poseStack.popPose();
-			}
+			poseStack.pushPose();
+			poseStack.translate(0.5D, 1.5D, 0.5D);
+			poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
+			poseStack.scale(-0.025F, -0.025F, 0.025F);
+			positionMatrix = poseStack.last().pose();
+			mc.font.drawInBatch(levelsString, halfWidth, 0, 553648127, false, positionMatrix, buffer, DisplayMode.SEE_THROUGH, j, combinedLight); //renderString
+			mc.font.drawInBatch(levelsString, halfWidth, 0, -1, false, positionMatrix, buffer, DisplayMode.NORMAL, 0, combinedLight);
+			poseStack.popPose();
 		}
 
 		float time = be.getLevel().getLevelData().getGameTime() + partialTicks;
