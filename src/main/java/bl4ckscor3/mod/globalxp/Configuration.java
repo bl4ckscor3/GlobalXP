@@ -1,21 +1,20 @@
 package bl4ckscor3.mod.globalxp;
 
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-
 public class Configuration {
-	public static final ForgeConfigSpec SERVER_SPEC;
+	public static final ModConfigSpec SERVER_SPEC;
 	public static final Client CLIENT;
-	public static final ForgeConfigSpec CLIENT_SPEC;
+	public static final ModConfigSpec CLIENT_SPEC;
 	public static final Server SERVER;
 
 	static {
-		Pair<Client, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(Client::new);
-		Pair<Server, ForgeConfigSpec> serverSpecPair = new ForgeConfigSpec.Builder().configure(Server::new);
+		Pair<Client, ModConfigSpec> clientSpecPair = new ModConfigSpec.Builder().configure(Client::new);
+		Pair<Server, ModConfigSpec> serverSpecPair = new ModConfigSpec.Builder().configure(Server::new);
 
 		CLIENT_SPEC = clientSpecPair.getRight();
 		CLIENT = clientSpecPair.getLeft();
@@ -28,7 +27,7 @@ public class Configuration {
 		public final DoubleValue bobSpeed;
 		public final BooleanValue renderNameplate;
 
-		Client(ForgeConfigSpec.Builder builder) {
+		Client(ModConfigSpec.Builder builder) {
 			//@formatter:off
 			spinSpeed = builder
 					.comment("How fast the emerald should spin (multiplier of the default speed)")
@@ -54,7 +53,7 @@ public class Configuration {
 		public final DoubleValue retrievalPercentage;
 		public final BooleanValue retrieveXPOrbs;
 
-		Server(ForgeConfigSpec.Builder builder) {
+		Server(ModConfigSpec.Builder builder) {
 			//@formatter:off
 			xpForComparator = builder
 					.comment("The amount of XP needed for the comparator to output a redstone signal of strength one. By default, the signal will be at full strength if the block has 30 levels stored.")

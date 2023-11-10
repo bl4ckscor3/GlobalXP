@@ -26,8 +26,8 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 
 public class XPBlock extends BaseEntityBlock {
 	private static final VoxelShape SHAPE = Block.box(0.0001D, 0.0001D, 0.0001D, 15.999D, 15.999D, 15.999D);
@@ -115,11 +115,11 @@ public class XPBlock extends BaseEntityBlock {
 		else {
 			int previousLevel = player.experienceLevel;
 
-			MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.XpChange(player, amount));
+			NeoForge.EVENT_BUS.post(new PlayerXpEvent.XpChange(player, amount));
 			EnchantmentUtils.addPlayerXP(player, amount);
 
 			if (previousLevel != player.experienceLevel)
-				MinecraftForge.EVENT_BUS.post(new PlayerXpEvent.LevelChange(player, player.experienceLevel));
+				NeoForge.EVENT_BUS.post(new PlayerXpEvent.LevelChange(player, player.experienceLevel));
 		}
 	}
 

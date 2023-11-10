@@ -9,21 +9,21 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.InterModComms;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
 
 @Mod(GlobalXP.MOD_ID)
 @EventBusSubscriber(bus = Bus.MOD)
@@ -36,9 +36,7 @@ public class GlobalXP {
 	public static final RegistryObject<BlockEntityType<XPBlockEntity>> XP_BLOCK_ENTITY_TYPE = BLOCK_ENTITY_TYPES.register("xp_block", () -> BlockEntityType.Builder.of(XPBlockEntity::new, XP_BLOCK.get()).build(null));
 	public static final RegistryObject<XPBlockItem> XP_BLOCK_ITEM = ITEMS.register("xp_block", () -> new XPBlockItem(XP_BLOCK.get()));
 
-	public GlobalXP() {
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
+	public GlobalXP(IEventBus modEventBus) {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Configuration.CLIENT_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Configuration.SERVER_SPEC);
 		BLOCKS.register(modEventBus);
