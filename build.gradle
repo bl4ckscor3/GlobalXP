@@ -6,7 +6,7 @@ plugins {
 //	id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-version = '1.10.4'
+version = '1.10.5'
 group = 'bl4ckscor3.mod.globalxp'
 
 base {
@@ -42,7 +42,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'net.neoforged:neoforge:20.2.47-beta'
+	implementation 'net.neoforged:neoforge:20.2.59-beta'
 
     implementation "curse.maven:jade-324717:4845321"
 	implementation "curse.maven:the-one-probe-245211:4629624"
