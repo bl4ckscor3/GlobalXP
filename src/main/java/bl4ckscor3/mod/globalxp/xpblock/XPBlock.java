@@ -1,5 +1,7 @@
 package bl4ckscor3.mod.globalxp.xpblock;
 
+import com.mojang.serialization.MapCodec;
+
 import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.openmods.utils.EnchantmentUtils;
@@ -154,11 +156,11 @@ public class XPBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
 			xpBlock.setDestroyedByCreativePlayer(player.isCreative());
 
-		super.playerWillDestroy(level, pos, state, player);
+		return super.playerWillDestroy(level, pos, state, player);
 	}
 
 	@Override
@@ -203,5 +205,10 @@ public class XPBlock extends BaseEntityBlock {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
 		return level.isClientSide ? null : createTickerHelper(type, GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), XPBlockEntity::serverTick);
+	}
+
+	@Override
+	protected MapCodec<? extends BaseEntityBlock> codec() {
+		return null;
 	}
 }

@@ -10,7 +10,7 @@ version = '1.10.5'
 group = 'bl4ckscor3.mod.globalxp'
 
 base {
-	archivesName = 'globalxp-neoforge-1.20.2'
+	archivesName = 'globalxp-neoforge-1.20.4'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -42,9 +42,9 @@ repositories {
 }
 
 dependencies {
-	implementation 'net.neoforged:neoforge:20.2.59-beta'
+	implementation 'net.neoforged:neoforge:20.4.11-beta'
 
-    implementation "curse.maven:jade-324717:4845321"
+	implementation "curse.maven:jade-324717:4845321"
 	implementation "curse.maven:the-one-probe-245211:4629624"
 }
 
