@@ -50,7 +50,7 @@ public class XPBlock extends BaseEntityBlock {
 		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock) {
 			if (!level.isClientSide) {
 				if (player.isShiftKeyDown()) {
-					int xpToStore = 0;
+					long xpToStore = 0;
 
 					if (GlobalXP.CONFIG.storingAmount != -1)
 						xpToStore = Math.min(GlobalXP.CONFIG.storingAmount, EnchantmentUtils.getPlayerXP(player));
@@ -73,17 +73,17 @@ public class XPBlock extends BaseEntityBlock {
 					return InteractionResult.SUCCESS;
 				}
 				else if (!player.isShiftKeyDown()) {
-					int xpRetrieved;
+					long xpRetrieved;
 
 					if (GlobalXP.CONFIG.retrievalAmount != -1)
-						xpRetrieved = (int) (xpBlock.removeXP(GlobalXP.CONFIG.retrievalAmount) * GlobalXP.CONFIG.retrievalPercentage);
+						xpRetrieved = (long) (xpBlock.removeXP(GlobalXP.CONFIG.retrievalAmount) * GlobalXP.CONFIG.retrievalPercentage);
 					else if (GlobalXP.CONFIG.retriveUntilNextLevel) {
-						int xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
+						long xpToRetrieve = EnchantmentUtils.getExperienceForLevel(player.experienceLevel + 1) - EnchantmentUtils.getPlayerXP(player);
 
-						xpRetrieved = (int) (xpBlock.removeXP(xpToRetrieve) * GlobalXP.CONFIG.retrievalPercentage);
+						xpRetrieved = (long) (xpBlock.removeXP(xpToRetrieve) * GlobalXP.CONFIG.retrievalPercentage);
 					}
 					else {
-						xpRetrieved = (int) (xpBlock.getStoredXP() * GlobalXP.CONFIG.retrievalPercentage);
+						xpRetrieved = (long) (xpBlock.getStoredXP() * GlobalXP.CONFIG.retrievalPercentage);
 						xpBlock.setStoredXP(0);
 					}
 
@@ -98,7 +98,7 @@ public class XPBlock extends BaseEntityBlock {
 		return InteractionResult.PASS;
 	}
 
-	private void addOrSpawnXPForPlayer(Player player, int amount) {
+	private void addOrSpawnXPForPlayer(Player player, long amount) {
 		if (GlobalXP.CONFIG.retrieveXPOrbs) {
 			Level level = player.level();
 
@@ -168,7 +168,7 @@ public class XPBlock extends BaseEntityBlock {
 			if (xpBlock.getStoredLevels() != 0) {
 				CompoundTag stackTag = stack.getOrCreateTag();
 
-				stackTag.putInt("stored_xp", xpBlock.getStoredXP());
+				stackTag.putLong("stored_xp", xpBlock.getStoredXP());
 				popResource(level, pos, stack);
 			}
 			else if (!xpBlock.isDestroyedByCreativePlayer())
