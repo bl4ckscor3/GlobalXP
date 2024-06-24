@@ -55,7 +55,7 @@ public class XPBlock extends BaseEntityBlock {
 					if (GlobalXP.CONFIG.storingAmount != -1)
 						xpToStore = Math.min(GlobalXP.CONFIG.storingAmount, EnchantmentUtils.getPlayerXP(player));
 					else if (GlobalXP.CONFIG.storeUntilPreviousLevel) {
-						int xpForCurrentLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
+						long xpForCurrentLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
 
 						xpToStore = EnchantmentUtils.getPlayerXP(player) - xpForCurrentLevel;
 
