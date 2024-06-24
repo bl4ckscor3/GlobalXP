@@ -27,17 +27,17 @@ public class XPBlockItem extends BlockItem {
 			addInfo(tooltip, "0", 0);
 		else {
 			CompoundTag stackTag = stack.getTag();
-			int storedXP;
+			long storedXP;
 
 			if (stackTag.contains(BLOCK_ENTITY_TAG))
 				stackTag = stackTag.getCompound(BLOCK_ENTITY_TAG);
 
-			storedXP = stackTag.getInt("stored_xp");
+			storedXP = stackTag.getLong("stored_xp");
 			addInfo(tooltip, String.format("%.2f", XPUtils.calculateStoredLevels(storedXP)), storedXP);
 		}
 	}
 
-	public void addInfo(List<Component> tooltip, String storedLevels, int storedXP) {
+	public void addInfo(List<Component> tooltip, String storedLevels, long storedXP) {
 		tooltip.add(Component.translatable("info.globalxp.levels", storedLevels).setStyle(STYLE));
 		tooltip.add(Component.translatable("info.globalxp.xp", storedXP).setStyle(STYLE));
 	}
