@@ -11,9 +11,9 @@ public class XPUtils {
 	 * @param storedXP The amount of XP to get the level amount of
 	 * @return The amount of levels storedXP represents
 	 */
-	public static float calculateStoredLevels(int storedXP) {
+	public static float calculateStoredLevels(long storedXP) {
 		float storedLevels = 0.0F;
-		int xp = storedXP;
+		long xp = storedXP;
 
 		while (xp > 0) {
 			int xpToNextLevel = EnchantmentUtils.xpBarCap((int) storedLevels);
@@ -36,7 +36,7 @@ public class XPUtils {
 	 * @param currentXP The XP that the player already has
 	 * @return
 	 */
-	public static int getXPToNextLevel(int currentXP) {
+	public static int getXPToNextLevel(long currentXP) {
 		int level = EnchantmentUtils.getLevelForExperience(currentXP);
 		int nextLevelXP = EnchantmentUtils.getExperienceForLevel(level + 1);
 
