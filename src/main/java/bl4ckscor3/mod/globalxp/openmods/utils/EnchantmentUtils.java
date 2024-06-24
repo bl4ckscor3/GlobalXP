@@ -23,12 +23,12 @@ public class EnchantmentUtils {
 	 * @param player The player to get the XP of
 	 * @return The amount of XP the given player has
 	 */
-	public static int getPlayerXP(Player player) {
-		return (int) (EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + (player.experienceProgress * player.getXpNeededForNextLevel()));
+	public static long getPlayerXP(Player player) {
+		return (long) (EnchantmentUtils.getExperienceForLevel(player.experienceLevel) + (player.experienceProgress * player.getXpNeededForNextLevel()));
 	}
 
-	public static void addPlayerXP(Player player, int amount) {
-		int experience = getPlayerXP(player) + amount;
+	public static void addPlayerXP(Player player, long amount) {
+		long experience = getPlayerXP(player) + amount;
 		int expForLevel;
 
 		player.totalExperience = experience;
@@ -46,11 +46,11 @@ public class EnchantmentUtils {
 		return 7 + level * 2;
 	}
 
-	private static int sum(int n, int a0, int d) {
+	private static long sum(long n, long a0, long d) {
 		return n * (2 * a0 + (n - 1) * d) / 2;
 	}
 
-	public static int getExperienceForLevel(int level) {
+	public static long getExperienceForLevel(int level) {
 		if (level == 0)
 			return 0;
 
@@ -60,10 +60,10 @@ public class EnchantmentUtils {
 		if (level <= 30)
 			return 315 + sum(level - 15, 37, 5);
 
-		return 1395 + sum(level - 30, 112, 9);
+		return 1395L + sum((long)(level - 30), 112L, 9L);
 	}
 
-	public static int getLevelForExperience(int targetXp) {
+	public static int getLevelForExperience(long targetXp) {
 		int level = 0;
 
 		while (true) {
