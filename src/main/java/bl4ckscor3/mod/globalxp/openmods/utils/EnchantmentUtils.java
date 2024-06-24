@@ -29,9 +29,9 @@ public class EnchantmentUtils {
 
 	public static void addPlayerXP(Player player, long amount) {
 		long experience = getPlayerXP(player) + amount;
-		int expForLevel;
+		long expForLevel;
 
-		player.totalExperience = experience;
+		player.totalExperience = (int)Math.min(Integer.MAX_VALUE, experience);
 		player.experienceLevel = EnchantmentUtils.getLevelForExperience(experience);
 		expForLevel = EnchantmentUtils.getExperienceForLevel(player.experienceLevel);
 		player.experienceProgress = (experience - expForLevel) / (float) player.getXpNeededForNextLevel();
