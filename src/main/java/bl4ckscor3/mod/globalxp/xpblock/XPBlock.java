@@ -103,7 +103,7 @@ public class XPBlock extends BaseEntityBlock {
 			Level level = player.level();
 
 			if (!level.isClientSide) {
-				ExperienceOrb orb = new ExperienceOrb(level, player.getX(), player.getY(), player.getZ(), amount);
+				ExperienceOrb orb = new ExperienceOrb(level, player.getX(), player.getY(), player.getZ(), (int)amount);
 
 				orb.addTag("GlobalXPMarker"); //so the xp block won't pick it back up
 				level.addFreshEntity(orb);
@@ -121,7 +121,7 @@ public class XPBlock extends BaseEntityBlock {
 	@Override
 	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
 		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
-			return Math.min(15, Math.floorDiv(xpBlock.getStoredXP(), GlobalXP.CONFIG.xpForComparator));
+			return (int)Math.min(15, Math.floorDiv(xpBlock.getStoredXP(), GlobalXP.CONFIG.xpForComparator));
 		else
 			return 0;
 	}
