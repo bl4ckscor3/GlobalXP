@@ -38,7 +38,7 @@ public class XPUtils {
 	 */
 	public static int getXPToNextLevel(long currentXP) {
 		int level = EnchantmentUtils.getLevelForExperience(currentXP);
-		int nextLevelXP = EnchantmentUtils.getExperienceForLevel(level + 1);
+		long nextLevelXP = EnchantmentUtils.getExperienceForLevel(level + 1);
 
 		return nextLevelXP - currentXP;
 	}
