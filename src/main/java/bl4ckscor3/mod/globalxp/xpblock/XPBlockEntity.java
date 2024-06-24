@@ -17,7 +17,7 @@ import net.minecraft.world.phys.AABB;
 
 public class XPBlockEntity extends BlockEntity implements Nameable {
 	private Component name;
-	private int storedXP = 0;
+	private long storedXP = 0;
 	private float storedLevels = 0.0F;
 	private boolean destroyedByCreativePlayer;
 
@@ -30,7 +30,7 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	 *
 	 * @param amount The amount of XP to add
 	 */
-	public void addXP(int amount) {
+	public void addXP(long amount) {
 		storedXP += amount;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		setChanged();
@@ -43,8 +43,8 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	 * @param amount The amount of XP to remove
 	 * @return The amount of XP that has been removed
 	 */
-	public int removeXP(int amount) {
-		int amountRemoved = Math.min(amount, storedXP);
+	public long removeXP(long amount) {
+		long amountRemoved = Math.min(amount, storedXP);
 
 		if (amountRemoved <= 0)
 			return 0;
@@ -71,7 +71,7 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	 *
 	 * @param xp The amount of XP
 	 */
-	public void setStoredXP(int xp) {
+	public void setStoredXP(long xp) {
 		storedXP = xp;
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		setChanged();
@@ -85,7 +85,7 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	 *
 	 * @return The total amount of XP stored in this block entity
 	 */
-	public int getStoredXP() {
+	public long getStoredXP() {
 		return storedXP;
 	}
 
@@ -114,7 +114,7 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 
 	@Override
 	public void saveAdditional(CompoundTag tag) {
-		tag.putInt("stored_xp", storedXP);
+		tag.putLong("stored_xp", storedXP);
 
 		if (name != null)
 			tag.putString("CustomName", Component.Serializer.toJson(name));
@@ -123,7 +123,7 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	@Override
 	public void load(CompoundTag tag) {
 		super.load(tag);
-		setStoredXP(tag.getInt("stored_xp"));
+		setStoredXP(tag.getLong("stored_xp"));
 
 		if (tag.contains("CustomName", Tag.TAG_STRING))
 			name = Component.Serializer.fromJson(tag.getString("CustomName"));
@@ -163,8 +163,8 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	 *
 	 * @return The total amount of XP that can be stored in this block entity
 	 */
-	public int getCapacity() {
-		return Integer.MAX_VALUE;
+	public long getCapacity() {
+		return Long.MAX_VALUE;
 	}
 
 	public void setCustomName(Component name) {
