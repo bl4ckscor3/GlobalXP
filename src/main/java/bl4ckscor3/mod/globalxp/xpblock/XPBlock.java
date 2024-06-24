@@ -141,7 +141,7 @@ public class XPBlock extends BaseEntityBlock {
 				if (stackTag.contains("BlockEntityTag"))
 					stackTag = stackTag.getCompound("BlockEntityTag");
 
-				xpBlock.setStoredXP(stackTag.getInt("stored_xp"));
+				xpBlock.setStoredXP(stackTag.getLong("stored_xp"));
 			}
 		}
 	}
