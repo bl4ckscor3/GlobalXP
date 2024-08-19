@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_name",
+              "source": "block_entity"
+            },
+            {
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "stored_xp",
+                  "target": "stored_xp"
+                }
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "globalxp:xp_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "globalxp:blocks/xp_block"
+}
