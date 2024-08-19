@@ -16,13 +16,21 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
+processResources {
+	exclude ".cache"
+}
+
+sourceSets.main.resources {
+	srcDir 'src/generated/resources' //include generated files
+}
+
 minecraft {
 	mappings channel: 'parchment', version: '2023.09.03-1.20.1'
 	copyIdeResources = true
 	
     runs {
         client {
-            workingDirectory project.file('run/client')
+            workingDirectory project.file('runs/client')
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -33,7 +41,7 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('run/server')
+            workingDirectory project.file('runs/server')
             property 'forge.logging.console.level', 'debug'
 			args '-nogui'
 
@@ -43,6 +51,17 @@ minecraft {
                 }
             }
         }
+
+        data {
+			workingDirectory project.file('runs/data')
+			args '--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath()
+
+            mods {
+                globalxp {
+                    source sourceSets.main
+                }
+            }
+		}
     }
 }
 
@@ -65,6 +84,8 @@ dependencies {
 }
 
 tasks.named('jar', Jar).configure {
+	exclude('bl4ckscor3/mod/globalxp/datagen/**') //exclude files from the built jar that are only used to generate the assets & data
+
     manifest {
         attributes(["Specification-Title": "Global XP",
                     "Specification-Vendor": "bl4ckscor3",

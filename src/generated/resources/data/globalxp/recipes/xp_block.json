@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "E": {
+      "tag": "forge:gems/emerald"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BEB",
+    "BBB"
+  ],
+  "result": {
+    "item": "globalxp:xp_block"
+  },
+  "show_notification": true
+}
