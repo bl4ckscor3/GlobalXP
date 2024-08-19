@@ -1,10 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "BBB",
-    "BEB",
-    "BBB"
-  ],
+  "category": "misc",
   "key": {
     "B": {
       "item": "minecraft:iron_bars"
@@ -13,8 +9,13 @@
       "item": "minecraft:emerald"
     }
   },
+  "pattern": [
+    "BBB",
+    "BEB",
+    "BBB"
+  ],
   "result": {
-    "item": "globalxp:xp_block",
-    "count": 1
-  }
+    "item": "globalxp:xp_block"
+  },
+  "show_notification": true
 }
