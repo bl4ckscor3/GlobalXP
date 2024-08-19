@@ -36,7 +36,7 @@ public class GlobalXP {
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MOD_ID);
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
 	public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(MOD_ID);
-	public static final DeferredBlock<XPBlock> XP_BLOCK = BLOCKS.register("xp_block", () -> new XPBlock(BlockBehaviour.Properties.of().strength(12.5F, 2000.0F).sound(SoundType.METAL)));
+	public static final DeferredBlock<XPBlock> XP_BLOCK = BLOCKS.register("xp_block", () -> new XPBlock(BlockBehaviour.Properties.of().strength(5F, 2000.0F).sound(SoundType.METAL)));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<XPBlockEntity>> XP_BLOCK_ENTITY_TYPE = BLOCK_ENTITY_TYPES.register("xp_block", () -> BlockEntityType.Builder.of(XPBlockEntity::new, XP_BLOCK.get()).build(null));
 	public static final DeferredItem<XPBlockItem> XP_BLOCK_ITEM = ITEMS.register("xp_block", () -> new XPBlockItem(XP_BLOCK.get()));
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> STORED_XP = DATA_COMPONENTS.registerComponentType("xp", builder -> builder.persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).cacheEncoding());
