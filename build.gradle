@@ -9,7 +9,7 @@ version = '1.11'
 group = 'bl4ckscor3.mod.globalxp'
 
 base {
-	archivesName = 'globalxp-neoforge-1.201'
+	archivesName = 'globalxp-neoforge-1.21.1'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -32,17 +32,17 @@ runs {
     }
 
     client {
-        workingDirectory project.file('run/client')
+        workingDirectory project.file('runs/client')
     }
 
     server {
-        workingDirectory project.file('run/server')
-		programArgument '-nogui'
+        workingDirectory project.file('runs/server')
+		argument '-nogui'
     }
 
     data {
-		workingDirectory project.file('run/data')
-		programArguments.addAll '--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath()
+		workingDirectory project.file('runs/data')
+		arguments.addAll '--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath()
 	}
 }
 
@@ -56,12 +56,12 @@ repositories {
 }
 
 dependencies {
-	implementation 'net.neoforged:neoforge:21.0.2-beta'
+	implementation 'net.neoforged:neoforge:21.1.21'
 
-	implementation "curse.maven:jade-324717:5109393"
-	implementation "curse.maven:the-one-probe-245211:5159289"
-	implementation "curse.maven:wthit-forge-455982:5299020"
-	implementation "curse.maven:badpackets-615134:5288257" //wthit dependency
+	implementation "curse.maven:jade-324717:5639932"
+	implementation "curse.maven:the-one-probe-245211:5502323"
+	implementation "curse.maven:wthit-forge-455982:5619186"
+	implementation "curse.maven:badpackets-615134:5430629" //wthit dependency
 }
 
 tasks.named('jar', Jar).configure {

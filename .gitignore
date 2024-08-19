@@ -20,7 +20,7 @@ build
 logs
 
 # other
-run
+runs
 /.apt_generated/
 /.apt_generated_tests/
 
