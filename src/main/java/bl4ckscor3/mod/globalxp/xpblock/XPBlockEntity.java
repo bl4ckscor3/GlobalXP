@@ -1,5 +1,6 @@
 package bl4ckscor3.mod.globalxp.xpblock;
 
+import com.google.common.math.IntMath;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.XPUtils;
 import net.minecraft.core.BlockPos;
@@ -29,12 +30,20 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	 * Adds XP to this tile entity and updates all clients within a 64 block range with that change
 	 *
 	 * @param amount The amount of XP to add
+	 * @return The amount of XP that was not added
 	 */
-	public void addXP(int amount) {
-		storedXP += amount;
+	public int addXP(int amount) {
+		int space = Integer.MAX_VALUE - storedXP;
+
+		storedXP = IntMath.saturatedAdd(storedXP, amount);
 		storedLevels = XPUtils.calculateStoredLevels(storedXP);
 		setChanged();
 		level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+
+		if (amount > space)
+			return amount - space;
+		else
+			return 0;
 	}
 
 	/**
@@ -136,12 +145,16 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 
 	private void pickupDroppedXP() {
 		//find all orbs in the area around the block, and ignore xp orbs that were spawned as a result of a player removing xp from the block
-		for (ExperienceOrb entity : level.getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE.and(e -> !e.getTags().contains("GlobalXPMarker")))) {
-			int amount = entity.getValue();
+		for (ExperienceOrb orb : level.getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE.and(e -> !e.getTags().contains("GlobalXPMarker")))) {
+			int amount = orb.getValue();
 
 			if (getStoredXP() + amount <= getCapacity()) {
-				addXP(amount);
-				entity.discard();
+				int unused = addXP(amount);
+
+				orb.discard();
+
+				if (unused > 0)
+					level.addFreshEntity(new ExperienceOrb(level, orb.getX(), orb.getY(), orb.getZ(), unused));
 			}
 		}
 	}
