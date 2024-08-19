@@ -2,7 +2,7 @@ plugins {
 	id 'java-library'
 	id 'eclipse'
 	id 'idea'
-	id 'net.neoforged.gradle.userdev' version '7.0.105'
+	id 'net.neoforged.gradle.userdev' version '7.0.+'
 }
 
 version = '1.11'
@@ -32,17 +32,17 @@ runs {
     }
 
     client {
-        workingDirectory project.file('run/client')
+        workingDirectory project.file('runs/client')
     }
 
     server {
-        workingDirectory project.file('run/server')
-		programArgument '-nogui'
+        workingDirectory project.file('runs/server')
+		argument '-nogui'
     }
 
     data {
-		workingDirectory project.file('run/data')
-		programArguments.addAll '--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath()
+		workingDirectory project.file('runs/data')
+		arguments.addAll '--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath()
 	}
 }
 
@@ -56,12 +56,12 @@ repositories {
 }
 
 dependencies {
-	implementation 'net.neoforged:neoforge:20.6.7-beta'
+	implementation 'net.neoforged:neoforge:20.6.119'
 
-	implementation "curse.maven:jade-324717:5109393"
-	implementation "curse.maven:the-one-probe-245211:5159289"
-	implementation "curse.maven:wthit-forge-455982:5299020"
-	implementation "curse.maven:badpackets-615134:5288257" //wthit dependency
+	implementation "curse.maven:jade-324717:5366595"
+	implementation "curse.maven:the-one-probe-245211:5304322"
+	implementation "curse.maven:wthit-forge-455982:5568793"
+	implementation "curse.maven:badpackets-615134:5400300" //wthit dependency
 }
 
 tasks.named('jar', Jar).configure {
