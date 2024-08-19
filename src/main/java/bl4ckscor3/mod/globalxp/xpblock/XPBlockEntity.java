@@ -1,6 +1,7 @@
 package bl4ckscor3.mod.globalxp.xpblock;
 
 import com.google.common.math.IntMath;
+
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.XPUtils;
 import net.minecraft.core.BlockPos;
@@ -20,7 +21,6 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	private Component name;
 	private int storedXP = 0;
 	private float storedLevels = 0.0F;
-	private boolean destroyedByCreativePlayer;
 
 	public XPBlockEntity(BlockPos pos, BlockState state) {
 		super(GlobalXP.XP_BLOCK_ENTITY_TYPE, pos, state);
@@ -105,20 +105,6 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	 */
 	public float getStoredLevels() {
 		return storedLevels;
-	}
-
-	/**
-	 * Sets whether the corresponding block will be destroyed by a creative player. Used to determine drops
-	 */
-	public void setDestroyedByCreativePlayer(boolean destroyedByCreativePlayer) {
-		this.destroyedByCreativePlayer = destroyedByCreativePlayer;
-	}
-
-	/**
-	 * @return true if the corresponding block was destroyed by a creative player, false otherwhise
-	 */
-	public boolean isDestroyedByCreativePlayer() {
-		return destroyedByCreativePlayer;
 	}
 
 	@Override
