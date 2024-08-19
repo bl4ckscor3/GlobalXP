@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class GlobalXP implements ModInitializer {
 	public static final String MOD_ID = "globalxp";
-	public static final XPBlock XP_BLOCK = new XPBlock(BlockBehaviour.Properties.of().strength(12.5F, 2000.0F).sound(SoundType.METAL));
+	public static final XPBlock XP_BLOCK = new XPBlock(BlockBehaviour.Properties.of().strength(5F, 2000.0F).sound(SoundType.METAL));
 	public static final BlockEntityType<XPBlockEntity> XP_BLOCK_ENTITY_TYPE = BlockEntityType.Builder.of(XPBlockEntity::new, XP_BLOCK).build(null);
 	public static final XPBlockItem XP_BLOCK_ITEM = new XPBlockItem(XP_BLOCK);
 	public static final Configuration CONFIG = AutoConfig.register(Configuration.class, JanksonConfigSerializer::new).getConfig();
