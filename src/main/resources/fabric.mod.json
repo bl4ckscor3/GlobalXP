@@ -15,7 +15,7 @@
 	"license": "MIT",
 	"icon": "assets/globalxp/icon.png",
 	"environment": "*",
-	"accessWidener" : "globalxp.accesswidener",
+	"accessWidener": "globalxp.accesswidener",
 	"entrypoints": {
 		"main": [
 			"bl4ckscor3.mod.globalxp.GlobalXP"
