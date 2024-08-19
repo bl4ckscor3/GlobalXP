@@ -71,8 +71,9 @@ public class XPBlock extends BaseEntityBlock {
 					if (xpToStore == 0)
 						return InteractionResult.PASS;
 
-					xpBlock.addXP(xpToStore); //store as much XP as possible
-					EnchantmentUtils.addPlayerXP(player, -xpToStore); //negative value removes xp
+					int unused = xpBlock.addXP(xpToStore); //store as much XP as possible
+
+					EnchantmentUtils.addPlayerXP(player, -xpToStore + unused); //negative value removes xp
 					return InteractionResult.SUCCESS;
 				}
 				else if (!player.isShiftKeyDown()) {
