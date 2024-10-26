@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:iron_bars"
-    },
-    "E": {
-      "tag": "c:gems/emerald"
-    }
+    "B": "minecraft:iron_bars",
+    "E": "#c:gems/emerald"
   },
   "pattern": [
     "BBB",
