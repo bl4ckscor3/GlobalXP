@@ -13,8 +13,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 
 public class XPBlockItem extends BlockItem {
-	public XPBlockItem(Block block) {
-		super(block, new Item.Properties().component(GlobalXP.STORED_XP, 0));
+	public XPBlockItem(Block block, Item.Properties properties) {
+		super(block, properties);
 	}
 
 	@Override
