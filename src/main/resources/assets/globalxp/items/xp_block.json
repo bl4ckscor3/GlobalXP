@@ -1,0 +1,6 @@
+{
+	"model": {
+		"type": "minecraft:model",
+		"model": "globalxp:block/xp_block"
+	}
+}

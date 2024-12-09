@@ -12,7 +12,6 @@ import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -47,11 +46,10 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 
 		float time = be.getLevel().getLevelData().getGameTime() + partialTicks;
 		double offset = Math.sin(time * GlobalXP.CONFIG.bobSpeed / 8.0D) / 10.0D;
-		BakedModel model = mc.getItemRenderer().getModel(emerald, be.getLevel(), null, 0);
 
 		poseStack.translate(0.5D, 0.4D + offset, 0.5D);
 		poseStack.mulPose(Axis.YP.rotationDegrees(time * 4.0F * GlobalXP.CONFIG.spinSpeed));
-		mc.getItemRenderer().render(emerald, ItemDisplayContext.GROUND, false, poseStack, buffer, combinedLight, combinedOverlay, model);
+		mc.getItemRenderer().renderStatic(emerald, ItemDisplayContext.GROUND, combinedLight, combinedOverlay, poseStack, buffer, be.getLevel(), 0);
 		poseStack.popPose();
 	}
 

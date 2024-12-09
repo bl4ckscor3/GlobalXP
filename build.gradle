@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.7.+'
+	id 'fabric-loom' version '1.8.+'
 }
 
 java {
@@ -16,6 +16,10 @@ group = project.maven_group
 
 loom {
 	accessWidenerPath = file("src/main/resources/globalxp.accesswidener")
+	
+	mixin {
+		defaultRefmapName = "globalxp.refmap.json"
+	}
 }
 
 repositories {

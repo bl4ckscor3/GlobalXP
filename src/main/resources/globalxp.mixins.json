@@ -2,7 +2,7 @@
 	"required": true,
 	"package": "bl4ckscor3.mod.globalxp.mixin",
 	"compatibilityLevel": "JAVA_21",
-	"refmap": "globalxp-fabric-1.20.6-refmap.json",
+	"refmap": "globalxp.refmap.json",
 	"mixins": [
 		"ItemStackComponentizationFixMixin"
 	],
