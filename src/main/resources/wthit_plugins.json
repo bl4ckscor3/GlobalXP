@@ -1,6 +1,8 @@
 {
 	"globalxp:plugin": {
-		"initializer": "bl4ckscor3.mod.globalxp.compat.WTHITDataProvider",
+		"entrypoints": {
+			"client": "bl4ckscor3.mod.globalxp.compat.WTHITDataProvider"
+		},
 		"side": "*"
 	}
 }
