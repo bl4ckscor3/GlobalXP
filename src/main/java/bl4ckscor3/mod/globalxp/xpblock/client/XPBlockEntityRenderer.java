@@ -62,7 +62,7 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 		poseStack.pushPose();
 		poseStack.translate(0.5D, y, 0.5D);
 		poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
-		poseStack.scale(-0.025F, -0.025F, 0.025F);
+		poseStack.scale(0.025F, -0.025F, 0.025F);
 		positionMatrix = poseStack.last().pose();
 		mc.font.drawInBatch(text, halfWidth, 0, 553648127, false, positionMatrix, buffer, DisplayMode.SEE_THROUGH, backgroundColor, combinedLight);
 		mc.font.drawInBatch(text, halfWidth, 0, -1, false, positionMatrix, buffer, DisplayMode.NORMAL, 0, combinedLight);
