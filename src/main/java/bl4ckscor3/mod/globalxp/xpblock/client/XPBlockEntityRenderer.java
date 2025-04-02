@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity> {
 	private ItemStack emerald = new ItemStack(Items.EMERALD, 1);
@@ -24,7 +25,7 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity>
 	public XPBlockEntityRenderer(BlockEntityRendererProvider.Context ctx) {}
 
 	@Override
-	public void render(XPBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+	public void render(XPBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay, Vec3 cameraPos) {
 		if (be == null)
 			return;
 

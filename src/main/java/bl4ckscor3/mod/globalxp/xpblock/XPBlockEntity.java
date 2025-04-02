@@ -7,10 +7,10 @@ import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.XPUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Nameable;
@@ -137,17 +137,15 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	@Override
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
 		super.loadAdditional(tag, lookupProvider);
-		setStoredXP(tag.getInt("stored_xp"));
-
-		if (tag.contains("CustomName", Tag.TAG_STRING))
-			name = parseCustomNameSafe(tag.getString("CustomName"), lookupProvider);
+		setStoredXP(tag.getIntOr("stored_xp", 0));
+		name = parseCustomNameSafe(tag.get("CustomName"), lookupProvider);
 	}
 
 	@Override
-	protected void applyImplicitComponents(DataComponentInput input) {
-		super.applyImplicitComponents(input);
-		name = input.get(DataComponents.CUSTOM_NAME);
-		setStoredXP(input.get(GlobalXP.STORED_XP));
+	protected void applyImplicitComponents(DataComponentGetter getter) {
+		super.applyImplicitComponents(getter);
+		name = getter.get(DataComponents.CUSTOM_NAME);
+		setStoredXP(getter.get(GlobalXP.STORED_XP));
 	}
 
 	@Override
@@ -170,7 +168,7 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 
 	private void pickupDroppedXP() {
 		//find all orbs in the area around the block, and ignore xp orbs that were spawned as a result of a player removing xp from the block
-		for (ExperienceOrb orb : level.getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE.and(e -> !e.getPersistentData().getBoolean("GlobalXPMarker")))) {
+		for (ExperienceOrb orb : level.getEntitiesOfClass(ExperienceOrb.class, getPickupArea(), EntitySelector.ENTITY_STILL_ALIVE.and(e -> !e.getPersistentData().getBoolean("GlobalXPMarker").orElse(false)))) {
 			int amount = orb.getValue();
 
 			if (getStoredXP() + amount <= getCapacity()) {

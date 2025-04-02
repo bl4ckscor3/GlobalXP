@@ -1,6 +1,6 @@
 package bl4ckscor3.mod.globalxp.xpblock;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.XPUtils;
@@ -10,6 +10,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 
 public class XPBlockItem extends BlockItem {
@@ -18,17 +19,17 @@ public class XPBlockItem extends BlockItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, TooltipContext ctx, TooltipDisplay display, Consumer<Component> tooltipAdder, TooltipFlag flag) {
 		int storedXP = stack.get(GlobalXP.STORED_XP);
 
 		if (storedXP == 0)
-			addInfo(tooltip, "0", 0);
+			addInfo(tooltipAdder, "0", 0);
 		else
-			addInfo(tooltip, String.format("%.2f", XPUtils.calculateStoredLevels(storedXP)), storedXP);
+			addInfo(tooltipAdder, String.format("%.2f", XPUtils.calculateStoredLevels(storedXP)), storedXP);
 	}
 
-	public void addInfo(List<Component> tooltip, String storedLevels, int storedXP) {
-		tooltip.add(Component.translatable("info.globalxp.levels", storedLevels).withStyle(ChatFormatting.GRAY));
-		tooltip.add(Component.translatable("info.globalxp.xp", storedXP).withStyle(ChatFormatting.GRAY));
+	public void addInfo(Consumer<Component> tooltipAdder, String storedLevels, int storedXP) {
+		tooltipAdder.accept(Component.translatable("info.globalxp.levels", storedLevels).withStyle(ChatFormatting.GRAY));
+		tooltipAdder.accept(Component.translatable("info.globalxp.xp", storedXP).withStyle(ChatFormatting.GRAY));
 	}
 }
