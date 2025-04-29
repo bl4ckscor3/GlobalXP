@@ -2,7 +2,7 @@ plugins {
 	id 'java-library'
 	id 'eclipse'
 	id 'idea'
-	id 'net.neoforged.gradle.userdev' version '7.0.+'
+	id 'net.neoforged.moddev' version '2.0.82'
 }
 
 version = '1.12'
@@ -23,26 +23,35 @@ sourceSets.main.resources {
 	srcDir 'src/generated/resources' //include generated files
 }
 
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+neoForge {
+	version = "21.5.62-beta"
 
-runs {
-    configureEach {
-        systemProperty 'forge.logging.console.level', 'debug'
-        modSource project.sourceSets.main
-    }
+	runs {
+		configureEach {
+			logLevel = org.slf4j.event.Level.DEBUG
+			gameDirectory = project.file("runs/" + name)
+			ideName = "GlobalXP " + ideName.get()
+		}
 
-    client {
-        workingDirectory project.file('runs/client')
-    }
+		client {
+			client()
+		}
 
-    server {
-        workingDirectory project.file('runs/server')
-		argument '-nogui'
-    }
+		server {
+			server()
+			programArgument('-nogui')
+		}
 
-    clientData {
-		workingDirectory project.file('runs/data')
-		arguments.addAll '--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath()
+		data {
+			clientData()
+			programArguments.addAll('--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath())
+		}
+	}
+
+	mods {
+		globalxp {
+			sourceSet(sourceSets.main)
+		}
 	}
 }
 
@@ -51,17 +60,15 @@ repositories {
     	url "https://cursemaven.com/"
         content {
             includeGroup "curse.maven"
-        }
-    }
+		}
+	}
 }
 
 dependencies {
-	implementation 'net.neoforged:neoforge:21.5.14-beta'
-
-	implementation "curse.maven:jade-324717:6353729"
+	implementation "curse.maven:jade-324717:6389812"
 	implementation "curse.maven:the-one-probe-245211:5502323"
-	implementation "curse.maven:wthit-forge-455982:5974543"
-	implementation "curse.maven:badpackets-615134:5430629" //wthit dependency
+	implementation "curse.maven:wthit-forge-455982:6417716"
+	implementation "curse.maven:badpackets-615134:6067146" //wthit dependency
 }
 
 tasks.named('jar', Jar).configure {
@@ -80,4 +87,11 @@ tasks.named('jar', Jar).configure {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 	options.release = 21
+}
+
+idea {
+	module {
+		downloadSources = true
+		downloadJavadoc = true
+	}
 }
