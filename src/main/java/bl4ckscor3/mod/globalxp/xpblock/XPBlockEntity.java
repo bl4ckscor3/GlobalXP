@@ -12,6 +12,7 @@ import net.minecraft.core.component.DataComponentMap.Builder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.EntitySelector;
@@ -19,6 +20,8 @@ import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 
 public class XPBlockEntity extends BlockEntity implements Nameable {
@@ -127,18 +130,16 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+	public void saveAdditional(ValueOutput tag) {
 		tag.putInt("stored_xp", storedXP);
-
-		if (name != null)
-			tag.putString("CustomName", Component.Serializer.toJson(name, lookupProvider));
+		tag.storeNullable("CustomName", ComponentSerialization.CODEC, name);
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-		super.loadAdditional(tag, lookupProvider);
+	public void loadAdditional(ValueInput tag) {
+		super.loadAdditional(tag);
 		setStoredXP(tag.getIntOr("stored_xp", 0));
-		name = parseCustomNameSafe(tag.get("CustomName"), lookupProvider);
+		name = tag.read("CustomName", ComponentSerialization.CODEC).orElse(null);
 	}
 
 	@Override
@@ -149,9 +150,9 @@ public class XPBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	@Override
-	public void removeComponentsFromTag(CompoundTag tag) {
-		tag.remove("CustomName");
-		tag.remove("stored_xp");
+	public void removeComponentsFromTag(ValueOutput tag) {
+		tag.discard("CustomName");
+		tag.discard("stored_xp");
 	}
 
 	@Override

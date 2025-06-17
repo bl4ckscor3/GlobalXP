@@ -9,7 +9,7 @@ version = '1.12'
 group = 'bl4ckscor3.mod.globalxp'
 
 base {
-	archivesName = 'globalxp-neoforge-1.21.5'
+	archivesName = 'globalxp-neoforge-1.21.6'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -24,7 +24,7 @@ sourceSets.main.resources {
 }
 
 neoForge {
-	version = "21.5.62-beta"
+	version = "21.6.0-beta"
 
 	runs {
 		configureEach {
@@ -65,10 +65,10 @@ repositories {
 }
 
 dependencies {
-	implementation "curse.maven:jade-324717:6389812"
-	implementation "curse.maven:the-one-probe-245211:5502323"
-	implementation "curse.maven:wthit-forge-455982:6417716"
-	implementation "curse.maven:badpackets-615134:6067146" //wthit dependency
+	compileOnly "curse.maven:jade-324717:6389812"
+	compileOnly "curse.maven:the-one-probe-245211:5502323"
+	compileOnly "curse.maven:wthit-forge-455982:6417716"
+	compileOnly "curse.maven:badpackets-615134:6067146" //wthit dependency
 }
 
 tasks.named('jar', Jar).configure {

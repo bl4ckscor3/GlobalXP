@@ -32,7 +32,7 @@ public class DataGenRegistrar {
 		//@formatter:off
 		event.createProvider(output -> new PackMetadataGenerator(output)
 				.add(PackMetadataSection.TYPE, new PackMetadataSection(Component.literal("Global XP resources & data"),
-						DetectedVersion.BUILT_IN.getPackVersion(PackType.CLIENT_RESOURCES),
+						DetectedVersion.BUILT_IN.packVersion(PackType.CLIENT_RESOURCES),
 						Optional.of(new InclusiveRange<>(0, Integer.MAX_VALUE)))));
 		//@formatter:on
 	}
