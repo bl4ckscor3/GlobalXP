@@ -6,6 +6,7 @@ import bl4ckscor3.mod.globalxp.Configuration;
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.openmods.utils.EnchantmentUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -52,7 +53,7 @@ public class XPBlock extends BaseEntityBlock {
 	@Override
 	public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
 		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock) {
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				if (player.isShiftKeyDown()) {
 					int xpToStore = 0;
 
@@ -107,7 +108,7 @@ public class XPBlock extends BaseEntityBlock {
 		if (Configuration.SERVER.retrieveXPOrbs.get()) {
 			Level level = player.level();
 
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				ExperienceOrb orb = new ExperienceOrb(level, player.getX(), player.getY(), player.getZ(), amount);
 
 				orb.getPersistentData().putBoolean("GlobalXPMarker", true); //so the xp block won't pick it back up
@@ -131,7 +132,7 @@ public class XPBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
 		if (level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock)
 			return Math.min(15, Math.floorDiv(xpBlock.getStoredXP(), Configuration.SERVER.xpForComparator.get()));
 		else
@@ -140,7 +141,7 @@ public class XPBlock extends BaseEntityBlock {
 
 	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-		if (!level.isClientSide && player.isCreative() && level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock && xpBlock.getStoredXP() > 0) {
+		if (!level.isClientSide() && player.isCreative() && level.getBlockEntity(pos) instanceof XPBlockEntity xpBlock && xpBlock.getStoredXP() > 0) {
 			ItemStack stack = new ItemStack(GlobalXP.XP_BLOCK_ITEM.get());
 			ItemEntity entity;
 
@@ -171,7 +172,7 @@ public class XPBlock extends BaseEntityBlock {
 
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		return level.isClientSide ? null : createTickerHelper(type, GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), XPBlockEntity::serverTick);
+		return level.isClientSide() ? null : createTickerHelper(type, GlobalXP.XP_BLOCK_ENTITY_TYPE.get(), XPBlockEntity::serverTick);
 	}
 
 	@Override
