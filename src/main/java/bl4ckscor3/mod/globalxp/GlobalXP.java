@@ -36,9 +36,9 @@ public class GlobalXP {
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MOD_ID);
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
 	public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, MOD_ID);
-	public static final DeferredBlock<XPBlock> XP_BLOCK = BLOCKS.registerBlock("xp_block", XPBlock::new, BlockBehaviour.Properties.of().strength(5.0F, 2000.0F).sound(SoundType.METAL));
+	public static final DeferredBlock<XPBlock> XP_BLOCK = BLOCKS.registerBlock("xp_block", XPBlock::new, () -> BlockBehaviour.Properties.of().strength(5.0F, 2000.0F).sound(SoundType.METAL));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<XPBlockEntity>> XP_BLOCK_ENTITY_TYPE = BLOCK_ENTITY_TYPES.register("xp_block", () -> new BlockEntityType<>(XPBlockEntity::new, XP_BLOCK.get()));
-	public static final DeferredItem<XPBlockItem> XP_BLOCK_ITEM = ITEMS.registerItem("xp_block", p -> new XPBlockItem(XP_BLOCK.get(), p.component(GlobalXP.STORED_XP, 0)), new Item.Properties().useBlockDescriptionPrefix());
+	public static final DeferredItem<XPBlockItem> XP_BLOCK_ITEM = ITEMS.registerItem("xp_block", p -> new XPBlockItem(XP_BLOCK.get(), p.component(GlobalXP.STORED_XP, 0)), () -> new Item.Properties().useBlockDescriptionPrefix());
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> STORED_XP = DATA_COMPONENTS.registerComponentType("xp", builder -> builder.persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).cacheEncoding());
 
 	public GlobalXP(IEventBus modEventBus, ModContainer modContainer) {

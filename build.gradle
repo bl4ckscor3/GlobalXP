@@ -2,14 +2,14 @@ plugins {
 	id 'java-library'
 	id 'eclipse'
 	id 'idea'
-	id 'net.neoforged.moddev' version '2.0.115'
+	id 'net.neoforged.moddev' version '2.0.123'
 }
 
 version = '1.12.1'
 group = 'bl4ckscor3.mod.globalxp'
 
 base {
-	archivesName = 'globalxp-neoforge-1.21.10'
+	archivesName = 'globalxp-neoforge-1.21.11'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -24,7 +24,7 @@ sourceSets.main.resources {
 }
 
 neoForge {
-	version = "21.10.11-beta"
+	version = "21.11.0-beta"
 
 	runs {
 		configureEach {
@@ -65,10 +65,10 @@ repositories {
 }
 
 dependencies {
-	compileOnly "curse.maven:jade-324717:6389812"
+	implementation "curse.maven:jade-324717:7313008"
 	compileOnly "curse.maven:the-one-probe-245211:5502323"
-	compileOnly "curse.maven:wthit-forge-455982:6417716"
-	compileOnly "curse.maven:badpackets-615134:6067146" //wthit dependency
+	implementation "curse.maven:wthit-forge-455982:7312784"
+	implementation "curse.maven:badpackets-615134:7312679" //wthit dependency
 }
 
 tasks.named('jar', Jar).configure {

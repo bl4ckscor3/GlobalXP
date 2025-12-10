@@ -1,4 +1,4 @@
-license="MIT https://github.com/bl4ckscor3/GlobalXP/blob/neoforge/1.21.10/LICENSE"
+license="MIT https://github.com/bl4ckscor3/GlobalXP/blob/neoforge/1.21.11/LICENSE"
 issueTrackerURL="https://github.com/bl4ckscor3/GlobalXP/issues"
 
 [[mods]]
@@ -15,13 +15,13 @@ issueTrackerURL="https://github.com/bl4ckscor3/GlobalXP/issues"
 [[dependencies.globalxp]]
     modId="neoforge"
     type="required"
-    versionRange="[21.10,)"
+    versionRange="[21.11,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.globalxp]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.10,1.22)"
+    versionRange="[1.21.11,)"
     ordering="NONE"
     side="BOTH"
