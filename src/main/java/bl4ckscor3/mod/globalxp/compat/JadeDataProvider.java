@@ -2,7 +2,7 @@ package bl4ckscor3.mod.globalxp.compat;
 
 import bl4ckscor3.mod.globalxp.GlobalXP;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
@@ -24,7 +24,7 @@ public final class JadeDataProvider extends HUDOverlayModHandler implements IWai
 	}
 
 	@Override
-	public ResourceLocation getUid() {
-		return ResourceLocation.fromNamespaceAndPath(GlobalXP.MOD_ID, "display");
+	public Identifier getUid() {
+		return Identifier.fromNamespaceAndPath(GlobalXP.MOD_ID, "display");
 	}
 }
