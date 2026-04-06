@@ -1,27 +1,18 @@
-# eclipse
-bin
-eclipse
-*.launch
+# Gradle
+.gradle
+build
+libs
+
+
+# IntelliJ
+.idea
+out
+
+# Eclipse
 .settings
-.metadata
 .classpath
 .project
 
-# idea
-out
-*.ipr
-*.iws
-*.iml
-.idea
-
-# gradle
-build
-.gradle
-logs
-
-# other
+# Minecraft
 runs
-/.apt_generated/
-/.apt_generated_tests/
-
-src/generated/resources/.cache/
+.cache

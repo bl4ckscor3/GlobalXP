@@ -1,0 +1,6 @@
+{
+    "block.globalxp.xp_block": "経験値ブロック",
+    "info.globalxp.levels": "%sレベル分の経験値が保管されています。",
+    "info.globalxp.xp": "経験値が%s保管されています。",
+    "config.jade.plugin_globalxp.display": "保管している経験値を表示"
+}

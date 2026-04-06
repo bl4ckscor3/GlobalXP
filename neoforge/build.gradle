@@ -1,0 +1,56 @@
+plugins {
+    id 'net.neoforged.moddev' version "${mdg_version}"
+}
+
+neoForge {
+    version = neoforge_version
+    accessTransformers = project(":common").files('src/main/resources/META-INF/accesstransformer.cfg')
+
+    runs {
+        configureEach {
+            gameDirectory = mkdir(file("${run_dir}/" + name))
+            logLevel = org.slf4j.event.Level.DEBUG
+            ideName = "NeoForge ${it.name.capitalize()} (${project.path})"
+        }
+
+        client {
+            client()
+        }
+
+        server {
+            server()
+            programArgument('-nogui')
+        }
+
+        data {
+            clientData()
+            programArguments.addAll('--mod', "${mod_id}", '--all', '--output', file('../common/src/generated/resources/').getAbsolutePath())
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+dependencies {
+    compileOnly project(":common")
+    implementation "curse.maven:jade-324717:${neoforge_jade_version}"
+    //implementation "curse.maven:the-one-probe-245211:${top_version}"
+    implementation "curse.maven:wthit-forge-455982:${neoforge_wthit_version}"
+    implementation "curse.maven:badpackets-615134:${neoforge_badpackets_version}" //wthit dependency
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+compileJava {
+    source(project(":common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":common").sourceSets.main.resources
+}

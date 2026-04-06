@@ -1,97 +1,100 @@
 plugins {
-	id 'java-library'
-	id 'eclipse'
-	id 'idea'
-	id 'net.neoforged.moddev' version '2.0.141'
+    id 'idea'
 }
 
-version = '1.12.1'
-group = 'bl4ckscor3.mod.globalxp'
+subprojects {
+    apply plugin: 'java'
 
-base {
-	archivesName = 'globalxp-neoforge-26.1.1'
-}
+    base {
+        archivesName = "${mod_id}-${project.path.substring(1)}-${minecraft_version}"
+    }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+    java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 
-processResources {
-	exclude ".cache"
-}
+    processResources {
+        exclude ".cache"
+    }
 
-sourceSets.main.resources {
-	srcDir 'src/generated/resources' //include generated files
-}
+    sourceSets.main.resources {
+        srcDir 'src/generated/resources' //include generated files
+    }
 
-neoForge {
-	version = "26.1.1.10-beta"
+    repositories {
+        maven {
+            url "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+        }
+        maven {
+            url "https://cursemaven.com/"
+            content {
+                includeGroup "curse.maven"
+            }
+        }
+    }
 
-	runs {
-		configureEach {
-			logLevel = org.slf4j.event.Level.DEBUG
-			gameDirectory = project.file("runs/" + name)
-			ideName = "GlobalXP " + ideName.get()
-		}
+    jar {
+        destinationDirectory = file("../build/libs")
 
-		client {
-			client()
-		}
+        from(rootProject.file("LICENSE")) {
+            rename { "${it}_${mod_name}" }
+        }
 
-		server {
-			server()
-			programArgument('-nogui')
-		}
+        manifest {
+            attributes([
+                    'Specification-Title'     : mod_name,
+                    'Specification-Vendor'    : mod_author,
+                    'Specification-Version'   : project.jar.archiveVersion,
+                    'Implementation-Title'    : project.name,
+                    'Implementation-Version'  : project.jar.archiveVersion,
+                    'Implementation-Vendor'   : mod_author,
+                    'Built-On-Minecraft'      : minecraft_version
+            ])
+        }
+    }
 
-		data {
-			clientData()
-			programArguments.addAll('--mod', 'globalxp', '--all', '--output', file('src/generated/resources/').getAbsolutePath())
-		}
-	}
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = 'UTF-8'
+        it.options.getRelease().set(java_version.toInteger())
+    }
 
-	mods {
-		globalxp {
-			sourceSet(sourceSets.main)
-		}
-	}
-}
+    tasks.withType(AbstractTestTask).configureEach {
+        failOnNoDiscoveredTests = false
+    }
 
-repositories {
-    maven {
-    	url "https://cursemaven.com/"
-        content {
-            includeGroup "curse.maven"
-		}
-	}
-}
+    processResources {
+        var expandProps = [
+                'version'                   : version,
+                'minecraft_version'         : minecraft_version,
+                'java_version'              : java_version,
+                'license'                   : license,
+                'mod_id'                    : mod_id,
+                'mod_name'                  : mod_name,
+                'description'               : project.description,
+                'mod_author'                : mod_author,
+                'minecraft_version_range'   : minecraft_version_range,
+                'fcap_version'              : fcap_version,
+                'neoforge_version'          : neoforge_version,
+                'source_link'               : source_link,
+                'cf_link'                   : cf_link
+        ]
+        var jsonExpandProps = expandProps.collectEntries {
+            key, value -> [(key): value instanceof String ? value.replace("\n", "\\\\n") : value]
+        }
 
-dependencies {
-	implementation "curse.maven:jade-324717:7817285"
-	//implementation "curse.maven:the-one-probe-245211:5502323"
-	implementation "curse.maven:wthit-forge-455982:7880673"
-	implementation "curse.maven:badpackets-615134:7878544" //wthit dependency
-}
+        filesMatching(['META-INF/neoforge.mods.toml']) {
+            expand expandProps
+        }
 
-tasks.named('jar', Jar).configure {
-	exclude('bl4ckscor3/mod/globalxp/datagen/**') //exclude files from the built jar that are only used to generate the assets & data
+        filesMatching(['fabric.mod.json', '*.mixins.json']) {
+            expand jsonExpandProps
+        }
 
-    manifest {
-        attributes(["Specification-Title": "Global XP",
-                    "Specification-Vendor": "bl4ckscor3",
-                    "Specification-Version": "${version}",
-                    "Implementation-Title": "Global XP",
-                    "Implementation-Version": "${version}",
-                    "Implementation-Vendor": "bl4ckscor3"])
+        inputs.properties(expandProps)
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-	options.release = 25
-}
-
 idea {
-	module {
-		downloadSources = true
-		downloadJavadoc = true
-	}
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
 }

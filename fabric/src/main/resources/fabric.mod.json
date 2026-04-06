@@ -1,0 +1,34 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "homepage": "${cf_link}",
+        "issues": "${source_link}/issues",
+        "sources": "${source_link}"
+    },
+    "license": "${license}",
+    "icon": "assets/${mod_id}/icon.png",
+    "entrypoints": {
+        "main": [
+            "bl4ckscor3.mod.${mod_id}.FabricEntrypoint"
+        ],
+        "client": [
+            "bl4ckscor3.mod.${mod_id}.FabricClientEntrypoint"
+        ]
+    },
+    "mixins": [
+		"${mod_id}.mixins.json"
+    ],
+    "depends": {
+        "fabric-api": "*",
+        "minecraft": ">=${minecraft_version}",
+        "java": ">=${java_version}",
+        "forgeconfigapiport": ">=${fcap_version}"
+    }
+}

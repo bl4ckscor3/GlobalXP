@@ -1,0 +1,18 @@
+plugins {
+    id 'net.neoforged.moddev' version "${mdg_version}"
+}
+
+neoForge {
+    neoFormVersion = neo_form_version
+    accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+}
+
+dependencies {
+    api "fuzs.forgeconfigapiport:forgeconfigapiport-common-neoforgeapi:${fcap_version}"
+    compileOnly "net.fabricmc:sponge-mixin:${mixin_version}"
+    compileOnly "io.github.llamalad7:mixinextras-common:${mixinextras_version}"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:${mixinextras_version}"
+    compileOnly "curse.maven:jade-324717:${neoforge_jade_version}"
+    //compileOnly "curse.maven:the-one-probe-245211:${top_version}"
+    compileOnly "curse.maven:wthit-forge-455982:${neoforge_wthit_version}"
+}
