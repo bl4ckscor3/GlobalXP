@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 
 import bl4ckscor3.mod.globalxp.compat.GetTheOneProbe;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -30,7 +29,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 @Mod(GlobalXP.MODID)
 @EventBusSubscriber
 public class NeoEntrypoint implements Platform {
-	private final Map<ResourceKey<? extends Registry<?>>, Map<String, DeferredRegister<?>>> registers = new HashMap<>();
+	private final Map<ResourceKey<? extends Registry<?>>, DeferredRegister<?>> registers = new HashMap<>();
 	private final IEventBus modBus;
 
 	public NeoEntrypoint(ModContainer modContainer, IEventBus modBus) {
@@ -68,20 +67,17 @@ public class NeoEntrypoint implements Platform {
 	}
 
 	@Override
-	public <R, T extends R> void register(ResourceKey<? extends Registry<R>> registry, Supplier<T> entry, Identifier id) {
+	public <R, T extends R> void register(ResourceKey<? extends Registry<R>> registry, Supplier<T> entry, String path) {
 		@SuppressWarnings("unchecked")
 		DeferredRegister<R> register = (DeferredRegister<R>) registers.computeIfAbsent(
 			registry,
-			_ -> new HashMap<>()
-		).computeIfAbsent(
-			id.toString(),
 			_ -> {
-				DeferredRegister<R> r = DeferredRegister.create(registry, id.getNamespace());
+				DeferredRegister<R> r = DeferredRegister.create(registry, GlobalXP.MODID);
 
 				r.register(modBus);
 				return r;
 			}
 		);
-		register.register(id.getPath(), entry);
+		register.register(path, entry);
 	}
 }

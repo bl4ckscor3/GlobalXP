@@ -32,9 +32,9 @@ public class GlobalXP {
 
 		GlobalXP.platform = platform;
 		platform.register(Registries.BLOCK, XP_BLOCK);
-		platform.register(Registries.BLOCK_ENTITY_TYPE, XP_BLOCK_ENTITY_TYPE, id("xp_block"));
+		platform.register(Registries.BLOCK_ENTITY_TYPE, XP_BLOCK_ENTITY_TYPE, "xp_block");
 		platform.register(Registries.ITEM, XP_BLOCK_ITEM);
-		platform.register(Registries.DATA_COMPONENT_TYPE, STORED_XP, id("xp"));
+		platform.register(Registries.DATA_COMPONENT_TYPE, STORED_XP, "xp");
 	}
 
 	public static Identifier id(String path) {
