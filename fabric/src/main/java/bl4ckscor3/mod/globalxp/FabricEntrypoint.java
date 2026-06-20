@@ -3,6 +3,7 @@ package bl4ckscor3.mod.globalxp;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import bl4ckscor3.mod.globalxp.lib.Platform;
 import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;

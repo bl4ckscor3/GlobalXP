@@ -11,10 +11,6 @@ subprojects {
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 
-    processResources {
-        exclude ".cache"
-    }
-
     sourceSets.main.resources {
         srcDir 'src/generated/resources' //include generated files
     }
@@ -89,6 +85,7 @@ subprojects {
         }
 
         inputs.properties(expandProps)
+        exclude ".cache"
     }
 }
 

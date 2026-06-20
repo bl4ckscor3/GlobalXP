@@ -4,6 +4,9 @@ import java.util.function.Supplier;
 
 import com.google.common.base.Suppliers;
 
+import bl4ckscor3.mod.globalxp.lib.Platform;
+import bl4ckscor3.mod.globalxp.lib.RegisteredBlock;
+import bl4ckscor3.mod.globalxp.lib.RegisteredItem;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlock;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockEntity;
 import bl4ckscor3.mod.globalxp.xpblock.XPBlockItem;
@@ -20,9 +23,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 public class GlobalXP {
 	public static final String MODID = "globalxp";
 	private static Platform platform;
-	public static final RegistryObject<XPBlock> XP_BLOCK = RegistryObject.block("xp_block", XPBlock::new, () -> BlockBehaviour.Properties.of().strength(5.0F, 2000.0F).sound(SoundType.METAL));
+	public static final RegisteredBlock<XPBlock> XP_BLOCK = RegisteredBlock.create("xp_block", XPBlock::new, () -> BlockBehaviour.Properties.of().strength(5.0F, 2000.0F).sound(SoundType.METAL));
 	public static final Supplier<BlockEntityType<XPBlockEntity>> XP_BLOCK_ENTITY_TYPE = Suppliers.memoize(() -> platform.createBlockEntity(XPBlockEntity::new, XP_BLOCK.get()));
-	public static final RegistryObject<XPBlockItem> XP_BLOCK_ITEM = RegistryObject.item("xp_block", p -> new XPBlockItem(XP_BLOCK.get(), p.component(GlobalXP.STORED_XP.get(), 0)), () -> new Item.Properties().useBlockDescriptionPrefix());
+	public static final RegisteredItem<XPBlockItem> XP_BLOCK_ITEM = RegisteredItem.blockItem("xp_block", p -> new XPBlockItem(XP_BLOCK.get(), p.component(GlobalXP.STORED_XP.get(), 0)), Item.Properties::new);
 	public static final Supplier<DataComponentType<Integer>> STORED_XP = Suppliers.memoize(() -> DataComponentType.<Integer>builder().persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT).cacheEncoding().build());
 
 	public synchronized static void initialize(Platform platform) {

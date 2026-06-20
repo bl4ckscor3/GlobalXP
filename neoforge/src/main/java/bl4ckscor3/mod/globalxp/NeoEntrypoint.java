@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import bl4ckscor3.mod.globalxp.compat.GetTheOneProbe;
+import bl4ckscor3.mod.globalxp.lib.Platform;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;

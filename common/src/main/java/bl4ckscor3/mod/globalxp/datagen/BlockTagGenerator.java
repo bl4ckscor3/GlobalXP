@@ -15,6 +15,6 @@ public class BlockTagGenerator extends VanillaBlockTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
-		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(GlobalXP.XP_BLOCK.get());
+		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(GlobalXP.XP_BLOCK.key());
 	}
 }

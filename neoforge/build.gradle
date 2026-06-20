@@ -39,12 +39,16 @@ dependencies {
     compileOnly project(":common")
     implementation "curse.maven:jade-324717:${neoforge_jade_version}"
     //implementation "curse.maven:the-one-probe-245211:${top_version}"
-    implementation "curse.maven:wthit-forge-455982:${neoforge_wthit_version}"
-    implementation "curse.maven:badpackets-615134:${neoforge_badpackets_version}" //wthit dependency
+    compileOnly "curse.maven:wthit-forge-455982:${neoforge_wthit_version}"
+    compileOnly "curse.maven:badpackets-615134:${neoforge_badpackets_version}" //wthit dependency
 }
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+}
+
+jar {
+    exclude("${mod_id}.accesswidener")
 }
 
 compileJava {
