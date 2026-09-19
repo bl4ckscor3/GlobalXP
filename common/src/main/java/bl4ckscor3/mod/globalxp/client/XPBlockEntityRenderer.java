@@ -48,7 +48,7 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity,
 		}
 
 		poseStack.translate(0.5D, 0.4D + state.yOffset, 0.5D);
-		poseStack.mulPose(state.rotation);
+		poseStack.rotate(state.rotation);
 		state.emerald.submit(poseStack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 		poseStack.popPose();
 	}
@@ -80,7 +80,7 @@ public class XPBlockEntityRenderer implements BlockEntityRenderer<XPBlockEntity,
 
 		poseStack.pushPose();
 		poseStack.translate(0.5D, y, 0.5D);
-		poseStack.mulPose(camera.orientation);
+		poseStack.rotate(camera.orientation);
 		poseStack.scale(0.025F, -0.025F, 0.025F);
 		submitNodeCollector.submitText(poseStack, halfWidth, 0.0F, text, false, DisplayMode.SEE_THROUGH, state.lightCoords, 553648127, backgroundColor, 0);
 		submitNodeCollector.submitText(poseStack, halfWidth, 0.0F, text, false, DisplayMode.NORMAL, state.lightCoords, -1, backgroundColor, 0);

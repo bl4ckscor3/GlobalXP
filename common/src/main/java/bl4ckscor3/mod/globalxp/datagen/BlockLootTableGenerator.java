@@ -12,7 +12,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.ConditionUserBuilder;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 public class BlockLootTableGenerator {
 	public static void generate(LootTableAdder adder, ExplosionConditionApplier applier) {
@@ -22,7 +22,7 @@ public class BlockLootTableGenerator {
 	private static LootTable.Builder createXPBlockDrop(Block xpBlock, ExplosionConditionApplier applier) {
 		//@formatter:off
         return LootTable.lootTable().withPool(applier.applyExplosionCondition(xpBlock, LootPool.lootPool()
-				.setRolls(ConstantValue.exactly(1.0F))
+				.setRolls(ContextIntProviders.exactly(1))
 				.add(LootItem.lootTableItem(xpBlock)
 						.apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
 								.include(DataComponents.CUSTOM_NAME)

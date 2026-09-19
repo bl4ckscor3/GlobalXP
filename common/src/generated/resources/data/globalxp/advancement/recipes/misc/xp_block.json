@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "globalxp:xp_block"
+        "recipes": "globalxp:xp_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

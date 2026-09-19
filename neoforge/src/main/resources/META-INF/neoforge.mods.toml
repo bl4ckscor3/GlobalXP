@@ -7,7 +7,7 @@ issueTrackerURL="${source_link}/issues"
     displayName="${mod_name}"
     description='''${description}'''
     displayURL="${cf_link}"
-    logoFile="assets/${mod_id}/icon.png"
+    iconFile="assets/${mod_id}/icon.png"
     authors="${mod_author}"
 
 [[mixins]]
