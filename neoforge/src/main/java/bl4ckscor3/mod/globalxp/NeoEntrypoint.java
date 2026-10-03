@@ -37,7 +37,7 @@ public class NeoEntrypoint implements Platform {
 		this.modBus = modBus;
 		GlobalXP.initialize(this);
 		modContainer.registerConfig(ModConfig.Type.CLIENT, Configuration.CLIENT_SPEC);
-		modContainer.registerConfig(ModConfig.Type.SERVER, Configuration.SERVER_SPEC);
+		modContainer.registerConfig(ModConfig.Type.SYNCED, Configuration.SERVER_SPEC);
 	}
 
 	@SubscribeEvent
